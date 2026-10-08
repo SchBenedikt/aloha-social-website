@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState, useRef, useCallback } from "react";
-import { ArrowDownToLine, Menu, Moon, Sun, X, ChevronRight } from "lucide-react";
+import { useEffect, useState } from "react";
+import { ArrowDownToLine, Menu, Moon, Sun, X } from "lucide-react";
 import { Logo } from "./logo";
 
 function ThemeSwitch() {
@@ -30,176 +30,9 @@ function ThemeSwitch() {
   );
 }
 
-const DOCS_NAV = [
-  {
-    label: "User",
-    items: [
-      { label: "Getting Started", href: "/get-started" },
-      { label: "User Guide", href: "/docs/user" },
-      { label: "Find a Server", href: "/servers" },
-      { label: "Moving Accounts", href: "/docs/moving" },
-      { label: "Client Apps", href: "/clients" },
-    ],
-  },
-  {
-    label: "Administrator",
-    items: [
-      { label: "Installation Guide", href: "/install" },
-      { label: "Admin Overview", href: "/admins" },
-      { label: "Admin Guide", href: "/docs/admin" },
-      { label: "OCC Commands", href: "/docs/occ" },
-      { label: "Mastodon Compatibility", href: "/docs/mastodon" },
-    ],
-  },
-  {
-    label: "Developer",
-    items: [
-      { label: "API Reference", href: "/developers/docs/api" },
-      { label: "Protocol Docs", href: "/developers/docs/protocol" },
-      { label: "Federation", href: "/developers/docs/federation" },
-      { label: "Operations", href: "/developers/docs/operations" },
-      { label: "Architecture", href: "/docs/architecture" },
-    ],
-  },
-] as const;
-
-const FEATURES_NAV = [
-  { label: "Write & Share", href: "/features/write" },
-  { label: "Read Feeds", href: "/features/read" },
-  { label: "Conversations", href: "/features/converse" },
-  { label: "Discover", href: "/features/discover" },
-  { label: "Profiles", href: "/features/profile" },
-  { label: "Safety & Privacy", href: "/features/safety" },
-  { label: "All Features", href: "/features" },
-] as const;
-
-function Dropdown({ trigger, children, align = "left" }: { trigger: React.ReactNode; children: React.ReactNode | ((props: { close: () => void }) => React.ReactNode); align?: "left" | "right" }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  const close = useCallback(() => setOpen(false), []);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (ref.current && !ref.current.contains(event.target as Node)) {
-        setOpen(false);
-      }
-    }
-    function handleKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") setOpen(false);
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    document.addEventListener("keydown", handleKeyDown);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-      document.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
-
-  return (
-    <div className="relative" ref={ref}>
-      <button
-        type="button"
-        aria-haspopup="true"
-        aria-expanded={open}
-        onClick={() => setOpen(!open)}
-        className="flex items-center gap-1.5 rounded-full px-3.5 py-2 text-[14px] font-medium transition-colors hover:text-coral"
-      >
-        {trigger}
-        <ChevronRight className={`size-4 transition-transform ${open ? "rotate-90" : ""}`} aria-hidden="true" />
-      </button>
-
-      {open && (
-        <div
-          className={`absolute top-full z-50 mt-2 w-56 rounded-2xl border border-line bg-canvas/95 backdrop-blur-xl shadow-lg ${align === "right" ? "right-0" : "left-0"}`}
-          role="menu"
-        >
-          {typeof children === "function" ? children({ close }) : children}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function SubMenu({ label, items, close }: { label: string; items: readonly { label: string; href: string }[]; close: () => void }) {
-  const [open, setOpen] = useState(false);
-
-  return (
-    <div className="relative">
-      <button
-        type="button"
-        aria-haspopup="true"
-        aria-expanded={open}
-        onClick={() => setOpen(!open)}
-        className="flex items-center justify-between w-full px-3 py-2.5 text-[14px] font-medium text-ink-strong transition-colors hover:text-coral"
-      >
-        {label}
-        <ChevronRight className={`size-4 transition-transform ${open ? "rotate-90" : ""}`} aria-hidden="true" />
-      </button>
-
-      {open && (
-        <div className="absolute left-full top-0 ml-1 z-50 w-56 rounded-2xl border border-line bg-canvas/95 backdrop-blur-xl shadow-lg overflow-hidden">
-          <ul className="py-2" role="menu">
-            {items.map((item) => (
-              <li key={item.href} role="none">
-                <Link
-                  href={item.href}
-                  onClick={close}
-                  className="block px-3 py-2 text-[14px] transition-colors hover:bg-surface-2"
-                  role="menuitem"
-                >
-                  {item.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function DocsDropdown() {
-  return (
-    <Dropdown trigger="Documentation" align="left">
-      {({ close }) => (
-        <nav className="p-2" aria-label="Documentation">
-          <ul className="space-y-1" role="menu">
-            {DOCS_NAV.map((section) => (
-              <li key={section.label} role="none">
-                <SubMenu label={section.label} items={section.items} close={close} />
-              </li>
-            ))}
-          </ul>
-        </nav>
-      )}
-    </Dropdown>
-  );
-}
-
-function FeaturesDropdown() {
-  return (
-    <Dropdown trigger="Features" align="left">
-      <nav className="p-2" aria-label="Features">
-        <ul className="space-y-1" role="menu">
-          {FEATURES_NAV.map((item) => (
-            <li key={item.href} role="none">
-              <Link
-                href={item.href}
-                className="block px-3 py-2 text-[14px] font-medium text-ink-strong transition-colors hover:text-coral"
-                role="menuitem"
-              >
-                {item.label}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </nav>
-    </Dropdown>
-  );
-}
-
 const NAV_LINKS = [
+  { label: "Features", href: "/features" },
+  { label: "Documentation", href: "/docs" },
   { label: "Get started", href: "/get-started" },
 ] as const;
 
@@ -238,8 +71,6 @@ export function SiteHeader() {
           </Link>
 
           <nav aria-label="Main navigation" className="ml-auto hidden items-center gap-1 sm:flex">
-            <FeaturesDropdown />
-            <DocsDropdown />
             {NAV_LINKS.map((item) => (
               <Link
                 key={item.href}
@@ -283,11 +114,9 @@ export function SiteHeader() {
         <div
           aria-hidden={!open}
           inert={!open}
-          className={`overflow-hidden border-t border-line transition-[max-height,opacity] duration-300 sm:hidden ${open ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+          className={`overflow-hidden border-t border-line transition-[max-height,opacity] duration-300 sm:hidden ${open ? "max-h-56 opacity-100" : "max-h-0 opacity-0"}`}
         >
           <nav id="mobile-navigation" aria-label="Mobile navigation" className="mx-auto flex max-w-6xl flex-col gap-1 px-5 py-4 sm:px-8 lg:px-12">
-            <FeaturesDropdown />
-            <DocsDropdown />
             {NAV_LINKS.map((item) => (
               <Link
                 key={item.href}
