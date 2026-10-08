@@ -111,7 +111,7 @@ function Dropdown({ trigger, children, align = "left" }: { trigger: React.ReactN
 
       {open && (
         <div
-          className={`absolute top-full z-50 mt-2 w-56 rounded-2xl border border-line bg-canvas/95 backdrop-blur-xl shadow-lg overflow-hidden ${align === "right" ? "right-0" : "left-0"}`}
+          className={`absolute top-full z-50 mt-2 w-56 rounded-2xl border border-line bg-canvas/95 backdrop-blur-xl shadow-lg ${align === "right" ? "right-0" : "left-0"}`}
           role="menu"
         >
           {typeof children === "function" ? children({ close }) : children}

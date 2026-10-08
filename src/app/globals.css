@@ -600,16 +600,23 @@ pre.code {
   gap: 2rem;
   width: max-content;
   animation: marquee 30s linear infinite;
+  -webkit-animation: marquee 30s linear infinite;
   will-change: transform;
 }
 
 .marquee-track:hover .marquee-content {
   animation-play-state: paused;
+  -webkit-animation-play-state: paused;
 }
 
 @keyframes marquee {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
+}
+
+@-webkit-keyframes marquee {
+  0% { -webkit-transform: translateX(0); transform: translateX(0); }
+  100% { -webkit-transform: translateX(-50%); transform: translateX(-50%); }
 }
 
 @media (prefers-reduced-motion: reduce) {

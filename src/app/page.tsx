@@ -99,9 +99,7 @@ export default function Home() {
           <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[12px] tracking-[0.14em] text-muted uppercase">
             <span className="text-coral">Aloha Social</span>
             <span aria-hidden>·</span>
-            <span>ActivityPub federation</span>
-            <span aria-hidden>·</span>
-            <span>AGPL-3.0-or-later</span>
+            <span>A new experience of freedom, connection & open source</span>
           </p>
 
           <h1 className="mt-7 max-w-[17ch] text-[2.75rem] leading-[0.98] tracking-[-0.04em] text-ink-strong sm:text-[3.9rem] lg:text-[4.75rem]">
