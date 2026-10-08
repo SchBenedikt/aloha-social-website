@@ -6,10 +6,6 @@ import { Container, Screenshot } from "@/components/ui";
 import { FEATURES } from "@/lib/features";
 import { SITE } from "@/lib/site";
 
-export const metadata: Metadata = {
-  alternates: { canonical: "/" },
-};
-
 const JSON_LD = {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
@@ -36,6 +32,47 @@ const INSIDE = [
   ["Private by default", "Photo metadata is removed before images are stored or sent."],
   ["Your community, your rules", "The server operator sets account access, moderation and data-retention policies."],
 ] as const;
+
+// Compatible ActivityPub services/instances that work with Aloha Social
+const COMPATIBLE_SERVICES = [
+  { name: "Mastodon", version: "4.2+", status: "full", description: "Full federation support" },
+  { name: "Pixelfed", version: "0.12+", status: "full", description: "Photo federation" },
+  { name: "PeerTube", version: "6.2+", status: "partial", description: "Video federation" },
+  { name: "Pleroma", version: "2.6+", status: "full", description: "Full federation" },
+  { name: "Akkoma", version: "3.8+", status: "full", description: "Full federation" },
+  { name: "Misskey", version: "2024+", status: "partial", description: "Microblog federation" },
+  { name: "Firefish", version: "1.0+", status: "partial", description: "Microblog federation" },
+  { name: "GoToSocial", version: "0.16+", status: "full", description: "Lightweight federation" },
+  { name: "Friendica", version: "2024+", status: "partial", description: "Full federation" },
+  { name: "Lemmy", version: "0.19+", status: "partial", description: "Thread federation" },
+  { name: "WriteFreely", version: "0.14+", status: "partial", description: "Blog federation" },
+  { name: "Funkwhale", version: "1.2+", status: "partial", description: "Audio federation" },
+] as const;
+
+function ServiceBadge({ service }: { service: typeof COMPATIBLE_SERVICES[number] }) {
+  const statusColors = {
+    full: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400",
+    partial: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400",
+  };
+  const statusLabels = {
+    full: "Full",
+    partial: "Partial",
+  };
+
+  return (
+    <div className="flex shrink-0 items-center gap-3 px-4 py-2.5 rounded-xl border border-line bg-surface/50 backdrop-blur-sm shadow-sm transition-shadow hover:shadow-md" title={`${service.name} ${service.version} — ${service.description}`}>
+      <span className="font-semibold text-ink-strong whitespace-nowrap">{service.name}</span>
+      <span className="font-mono text-[11px] text-muted whitespace-nowrap">{service.version}</span>
+      <span className={`px-2 py-0.5 rounded-full font-mono text-[10px] font-medium ${statusColors[service.status]}`}>
+        {statusLabels[service.status]}
+      </span>
+    </div>
+  );
+}
+
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
@@ -102,6 +139,35 @@ export default function Home() {
         </Container>
 
         <div className="h-16" aria-hidden />
+      </section>
+
+      {/* ---------------------------------------- compatible services marquee */}
+      <section aria-label="Compatible ActivityPub services" className="border-y border-line bg-surface py-6 overflow-hidden">
+        <Container>
+          <div className="flex items-center gap-4 mb-4">
+            <span className="eyebrow shrink-0">Federates with</span>
+            <span className="font-mono text-[11px] tracking-[0.12em] text-muted uppercase">
+              Aloha Social uses ActivityPub to communicate with other federated services. Compatibility varies by feature and version.
+            </span>
+          </div>
+          
+          {/* Marquee / scrolling list of compatible services */}
+          <div className="relative" aria-hidden="true">
+            <div className="flex gap-8 animate-marquee">
+              {COMPATIBLE_SERVICES.map((service) => (
+                <ServiceBadge key={service.name} service={service} />
+              ))}
+              {/* Duplicate for seamless loop */}
+              {COMPATIBLE_SERVICES.map((service) => (
+                <ServiceBadge key={`${service.name}-dup`} service={service} />
+              ))}
+            </div>
+            
+            {/* Fade edges */}
+            <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-surface to-transparent pointer-events-none" />
+            <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-surface to-transparent pointer-events-none" />
+          </div>
+        </Container>
       </section>
 
       {/* ---------------------------------------- platform and protocol facts */}
