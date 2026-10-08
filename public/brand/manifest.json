@@ -1,0 +1,50 @@
+{
+  "name": "Aloha Social",
+  "short_name": "Aloha Social",
+  "description": "Social media for community-run servers. Publish posts and media, follow compatible ActivityPub accounts, and manage your community on a server you control.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbf4ea",
+  "theme_color": "#e8604c",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/brand/mark-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/brand/mark-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "categories": ["social", "communication", "utilities"],
+  "screenshots": [
+    {
+      "src": "/brand/screenshot.png",
+      "sizes": "1360x900",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Aloha Social web interface showing the home timeline"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Features",
+      "short_name": "Features",
+      "description": "Explore Aloha Social features",
+      "url": "/features",
+      "icons": [{ "src": "/brand/mark-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Get Started",
+      "short_name": "Get Started",
+      "description": "Get started with Aloha Social",
+      "url": "/get-started",
+      "icons": [{ "src": "/brand/mark-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
