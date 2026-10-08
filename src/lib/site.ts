@@ -31,7 +31,7 @@ export const SITE = {
     moving: "https://github.com/AlohaSocial/social/blob/master/docs/Moving.md",
     architecture: "https://github.com/AlohaSocial/social/blob/master/docs/Architecture.md",
   },
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
+  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://aloha.social",
 } as const;
 
 export const COLOR = {
