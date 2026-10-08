@@ -153,14 +153,16 @@ export default function Home() {
           
           {/* Marquee / scrolling list of compatible services */}
           <div className="relative" aria-hidden="true">
-            <div className="flex gap-8 animate-marquee">
-              {COMPATIBLE_SERVICES.map((service) => (
-                <ServiceBadge key={service.name} service={service} />
-              ))}
-              {/* Duplicate for seamless loop */}
-              {COMPATIBLE_SERVICES.map((service) => (
-                <ServiceBadge key={`${service.name}-dup`} service={service} />
-              ))}
+            <div className="marquee-track">
+              <div className="marquee-content flex gap-8">
+                {COMPATIBLE_SERVICES.map((service) => (
+                  <ServiceBadge key={service.name} service={service} />
+                ))}
+                {/* Duplicate for seamless loop */}
+                {COMPATIBLE_SERVICES.map((service) => (
+                  <ServiceBadge key={`${service.name}-dup`} service={service} />
+                ))}
+              </div>
             </div>
             
             {/* Fade edges */}

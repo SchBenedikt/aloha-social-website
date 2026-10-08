@@ -590,13 +590,26 @@ pre.code {
 [data-stagger] > *:nth-child(11) { transition-delay: 700ms; }
 [data-stagger] > *:nth-child(12) { transition-delay: 770ms; }
 
-.animate-marquee {
-  animation: marquee 30s linear infinite;
-  width: max-content;
+.marquee-track {
+  overflow: hidden;
+  width: 100%;
 }
 
-.animate-marquee:hover {
+.marquee-content {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  animation: marquee 30s linear infinite;
+  will-change: transform;
+}
+
+.marquee-track:hover .marquee-content {
   animation-play-state: paused;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -609,5 +622,10 @@ pre.code {
     transition: none !important;
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .marquee-content {
+    animation: none;
+    flex-wrap: wrap;
   }
 }
