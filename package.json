@@ -8,6 +8,7 @@
     "predev": "node scripts/build-docs.mjs",
     "prebuild": "node scripts/build-docs.mjs",
     "build": "next build",
+    "postbuild": "node scripts/generate-seo.mjs",
     "start": "next start",
     "lint": "eslint",
     "test": "vitest run",
