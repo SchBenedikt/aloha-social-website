@@ -32,7 +32,7 @@ Negative interactions on social media go with more depressive symptoms. Being re
 - Routes: `GET/PATCH /api/v1|v2/notifications/policy`, `GET /api/v1/notifications/requests`, accept/dismiss (single and bulk). The policy answer carries `summary.pending_requests_count`.
 - Web: `NotificationRequests.vue` (the requests list) on the Blocking page only. Nothing reads or changes the policy.
 - Conversation mute: `POST /api/v1/statuses/{id}/mute|unmute` → `ActionService::muteConversation()` stores the mute against the thread's root (`social_convo_state`).
-- Delivery: `NotificationService::emit()` raises the Nextcloud notification (bell, push, mail) and applies the digest/quiet-hours hold (`NotificationDeliveryService`).
+- Delivery: `NotificationService::emit()` raises the Aloha notification (bell, push, mail) and applies the digest/quiet-hours hold (`NotificationDeliveryService`).
 
 ## 4. Gaps this specification closes
 
@@ -107,7 +107,7 @@ Changes visible to clients:
 
 - `muted` on statuses is real (was always `false`).
 - New accounts have a stored policy with the calm values (`GET /api/v2/notifications/policy` shows them).
-- Held senders no longer cause Nextcloud push notifications to phone apps either, because those come from the same `emit()`.
+- Held senders no longer cause Aloha push notifications to phone apps either, because those come from the same `emit()`.
 - Routes of this app's own: `GET /api/v1/social/notifications/allowed` and `DELETE /api/v1/social/notifications/allowed/{account_id}` (the always-allowed list), `POST /api/v1/social/notifications/policy/notice/dismiss` (the one-time notice; the policy answer carries `notice`), and `GET`/`POST /admin/notification-policy` (the defaults for new accounts).
 - `/api/v1/notifications/unread_count` leaves held and muted notifications out.
 - `docs/API.md` and `docs/Mastodon-Compatibility.md` describe these; the "drop is API-only" rule is stated.
@@ -120,7 +120,7 @@ Changes visible to clients:
 
 - **PHP unit:** calm policy stored at account creation and not for existing accounts; admin defaults; `emit()` raises nothing for a held sender (each key) and for a muted thread, and still raises for an always-allowed sender; accept releases without raising; dismiss discards; digest line only when requests wait and never a digest for requests alone; `muted` export per viewer incl. the update-path cache drop; `drop` never written from the web save path.
 - **Web (vitest):** the policy rows and always-allowed list; Activities waiting line and requests panel; sidebar count includes requests; Mute/Unmute in the post menu and on mention/reply cards; the one-time notice.
-- **Interop (real servers, every PR):** a Mastodon account we don't follow mentions a calm-default local user → held: not in `/api/v1/notifications`, listed in requests, no Nextcloud notification raised; accept → released and the next mention notifies; mute a thread, a Mastodon reply in it raises nothing, unmute.
+- **Interop (real servers, every PR):** a Mastodon account we don't follow mentions a calm-default local user → held: not in `/api/v1/notifications`, listed in requests, no Aloha notification raised; accept → released and the next mention notifies; mute a thread, a Mastodon reply in it raises nothing, unmute.
 
 ## 9. Out of scope
 

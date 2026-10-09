@@ -29,7 +29,7 @@ export function StaticMarkdownPage({ path }: { path: string }) {
             <div dangerouslySetInnerHTML={{ __html: page.html }} />
           </article>
 
-          <aside className="space-y-5">
+          <aside className="space-y-5 lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:pb-4">
             {page.toc.length > 1 ? (
               <nav aria-label="On this page" className="card p-5 sm:p-6">
                 <p className="eyebrow">On this page</p>

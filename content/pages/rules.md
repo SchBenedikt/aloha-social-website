@@ -32,7 +32,7 @@ The app is built so that the rules above are cheap to enforce:
 - **A review queue** for a first post and for posts that trip the spam rules. A direct message is never held.
 - **Domain blocks** that also clean up what a blocked server already sent.
 - **Reports** arrive from two directions — a local person reporting through a client, and a peer server reporting on behalf of one of its own users — and land in the same queue for the administrators and the delegated group.
-- **Everything lands in Nextcloud's audit log** where the audit app is enabled, next to every other administrative action.
+- **Everything lands in Aloha's audit log** where the audit app is enabled, next to every other administrative action.
 
 See [How Aloha Social protects you](/protect) for the full list, and the [moderating chapter](/docs/admin-moderating) for the exact behaviour.
 

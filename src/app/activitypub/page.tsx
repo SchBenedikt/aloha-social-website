@@ -337,7 +337,7 @@ export default function ActivityPubPage() {
               ],
               [
                 "Server-to-server WebSockets",
-                "Live updates depend on the Nextcloud's push configuration; otherwise clients poll for new activity.",
+                "Live updates depend on Aloha's push configuration; otherwise clients poll for new activity.",
               ],
               [
                 "Automatic bridges to closed networks",

@@ -25,7 +25,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Hosting model",
   description:
-    "How Aloha Social uses its Nextcloud for accounts, groups, permissions, storage, notifications, scheduled jobs and backups.",
+    "How Aloha Social uses its Aloha for accounts, groups, permissions, storage, notifications, scheduled jobs and backups.",
   alternates: { canonical: "/activitypub/native" },
 };
 
@@ -36,23 +36,23 @@ const BORROWED = [
   },
   {
     term: "Groups",
-    note: "Host-platform groups can be used to manage shared feeds. Group membership stays in the Nextcloud, so operators do not need to maintain a second member list.",
+    note: "Host-platform groups can be used to manage shared feeds. Group membership stays in the Aloha, so operators do not need to maintain a second member list.",
   },
   {
     term: "Permissions",
-    note: "The Nextcloud’s account and group permissions determine who may post, moderate and change service-wide settings.",
+    note: "The Aloha’s account and group permissions determine who may post, moderate and change service-wide settings.",
   },
   {
     term: "Storage and quota",
-    note: "Attachments use the Nextcloud’s file storage and configured quotas. Preview generation and effective upload size depend on its storage, PHP and web-server configuration.",
+    note: "Attachments use the Aloha’s file storage and configured quotas. Preview generation and effective upload size depend on its storage, PHP and web-server configuration.",
   },
   {
     term: "Notifications",
-    note: "Mentions, follows and replies use the Nextcloud’s notification system and any desktop or mobile clients configured to receive those notifications.",
+    note: "Mentions, follows and replies use the Aloha’s notification system and any desktop or mobile clients configured to receive those notifications.",
   },
   {
     term: "Cron",
-    note: "Delivery and housekeeping run as background jobs registered with the Nextcloud. A scheduled job determines how often they run; an optional worker can process the delivery queue continuously.",
+    note: "Delivery and housekeeping run as background jobs registered with the Aloha. A scheduled job determines how often they run; an optional worker can process the delivery queue continuously.",
   },
   {
     term: "Theming and login",
@@ -60,7 +60,7 @@ const BORROWED = [
   },
   {
     term: "Search",
-    note: "Where the Nextcloud’s unified search is enabled, people, hashtags and posts can appear alongside other indexed results.",
+    note: "Where the Aloha’s unified search is enabled, people, hashtags and posts can appear alongside other indexed results.",
   },
 ] as const;
 
@@ -95,7 +95,7 @@ const CAPABILITIES = [
   {
     icon: Users,
     title: "One identity per person",
-    body: "An account’s handle uses its Nextcloud username and public domain. When an account is deleted, Aloha Social can publish an ActivityPub deletion so remote services can remove their cached actor.",
+    body: "An account’s handle uses its Aloha username and public domain. When an account is deleted, Aloha Social can publish an ActivityPub deletion so remote services can remove their cached actor.",
   },
   {
     icon: ShieldCheck,
@@ -105,12 +105,12 @@ const CAPABILITIES = [
   {
     icon: FileText,
     title: "Files behave like files",
-    body: "Upload limits, storage quotas, preview generation and file permissions are inherited from the Nextcloud. The effective limit is determined by the app and the server configuration together.",
+    body: "Upload limits, storage quotas, preview generation and file permissions are inherited from the Aloha. The effective limit is determined by the app and the server configuration together.",
   },
   {
     icon: Bell,
     title: "Notifications take one path",
-    body: "Federated activity can create a notification through the Nextcloud, where it follows the notification settings and delivery clients already configured there.",
+    body: "Federated activity can create a notification through the Aloha, where it follows the notification settings and delivery clients already configured there.",
   },
   {
     icon: Clock,
@@ -120,7 +120,7 @@ const CAPABILITIES = [
   {
     icon: Palette,
     title: "It looks like your cloud",
-    body: "The Nextcloud controls the sign-in page and shared branding. Aloha Social opens as an app within that service, using the existing account system.",
+    body: "The Aloha controls the sign-in page and shared branding. Aloha Social opens as an app within that service, using the existing account system.",
   },
   {
     icon: Search,
@@ -140,7 +140,7 @@ export default function NativePage() {
       <PageHeader
         eyebrow="Hosting model"
         title="Aloha Social works with your existing service."
-        lede="Aloha Social is installed as an app on a compatible Nextcloud. It uses that platform for accounts, permissions, storage and background jobs, while adding ActivityPub accounts, federation and moderation tools."
+        lede="Aloha Social is installed as an app on a compatible Aloha. It uses that platform for accounts, permissions, storage and background jobs, while adding ActivityPub accounts, federation and moderation tools."
         actions={
           <>
             <Link href="/activitypub" className="btn btn-primary">
@@ -161,12 +161,12 @@ export default function NativePage() {
       <section className="py-16 sm:py-20">
         <Container className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-16">
           <div data-reveal="">
-            <span className="eyebrow">Provided by the Nextcloud</span>
+            <span className="eyebrow">Provided by the Aloha</span>
             <h2 className="mt-5 text-[2.05rem] leading-[1.12] tracking-[-0.035em] text-ink-strong sm:text-[2.4rem]">
               Accounts, storage and scheduled jobs.
             </h2>
             <p className="mt-5 text-[16.5px] leading-relaxed text-muted">
-              Aloha Social uses the Nextcloud’s existing services rather
+              Aloha Social uses the Aloha’s existing services rather
               than maintaining separate copies of accounts, permissions or
               files. This keeps administration in one place.
             </p>
@@ -261,7 +261,7 @@ export default function NativePage() {
               actor documents, the inbox and outbox, the signing keys and the
               moderation state. Everything else it reads or asks for. That
               boundary keeps federation data separate from your files. Changes
-              to the Nextcloud can still affect compatibility, so check the
+              to the Aloha can still affect compatibility, so check the
               app release notes before an upgrade.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -279,7 +279,7 @@ export default function NativePage() {
 
       <CtaBand
         title="Prepare the service before inviting people."
-        body="Confirm that your Nextcloud and PHP versions match the Aloha Social release, then run the installation and federation checks."
+        body="Confirm that your Aloha and PHP versions match the Aloha Social release, then run the installation and federation checks."
         primary={{ label: "Install Aloha Social", href: "/install" }}
         secondary={{ label: "Federation", href: "/activitypub/federation" }}
       />

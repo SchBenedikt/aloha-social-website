@@ -1,5 +1,5 @@
 <!--
-  - SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-FileCopyrightText: 2026 Aloha GmbH and Aloha contributors
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 # Bluesky and AT Protocol compatibility
@@ -53,7 +53,7 @@ the user interface (a profile that is both), §11 says which one wins.
 ## 1. The answer in one paragraph
 
 Every Aloha Social account becomes a Bluesky account as well, hosted by this
-Nextcloud: a `did:plc` identity whose handle is `alice.<instance host>`, a
+Aloha: a `did:plc` identity whose handle is `alice.<instance host>`, a
 signed repository of records that a Bluesky relay crawls, and a firehose the
 relay subscribes to. A Bluesky user finds `alice.social.example.com` in the
 Bluesky app, sees the profile and the public posts, follows, likes, replies
@@ -165,7 +165,7 @@ The identity is three things stored in `social_atproto_identity` (§15):
 
 The DID document the PLC publishes names the handle (§4.2), the signing
 key under `#atproto`, and the PDS service `#atproto_pds` with endpoint
-`https://<instance host>` — the Nextcloud host itself, where `/xrpc/` is
+`https://<instance host>` — the Aloha host itself, where `/xrpc/` is
 served (§6.1).
 
 ### 4.2 Handles
@@ -320,7 +320,7 @@ in here needs:
 `createSession`, `refreshSession`, `deleteSession`, `getSession`,
 `getServiceAuth`, `checkAccountStatus`, `activateAccount`,
 `deactivateAccount`, `createAccount` (migration in only, §13; open
-registration is **never** offered — a Bluesky account here is a Nextcloud
+registration is **never** offered — a Bluesky account here is an Aloha
 account); `com.atproto.repo.createRecord`, `putRecord`, `deleteRecord`,
 `getRecord`, `listRecords`, `describeRepo`, `uploadBlob`, `applyWrites`,
 `importRepo`, `listMissingBlobs`; `com.atproto.moderation.createReport`
@@ -336,15 +336,15 @@ response passed through unchanged.
 
 **Not served**: `com.atproto.admin.*`, `com.atproto.temp.*`,
 `tools.ozone.*`, `com.atproto.server.createInviteCode*`, `requestAccountDelete`
-(an account is deleted in Nextcloud), `com.atproto.server.requestPasswordReset`
-(Nextcloud's password is Nextcloud's).
+(an account is deleted in Aloha), `com.atproto.server.requestPasswordReset`
+(Aloha's password is Aloha's).
 
 ### 6.3 Authentication for Bluesky apps (D17)
 
-Phase 1 serves `createSession` with **app passwords**: a Nextcloud app
+Phase 1 serves `createSession` with **app passwords**: an Aloha app
 password (Settings → Security) is what a Bluesky app is given as the
 password, checked through `IProvider`/`IUserManager::checkPassword`, which
-is how Nextcloud's own clients log in. The session is a pair of JWTs
+is how Aloha's own clients log in. The session is a pair of JWTs
 (access 2 h, refresh 90 d) signed with the instance service key, carried in
 `Authorization: Bearer`, with `did` and `handle` in the response as Bluesky
 apps expect. **OAuth for Bluesky apps** (PAR, DPoP, PKCE S256, client
@@ -719,7 +719,7 @@ beside the Fediverse move-in.
    `com.atproto.server.getServiceAuth` on the old PDS (aud this instance's
    service DID, lxm `com.atproto.server.createAccount`), then
    `createAccount` here with that token and the DID — the account exists
-   here *deactivated*. The DID is bound to the Nextcloud user; the local
+   here *deactivated*. The DID is bound to the Aloha user; the local
    actor's own `did:plc` is **not** created, the moved DID is its identity.
 3. **Repository**: `com.atproto.sync.getRepo` from the old PDS, imported
    with `importRepo` into this one; `listMissingBlobs` here, each fetched
@@ -745,7 +745,7 @@ beside the Fediverse move-in.
 The mirror image, so a person is not locked in: `Settings → Migration →
 Move your Bluesky account away` performs steps 2–5 from the other side
 (this instance is the *old* PDS: it serves `getServiceAuth`,
-`requestPlcOperationSignature` by Nextcloud e-mail, `signPlcOperation`,
+`requestPlcOperationSignature` by Aloha e-mail, `signPlcOperation`,
 `deactivateAccount`). The Fediverse account is untouched; after the move
 the local actor has no Bluesky identity until §4.1 creates a fresh one —
 which it does not do automatically for a moved-away account (flag on the
@@ -869,7 +869,7 @@ The instance rotation key is rotated by the administrator (`occ
 social:atproto:rotate-key`, admin page): a PLC operation per identity
 (queued, rate-limited by the PLC's limits — *verify*), the old key kept
 for the 72-hour window and then deleted. An account's signing key is
-rotated when its sealing secret changes (Nextcloud's `secret` rotation) —
+rotated when its sealing secret changes (Aloha's `secret` rotation) —
 the setup check notices the seal no longer opens and the repair re-signs
 the repository with a fresh key and a PLC update.
 
@@ -949,7 +949,7 @@ each for a reason:
 
 - **No `paragonie/ecc`, no gmp.** Signing and verification use OpenSSL's
   secp256k1 and P-256 (`Crypto\PrivateKey`, `Crypto\PublicKey`), which every
-  Nextcloud host has; the little arithmetic OpenSSL does not expose
+  Aloha host has; the little arithmetic OpenSSL does not expose
   (low-S, point decompression) is a hundred lines of pure PHP
   (`Crypto\BigNum`). A gmp requirement would have kept Bluesky off hosts
   that have never needed it.
@@ -1126,14 +1126,14 @@ thread root), `RecordMapper` (reply, quote and card embeds, the postgate),
 `AppViewProxy`, `Preferences`, `WriteService`, `ClientXrpc`), tables
 `social_atproto_app_password` and `social_atproto_session`:
 
-- **App passwords are this app's, not Nextcloud's.** §6.3 said a Nextcloud
-  app password; that would hand a Bluesky app the whole of Nextcloud —
+- **App passwords are this app's, not Aloha's.** §6.3 said an Aloha
+  app password; that would hand a Bluesky app the whole of Aloha —
   files, WebDAV — and can only be checked through the server's private API.
   Settings → Apps and account → Bluesky makes Bluesky-style app passwords instead (four
   groups of four, shown once, stored as a password hash, at most 25),
   good for this app's Bluesky surface only. Revoking one ends every session
   it opened. A wrong password counts against the caller's address in
-  Nextcloud's brute-force protection, and the answer for an unknown account
+  Aloha's brute-force protection, and the answer for an unknown account
   and a wrong password is the same.
 - **Sessions** are JWTs this server signs with its service key: an access
   token of two hours naming its session, a refresh token of ninety days
@@ -1202,7 +1202,7 @@ thread root), `RecordMapper` (reply, quote and card embeds, the postgate),
 - **Fixed on the way:** a streamed HLS video was handed to the player as
   the byte route, so its segments 404'd; it now gets the playlist route,
   and stored links of older posts are rebuilt the same way when read.
-- **`getSession` reports the Nextcloud account's e-mail address**, and as
+- **`getSession` reports the Aloha account's e-mail address**, and as
   confirmed when it is set: the Bluesky app offers video only to an account
   with a confirmed address, and the account is one an administrator or the
   person manages.
@@ -1268,7 +1268,7 @@ Fed twins (§13.3), **4e** the moved posts in the timeline (§13.1, step 6).
   record (`_atproto.<domain>` = `did=<DID>`) and the file
   (`https://<domain>/.well-known/atproto-did` = the DID) that make it the
   account's, and checks them: either is enough, as for the AppView. Setting
-  it asks for the Nextcloud password.
+  it asks for the Aloha password.
 - **Then** the DID document names the domain (a PLC update with the same
   keys and endpoint) and the firehose sends `#identity`, so relays and
   AppViews resolve the handle again. The assigned `alice.<host>` keeps
@@ -1294,7 +1294,7 @@ Fed twins (§13.3), **4e** the moved posts in the timeline (§13.1, step 6).
   So Settings → Migration → *Move your Bluesky account away* does what the
   tool would: the person names the other PDS, a handle there, an e-mail
   address and a password (and an invite code if it wants one), confirms
-  with their Nextcloud password, and this server makes the account there
+  with their Aloha password, and this server makes the account there
   with a token the account signs (`createAccount` with the DID). What the
   other server refuses is said at once.
 - **Then a background job**: `importRepo` with this repository's CAR, every
@@ -1359,7 +1359,7 @@ direction `inbound` in `social_atproto_move`:
 - **Invited first.** Settings → Migration → *Bring your bridged Bluesky
   account here* finds the twin (the handle Bridgy gives the Fediverse
   address, resolving to a DID whose PDS is `atproto.brid.gy`); a person can
-  also name any other account. Inviting, after the Nextcloud password, makes
+  also name any other account. Inviting, after the Aloha password, makes
   a one-time code, kept only as a hash, good for a day. A twin's move is
   then asked for by a direct message from the account to Bridgy's bot with
   the command; for anything else the page shows the server, the handle,
@@ -1410,7 +1410,7 @@ For the owner, not blocking phase 1:
 
 1. **Per-user opt-out.** D3 says every account, automatically. Should a
    person be able to switch *their* Bluesky identity off (deactivate the
-   repository; the DID stays theirs) — a Nextcloud user who wants no
+   repository; the DID stays theirs) — an Aloha user who wants no
    presence on Bluesky at all? Recommended: yes, in phase 2, as
    `deactivateAccount` on their own identity with a plain explanation.
 2. **Bluesky-only replies.** A Bluesky user replies to alice's post; alice

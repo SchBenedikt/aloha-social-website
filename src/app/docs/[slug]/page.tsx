@@ -53,6 +53,57 @@ function sectionGroups(sections: SectionLink[]) {
   return groups;
 }
 
+function InThisSection({ sections }: { sections: SectionLink[] }) {
+  const groups = sectionGroups(sections);
+  const withDescriptions = groups.length <= 12;
+
+  return (
+    <section className="mt-12 max-w-3xl" aria-labelledby="in-this-section">
+      <h2
+        id="in-this-section"
+        className="flex items-center gap-2 text-[1.35rem] font-semibold text-ink-strong"
+      >
+        <Layers className="size-5 text-coral" aria-hidden="true" />
+        In this section
+      </h2>
+      <ul className="mt-4 grid gap-x-8 gap-y-4 border-t border-line pt-4 sm:grid-cols-2">
+        {groups.map((group) => (
+          <li key={group.path}>
+            <Link
+              href={group.path}
+              className="group flex flex-col gap-1 text-[15px] font-medium text-ink-strong transition hover:text-coral"
+            >
+              <span className="flex items-center gap-2">
+                {group.title}
+                <ArrowRight className="size-4 text-coral opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
+              </span>
+              {withDescriptions && group.description ? (
+                <p className="mt-0.5 line-clamp-2 text-[13px] leading-relaxed text-muted">
+                  {group.description}
+                </p>
+              ) : null}
+              {group.children.length > 0 ? (
+                <ul className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
+                  {group.children.map((child) => (
+                    <li key={child.path}>
+                      <Link
+                        href={child.path}
+                        className="text-[13px] text-muted transition hover:text-coral underline-offset-2 hover:underline"
+                      >
+                        {child.title}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
+  );
+}
+
 export default async function DocPage(
   props: { params: Promise<{ slug: string }> },
 ) {
@@ -82,47 +133,7 @@ export default async function DocPage(
             </article>
 
             {page.sections && page.sections.length > 0 ? (
-              <section className="mt-12 max-w-3xl" aria-labelledby="in-this-section">
-                <h2
-                  id="in-this-section"
-                  className="flex items-center gap-2 text-[1.35rem] font-semibold text-ink-strong"
-                >
-                  <Layers className="size-5 text-coral" aria-hidden="true" />
-                  In this section
-                </h2>
-                <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {sectionGroups(page.sections).map((group) => (
-                    <li key={group.path}>
-                      <div className="card h-full p-4">
-                        <Link
-                          href={group.path}
-                          className="block text-[15px] font-semibold text-ink-strong transition hover:text-coral"
-                        >
-                          {group.title}
-                        </Link>
-                        <p className="mt-1 text-[13.5px] leading-relaxed text-muted">
-                          {group.description}
-                        </p>
-                        {group.children.length > 0 ? (
-                          <ul className="mt-3 space-y-1.5 border-t border-line pt-3">
-                            {group.children.map((child) => (
-                              <li key={child.path}>
-                                <Link
-                                  href={child.path}
-                                  className="flex items-baseline gap-2 text-[13.5px] text-ink transition hover:text-coral"
-                                >
-                                  <span className="size-1.5 shrink-0 translate-y-[-1px] rounded-full bg-coral/60" />
-                                  {child.title}
-                                </Link>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : null}
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </section>
+              <InThisSection sections={page.sections} />
             ) : null}
 
             <nav
@@ -169,7 +180,7 @@ export default async function DocPage(
             ) : null}
           </div>
 
-          <aside className="space-y-5">
+          <aside className="space-y-5 lg:sticky lg:top-24 lg:max-h-[calc(100vh-6rem)] lg:overflow-y-auto lg:pb-4">
             <DocsToc toc={page.toc} />
             <DocsSidebar current={page} source={page.source} />
           </aside>

@@ -132,7 +132,7 @@ cleanly at phone width.
   neighbouring ranks is gradual rather than jumpy.
 - *Weight and colour intensity* follow the same step: the top tags are bold
   on the primary colour, the tail is regular on a muted tint. Both themes are
-  covered with Nextcloud colour variables, never fixed colours.
+  covered with Aloha colour variables, never fixed colours.
 - *Source* is a small leading glyph rather than a badge, to keep the cloud
   calm: a pin for pinned, a hand/pencil for added by you, a bell for followed,
   no glyph for learned.

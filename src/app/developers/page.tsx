@@ -10,6 +10,7 @@ import {
   SectionHeading,
 } from "@/components/ui";
 import { SITE } from "@/lib/site";
+import { ProgressChecklist } from "@/components/progress-checklist";
 
 export const metadata: Metadata = {
   title: "For developers",
@@ -126,6 +127,24 @@ export default function DevelopersPage() {
               </article>
             ))}
           </div>
+        </Container>
+      </section>
+
+      <section className="py-10 sm:py-12">
+        <Container>
+          <ProgressChecklist
+            id="developer-setup"
+            title="A step-by-step local development guide"
+            steps={[
+              { label: "Review the source and contribution guidelines", href: "/docs/contributing", description: "Read the repository, license and contribution process." },
+              { label: "Prepare a local development environment", href: "/install#source", description: "Set up an Aloha development instance, PHP/Composer and Node/npm." },
+              { label: "Install dependencies and run a build", href: "/install#source", description: "Use the lockfiles and verify the production build." },
+              { label: "Understand the architecture and protocol", href: "/developers/docs/protocol", description: "Trace data flow and federation before making changes." },
+              { label: "Explore the API and OCC commands", href: "/developers/docs/api", description: "Find existing interfaces and diagnostic tools." },
+              { label: "Test changes and check compatibility", href: "/developers/docs/operations", description: "Run tests and installation checks, and review affected versions." },
+              { label: "Document the patch and prepare a contribution", href: "/docs/contributing", description: "Explain the change clearly and prepare it for review." },
+            ]}
+          />
         </Container>
       </section>
 
@@ -253,7 +272,7 @@ export default function DevelopersPage() {
 
       <CtaBand
         title="Clone it and run it locally."
-        body="Aloha Social is distributed as an app for Nextcloud. Review its compatibility requirements and setup instructions before building or installing it."
+        body="Aloha Social is distributed as an app for Aloha. Review its compatibility requirements and setup instructions before building or installing it."
         primary={{ label: "Server repository", href: SITE.server, external: true }}
         secondary={{ label: "Installation guide", href: "/install" }}
       />

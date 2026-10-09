@@ -25,14 +25,14 @@ const PLATFORMS = [
     icon: Store,
     eyebrow: "Available today",
     title: "Use Aloha Social in your browser.",
-    body: "The web app ships with the app on your Nextcloud and is the reference client. Sign in with the account you already have — no new password, no separate sign-up.",
+    body: "The web app ships with the app on your Aloha and is the reference client. Sign in with the account you already have — no new password, no separate sign-up.",
     bullets: [
       "Works in every modern browser, on desktop and on the phone.",
       "Mastodon and Pixelfed mobile apps can connect today.",
       "Newcomers create an account right where they already are.",
       "Ships with the app — nothing extra to install.",
     ],
-    cta:      { label: "Get Aloha Social from the Nextcloud App Store", href: SITE.appStore },
+    cta:      { label: "Get Aloha Social from the Aloha App Store", href: SITE.appStore },
     screenshot: {
       src: "/img/readme/home.png",
       alt: "Aloha Social running in a web browser",
@@ -91,7 +91,7 @@ const COMPARE = [
   {
     row: "Project page",
     values: [
-      "Nextcloud App Store listing",
+      "Aloha App Store listing",
       "GitHub repository",
       "GitHub repository",
     ],
@@ -103,7 +103,7 @@ const COMPARE = [
   {
     row: "Target server",
     values: [
-      "Nextcloud running Aloha Social",
+      "Aloha running Aloha Social",
       "Mastodon client API; Aloha Social is a target",
       "Mastodon client API; Aloha Social is a target",
     ],
@@ -265,7 +265,7 @@ export default function ClientsPage() {
               Set up the service before connecting a client.
             </h2>
             <p className="mt-5 max-w-xl text-[16.5px] leading-relaxed text-muted">
-              Aloha Social is installed on Nextcloud 34 to 36 with PHP 8.3 to
+              Aloha Social is installed on Aloha 34 to 36 with PHP 8.3 to
               8.5, from the App Store or from source. Once it is enabled and the
               federation checks pass, every browser and every client that speaks
               the open API can connect to it.

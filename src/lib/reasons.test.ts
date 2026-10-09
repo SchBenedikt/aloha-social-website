@@ -32,14 +32,14 @@ describe("Release key points", () => {
   });
 
   it("keeps the press boilerplate", () => {
-    expect(BOILERPLATE.intro).toContain("Nextcloud");
+    expect(BOILERPLATE.intro).toContain("Aloha");
     expect(BOILERPLATE.bullets.length).toBeGreaterThanOrEqual(7);
   });
 
   it("publishes the proof points", () => {
     expect(PROOF_POINTS.length).toBeGreaterThanOrEqual(8);
     expect(PROOF_POINTS.some((point) => point.value.includes("AGPL"))).toBe(true);
-    expect(PROOF_POINTS.some((point) => point.value.includes("Nextcloud 34"))).toBe(true);
+    expect(PROOF_POINTS.some((point) => point.value.includes("Aloha 34"))).toBe(true);
     expect(HEADLINE_FIGURES).toHaveLength(4);
   });
 });

@@ -117,7 +117,7 @@ export default function FeaturesPage() {
 
       <CtaBand
         title="Install Aloha Social for your community."
-        body="Posts, photos, Shorts and video channels in one app on your Nextcloud — with no advertising, no tracking and counts hidden by default."
+        body="Posts, photos, Shorts and video channels in one app on your Aloha — with no advertising, no tracking and counts hidden by default."
         primary={{ label: "Install Aloha Social", href: "/install" }}
         secondary={{ label: "30 reasons it is special", href: "/why" }}
       />

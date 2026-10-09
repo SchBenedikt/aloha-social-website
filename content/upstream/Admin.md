@@ -9,7 +9,7 @@ how the pieces fit together [Architecture.md](Architecture.md).
 
 ## Before it federates
 
-Aloha Social is a fediverse server that happens to live inside Nextcloud, so the
+Aloha Social is a fediverse server that happens to live inside Aloha, so the
 things it needs are the things any fediverse server needs: a stable public
 address, a `.well-known` answer, and a cron that runs.
 
@@ -23,9 +23,9 @@ available here, because the old address is inside every id already federated.
 See [*the address Aloha Social is set up for*](#the-address-aloha-social-is-set-up-for).
 
 **`.well-known` redirects.** Another server looking for `@alice@example.com`
-asks `https://example.com/.well-known/webfinger`. Nextcloud serves that from
+asks `https://example.com/.well-known/webfinger`. Aloha serves that from
 `/index.php/.well-known/webfinger`, and the redirect from the domain root is
-something the web server has to do; Nextcloud's
+something the web server has to do; Aloha's
 [documented redirects](https://docs.nextcloud.com/server/latest/go.php?to=admin-setup-well-known-URL)
 are exactly the ones needed. Without them nobody outside can find an account
 here, however well everything inside works.
@@ -37,10 +37,10 @@ rewriting is available, turn it on before the first account is created rather
 than after.
 
 **Behind a reverse proxy**, set `trusted_proxies` and `overwritehost`,
-`overwriteprotocol` and `overwrite.cli.url` as the Nextcloud documentation
+`overwriteprotocol` and `overwrite.cli.url` as the Aloha documentation
 describes. Aloha Social signs its outbound requests over the `Host` and `Date`
 headers and verifies the signatures on what arrives, so a proxy that rewrites
-the host without Nextcloud knowing produces signature failures on both sides
+the host without Aloha knowing produces signature failures on both sides
 that look like nothing else.
 
 **Cron.** Background jobs must be set to *Cron* (system cron), not *AJAX* and
@@ -51,7 +51,7 @@ See [*the delivery job has not run*](#the-delivery-job-has-not-run).
 
 **Outbound HTTP.** The server must be able to reach the rest of the fediverse
 over HTTPS. Requests to local and private addresses are refused unless
-Nextcloud's `allow_local_remote_servers` is on, which is a development setting
+Aloha's `allow_local_remote_servers` is on, which is a development setting
 and not one to carry into production.
 
 ---
@@ -59,7 +59,7 @@ and not one to carry into production.
 ## The setup checks
 
 Aloha Social registers its own checks in **Administration → Overview**, beside
-Nextcloud's own. They are the things that break federation, or stop clients
+Aloha's own. They are the things that break federation, or stop clients
 connecting, without anything else saying so, and each links back to this page.
 
 `occ social:check:install` runs the same classes (`lib/SetupChecks/`),
@@ -74,7 +74,7 @@ reaches this app's code, so `/api/v1/instance` and `/api/v2/instance` advertise
 (`max_size`, `max_video_size`) and PHP's. When PHP's is the smaller, every
 client is held to it: an upload over it is refused with a 422 naming the limit
 (`the file is larger than this server accepts (2 MB)`), and a warning in the
-Nextcloud log names the setting it went over. To let the app's own ceiling
+Aloha log names the setting it went over. To let the app's own ceiling
 apply, raise both PHP values; see
 [Raising the upload limit](#raising-the-upload-limit).
 
@@ -114,10 +114,10 @@ Apache rules to paste, until the web server answers; it is the same check as
 in **Administration → Overview**, and it goes quiet within five minutes of the
 rules being in place.
 
-Nextcloud only lets a short list of apps claim URLs at the root of the domain,
+Aloha only lets a short list of apps claim URLs at the root of the domain,
 and Aloha Social is not on it, so this has to be done in the web server. Ready-made
 rules are in [`contrib/webserver/`](../contrib/webserver): include
-`apache-social-root.conf` from the `<VirtualHost>` that serves Nextcloud, or
+`apache-social-root.conf` from the `<VirtualHost>` that serves Aloha, or
 `nginx-social-root.conf` from its `server` block, and reload. For Apache that
 is:
 
@@ -140,7 +140,7 @@ untrusted domain.
 
 **Check what `127.0.0.1:80` actually serves.** These rules proxy to plain HTTP
 on the loopback address, which only works if something there serves *this*
-Nextcloud. A server whose virtual hosts are all on `:443` — what a
+Aloha. A server whose virtual hosts are all on `:443` — what a
 certbot-managed config looks like once the HTTP ones have been commented out —
 has no `:80` virtual host for the domain at all, so the request falls through
 to the main server and its `DocumentRoot`, and every proxied request answers
@@ -176,7 +176,7 @@ Listen 127.0.0.1:8081
 ```
 
 then point the three rules at `http://127.0.0.1:8081` instead. `AllowOverride
-All` is not optional here: Nextcloud's own `.htaccess` is what hands the
+All` is not optional here: Aloha's own `.htaccess` is what hands the
 `Authorization` header to PHP, so without it the client API answers *the
 access_token was revoked* for every signed-in request — see below.
 
@@ -190,7 +190,7 @@ They map three things onto the app:
 | `/.well-known/oauth-authorization-server` | RFC 8414 discovery; a Mastodon 4.3 client asks for it before it registers anything, and reads a 404 as "not a server I can sign in to" |
 | `/.well-known/oauth-protected-resource` | Bluesky apps signing in with Bluesky sign-in (OAuth) ask it which authorization server the accounts here use; with Bluesky on, `/.well-known/oauth-authorization-server` then describes both kinds of sign-in |
 
-**Use an internal rewrite, not a redirect.** Nextcloud routes on the address
+**Use an internal rewrite, not a redirect.** Aloha routes on the address
 the request arrived at, so a plain internal rewrite to `/index.php/apps/social`
 reaches PHP but not the route, and answers 404. Sending a redirect instead does
 reach the route, but many HTTP clients drop the `Authorization` header when
@@ -198,7 +198,7 @@ they follow one, so every signed-in request then answers 401. The Apache rules
 therefore proxy internally (`mod_proxy`, `mod_proxy_http` and `ProxyPreserveHost
 On`), which keeps both the address and the header.
 
-Apache also has to hand the `Authorization` header to PHP. Nextcloud's own
+Apache also has to hand the `Authorization` header to PHP. Aloha's own
 `.htaccess` does that, but only where `AllowOverride` lets it be read; with
 `AllowOverride None` the rule never runs and every request from a signed-in app
 answers `the access_token was revoked`. The shipped rules set it themselves for
@@ -217,7 +217,7 @@ path either way, so the request itself cannot say.
 
 **`X-Forwarded-Proto` is not optional.** `mod_proxy` sends `X-Forwarded-For` and
 `X-Forwarded-Host` by itself and stops there, and the rules above proxy to plain
-HTTP — so without that header Nextcloud believes every proxied request arrived
+HTTP — so without that header Aloha believes every proxied request arrived
 over `http` and builds every absolute URL it answers with accordingly. A client
 is then handed `http://` addresses for avatars, posts and the instance
 thumbnail, on a site that is `https`. An **iOS client refuses them outright**
@@ -323,7 +323,7 @@ when each was last tried.
 ### No memory cache
 
 Without `memcache.local` or `memcache.distributed` in `config.php`, every cache
-Aloha Social asks Nextcloud for is one that forgets each write. Nextcloud's own check
+Aloha Social asks Aloha for is one that forgets each write. Aloha's own check
 already says a memcache would be faster; this one is there because, for this
 app, some of what is lost is protection:
 
@@ -351,7 +351,7 @@ Chrome and Firefox do not play HEVC. Aloha Social converts such videos to H.264 
 MP4 (`video_transcode`, on by default) — **but only where ffmpeg is installed**.
 Install it from the distribution's packages (`apt install ffmpeg`,
 `dnf install ffmpeg`, …); ffprobe comes with it, and is what tells an H.264
-MP4, which is never touched, from an HEVC one. Nextcloud looks for both on the
+MP4, which is never touched, from an HEVC one. Aloha looks for both on the
 `PATH` of the PHP process and in the directories `binary_search_paths` in
 `config.php` names, only where PHP's `exec` is not disabled, and remembers the
 answer for five minutes.
@@ -366,15 +366,15 @@ not sent again.
 A client is told, and held to, the smaller of Aloha Social's own ceilings and
 PHP's. PHP's is the smaller of `upload_max_filesize` and `post_max_size`; its
 own default is 2 MB and 8 MB. A refused upload leaves a warning in the
-Nextcloud log saying which of the two it went over (`file upload refused:
+Aloha log saying which of the two it went over (`file upload refused:
 larger than this server accepts, over upload_max_filesize`, or `… the request
 body is over post_max_size`).
 
 Raise both, with `post_max_size` a little above `upload_max_filesize` so the
 rest of the form fits beside the file, wherever this PHP reads its settings:
 the `php.ini` of the PHP-FPM pool or Apache module, a `.user.ini` in
-Nextcloud's directory (PHP-FPM, picked up within five minutes), or
-`php_value` lines in Nextcloud's `.htaccess` (Apache with `mod_php`). For
+Aloha's directory (PHP-FPM, picked up within five minutes), or
+`php_value` lines in Aloha's `.htaccess` (Apache with `mod_php`). For
 videos up to 2 GB:
 
 ```ini
@@ -385,13 +385,13 @@ post_max_size = 2050M
 Restart PHP-FPM or Apache after editing `php.ini`. A reverse proxy or web
 server in front has a body limit of its own (`client_max_body_size` in nginx,
 `LimitRequestBody` in Apache) that refuses a larger request before PHP sees
-it. A refusal there never reaches Nextcloud's log.
+it. A refusal there never reaches Aloha's log.
 
 ---
 
 ## Bluesky
 
-Every account on this instance can be a Bluesky account as well: this Nextcloud
+Every account on this instance can be a Bluesky account as well: this Aloha
 is its personal data server (PDS), `alice.<host>` its handle, and a Bluesky
 relay reads what it publishes. Nothing is asked of the person; the
 administrator switches it on once, on the administration page, after the
@@ -410,7 +410,7 @@ checks, and the card refuses to switch Bluesky on while one fails:
   cover it (a Let's Encrypt wildcard needs the DNS-01 challenge). The
   web-server rules for that host are in `contrib/webserver` (the handles block
   at the end of each file).
-- **`*.<host>` in `trusted_domains`.** Nextcloud answers a request for a host it
+- **`*.<host>` in `trusted_domains`.** Aloha answers a request for a host it
   does not trust with an error page, before the app sees it:
 
   ```
@@ -571,9 +571,9 @@ Federation health widget to `#federation`.
   timelines. Turning one off takes it out of the sidebar and stops it being
   offered; nothing already posted is touched, so a video posted while Videos
   was off is still a video and appears again the moment it is turned back on.
-  The fourth setting is the Nextcloud groups that become Aloha Social lists, and it is
+  The fourth setting is the Aloha groups that become Aloha Social lists, and it is
   **empty by default**: everybody in a chosen group gets a list for it holding
-  the members who have a Aloha Social account, nobody is followed by it and nothing
+  the members who have an Aloha Social account, nobody is followed by it and nothing
   federates, but a group list does tell everybody in the group who else is in
   it -- which is why no group becomes one until an administrator chooses.
   Deselecting a group takes its lists away on the next cron reconcile.
@@ -637,11 +637,11 @@ Federation health widget to `#federation`.
   videos are transcoded, the storage figures are taken. When cron stops, the
   symptom is a post that never arrives and a disk that never shrinks, and
   nothing in the app said so. A job is called late after **three** of its own
-  intervals, because Nextcloud's cron is itself periodic and a five-minute job
+  intervals, because Aloha's cron is itself periodic and a five-minute job
   on a fifteen-minute timer is always two intervals behind with nothing wrong
   with it. A job missing from the list altogether is what an upgrade whose
   migrations have not run looks like; the page says so rather than showing a
-  zero. Read from Nextcloud's own job list, so it cannot drift from what
+  zero. Read from Aloha's own job list, so it cannot drift from what
   actually happened.
 - **Allowed and blocked servers** — the block list or the allow list, the same
   one `occ social:fediverse` manages.
@@ -676,7 +676,7 @@ the server. Server settings and Relays are the exception — neither is rendered
 delegate and their endpoints refuse them, because what they hold is a decision
 about the server rather than about a report: a relay changes what every
 federated timeline here holds and where every public post written here is
-sent. A delegate cannot act on a Nextcloud administrator's account, and
+sent. A delegate cannot act on an Aloha administrator's account, and
 nobody — administrator or delegate — can silence, suspend, lift or purge their
 own.
 
@@ -717,7 +717,7 @@ for local policies and any consent required.
 `support`, `social`, `postmaster` and similar). Email domains on the access
 block list are refused here as they are for every account.
 
-*Require two-factor authentication* is Nextcloud's own mandatory two-factor
+*Require two-factor authentication* is Aloha's own mandatory two-factor
 setting for the `social-external` group, the same one as in Administration →
 Security; changing it asks for your password. With it on, external users set
 up a second factor when they first log in.
@@ -743,11 +743,11 @@ date, newest or oldest. Filters cover account status, registration source and
 date, login activity, minimum media usage and notice acceptance. The list is paged and scans at most a
 bounded number of candidates per request.
 *Disable* and
-*Enable* are Nextcloud's own. *Promote* makes one an ordinary account of this
+*Enable* are Aloha's own. *Promote* makes one an ordinary account of this
 server with the same username, password, two-factor setup and Aloha Social
 account; from then on the groups and apps you give them apply, and there is
 no way back. *Delete* removes the account and its Aloha Social account, the way
-deleting any Nextcloud user does. Both ask for your password. External users
+deleting any Aloha user does. Both ask for your password. External users
 also appear on the Users page, with *Aloha Social* as their backend and in the
 `social-external` group.
 
@@ -756,17 +756,17 @@ user backend and the `social-external` group. They are distinct from accounts
 created by the [Guests app](https://github.com/nextcloud/guests), which uses
 the `Guests` backend and `guest_app` group. Aloha Social's account restrictions and
 collaborator filtering target only its own backend, so they do not classify a
-Guests-app account as a Aloha Social external account. The two apps can be installed
-together, but the Guests app controls which Nextcloud apps its accounts may
+Guests-app account as an Aloha Social external account. The two apps can be installed
+together, but the Guests app controls which Aloha apps its accounts may
 open: add `social` to its app whitelist if those accounts should use Aloha Social.
 This setting does not grant a Guests account the Aloha Social-only restrictions;
-Guests accounts remain governed by the Guests app and Nextcloud group policy.
+Guests accounts remain governed by the Guests app and Aloha group policy.
 
 What an external user reaches: Aloha Social, logging in and out, their personal
 settings for their details, language, security, appearance and
 notifications, and their notifications. Everything else is refused before it
 runs, including every app installed later, and WebDAV, CalDAV and CardDAV are
-refused altogether, so Nextcloud's desktop and mobile clients and Talk do not
+refused altogether, so Aloha's desktop and mobile clients and Talk do not
 work for them; Mastodon apps do. Nobody outside Aloha Social finds them in the
 share dialog, the contacts menu, the user status list or the system address
 book. See [Architecture.md](Architecture.md#external-users) for how.
@@ -814,7 +814,7 @@ it. The spam rules are on by default; first-post review is off until an
 administrator turns it on:
 
 - **first-post review** (`review_first_post`) holds the first post of an
-  account that has published nothing here yet. Accounts here are Nextcloud
+  account that has published nothing here yet. Accounts here are Aloha
   users, so a spammer has to be given an account by this server before they can
   post at all — and on an instance that hands accounts to strangers, the
   cheapest thing that can be done about it is that the first thing they write
@@ -903,7 +903,7 @@ the moderation routes accept.
 |-----|---------|---------|
 | `cloud_url` | *(empty)* | The base address every id is built from, copied from `overwrite.cli.url` the first time the app is opened. Changing it by hand does not rewrite the ids already issued. |
 | `social_url` | *(empty)* | The app's own base URL (`…/apps/social/`), which every id is minted from and which profile links, WebFinger and NodeInfo use. Derived from `cloud_url` — never from the request — the first time the app is opened with `cloud_url` set, and again by `occ social:reset`. |
-| `social_address` | *(empty)* | The hostname accounts are federated under, when it is not the host of `cloud_url`. Only set this if the fediverse address genuinely differs from the Nextcloud host, and only before the first account exists. |
+| `social_address` | *(empty)* | The hostname accounts are federated under, when it is not the host of `cloud_url`. Only set this if the fediverse address genuinely differs from the Aloha host, and only before the first account exists. |
 | `service` | `1` | Unused; a leftover of the original installer. |
 | `installed_version` | | Written by the upgrade machinery. |
 | `media_usage` | *(written by the job)* | The last measurement of what is on disk, as JSON with the moment it was taken. Bookkeeping, not a setting: the walk is a `stat` per stored file and belongs in the cron, so the administration page reads this rather than counting on page load. |
@@ -921,7 +921,7 @@ settings page, which validates the ranges given here; every one can be set with
 | Key | Default | Meaning |
 |-----|---------|---------|
 | `contact_email` | *(empty)* | Who to write to about this instance. Mastodon's `instance.email`: every client reads it on its first request and shows it on the server's about page. Empty until somebody fills it in, which until now most instances never did, because nothing said it existed. |
-| `contact_account` | *(empty)* | The local Aloha Social account responsible for this instance. Choose a local account by username under Server settings; remote accounts and team accounts without a Nextcloud user are refused. Aloha Social stores the owning Nextcloud user id and resolves the current account when it builds `/api/v1/instance` and `/api/v2/instance`, so profile changes are reflected without rewriting the setting. Clearing the field omits the contact account. |
+| `contact_account` | *(empty)* | The local Aloha Social account responsible for this instance. Choose a local account by username under Server settings; remote accounts and team accounts without an Aloha user are refused. Aloha Social stores the owning Aloha user id and resolves the current account when it builds `/api/v1/instance` and `/api/v2/instance`, so profile changes are reflected without rewriting the setting. Clearing the field omits the contact account. |
 | `extended_description` | *(empty)* | The long form of what this instance is, for `/api/v1/instance/extended_description`. Up to 10000 characters. |
 | `max_size` | `10` | The largest picture or file an upload may be, in MB. 1–10240. |
 | `max_video_size` | `2048` | The largest video, in MB. 1–102400. A peer will refuse a great deal less than the ceiling. |
@@ -938,7 +938,7 @@ settings page, which validates the ranges given here; every one can be set with
 | `nsfw_policy` | `default` | What happens to media somebody marked sensitive, for readers who have not chosen for themselves. PeerTube's three NSFW policies under Mastodon's names for the same three states: `show_all` (PeerTube's *display*), `default` (its *blur* — covered, the blurhash showing, one press away, and what this app has always done) and `hide_all` (its *hide* — not drawn, and no button to draw it). Anybody can override it for themselves under **Settings** in the app, and "follow the instance" stays a state of its own, so changing this moves everybody who is following it and nobody who has chosen. A **content warning is a different thing** and always covers its post, whatever this says. |
 | `review_videos` | `0` | Whether every post with a video on it waits for a moderator. The third rule of the review queue, beside a new account's first post and the spam rules, and the one an instance that hosts video wants: a video is minutes of somebody's attention and a great deal of somebody else's disk. **Unlike the other two it is not about the account** — a trusted account with a thousand posts behind it is held by it too, every time, because what it is about is the video. A moderator's own video is not held, and neither is a direct message. Under **Administration → Aloha Social → Posts waiting to be looked at**. |
 | `inbox_throttle` | `300` | Incoming inbox requests allowed per origin host per minute. `0` accepts everything, which is what an instance behind its own rate limiter wants. |
-| `rate_limit_user` | `900` | How many client API requests one **signed-in account** may make per window. The routes that fan out — search, the directories, the follow graph — carry limits of their own and Nextcloud enforces those; this is the budget for everything else, which was some three hundred routes with no limit at all. Generous on purpose: it exists to stop a scraper reading the whole instance at machine speed, not to pace an app. One budget for the whole API, not one per route. `0` switches it off, which is what an instance behind its own limiter wants. Federation, the internal queue and the routes that serve bytes (attachments, avatars, emoji, GIFs) are never counted — one public page is forty requests for pictures, and deliveries arrive in bursts from a handful of addresses. |
+| `rate_limit_user` | `900` | How many client API requests one **signed-in account** may make per window. The routes that fan out — search, the directories, the follow graph — carry limits of their own and Aloha enforces those; this is the budget for everything else, which was some three hundred routes with no limit at all. Generous on purpose: it exists to stop a scraper reading the whole instance at machine speed, not to pace an app. One budget for the whole API, not one per route. `0` switches it off, which is what an instance behind its own limiter wants. Federation, the internal queue and the routes that serve bytes (attachments, avatars, emoji, GIFs) are never counted — one public page is forty requests for pictures, and deliveries arrive in bursts from a handful of addresses. |
 | `rate_limit_anon` | `300` | The same budget for a caller with **no account**, counted per address. |
 | `rate_limit_window` | `300` | How long that window is, in seconds. |
 | `token_max_days` | `365` | How many days an OAuth token works from the moment it was granted, **however much it is used**. A token idle for a year stops working anyway; this is about one in use, which used to live for ever — every request kept it alive, so a token copied off a phone lived as long as whoever held the copy kept using it. Past it the app is signed out and the person signs in again; there are no refresh tokens. Each person sees when under **Settings → Authorized apps**. `0` lets a token in use live for ever. |
@@ -991,7 +991,7 @@ Two `config.php` values, neither documented anywhere else:
 | `social.checkssl` | `true` | Whether the WebFinger setup check verifies the certificate it is offered. Set it to `false` on an instance using a certificate the server itself does not trust. It affects the probe only — federation still verifies. |
 | `social.tests` | *(unset)* | Enables `GET /apps/social/test/{account}/`, a WebFinger self-test. Leave it unset outside development. |
 
-And one of Nextcloud's own that matters here: `allow_local_remote_servers`,
+And one of Aloha's own that matters here: `allow_local_remote_servers`,
 which must be on for an instance to federate with anything on a private
 address. That is a development arrangement.
 
@@ -1017,7 +1017,7 @@ its last fully indexed NID, and resumes from there; a failed row is retried on
 the next passes, and after five failures it is logged as skipped and the walk
 moves on. Once the walk reaches the newest post the repair is complete
 (app config `index_done` = `1`) and the job does nothing more; deleting that
-key runs it again from the stored cursor. Keep Nextcloud background jobs
+key runs it again from the stored cursor. Keep Aloha background jobs
 working as `Cron\Index` relies on them. The manual `occ social:check:install --index --force` remains a full
 rebuild for administrators; it clears and repopulates both indexes and should
 not be scheduled as a cron command.
@@ -1148,7 +1148,7 @@ one row at a time, so it is more processes, not wider ones, that add capacity.
 
 **Watch the cron actually finish.** The steps are budgeted at 300 seconds a pass
 and resume where they stopped, so a pass that runs out of time is normal. A pass
-that *never* reaches the later steps is not: `social:check` and the Nextcloud log
+that *never* reaches the later steps is not: `social:check` and the Aloha log
 are where that shows.
 
 **Cached remote accounts** are refreshed by `Cron\Cache` for up to 90 seconds
@@ -1199,7 +1199,7 @@ of this costs on the hardware in front of you.
   that an administrator who never opens Aloha Social still hears about it.
 - **The delivery queue.** A rising count of failing deliveries against one host
   is that instance's problem; a rising count against all of them is this one's.
-- **`social.log` / the Nextcloud log.** Signature verification failures on
+- **`social.log` / the Aloha log.** Signature verification failures on
   inbound requests, and `could not federate` warnings on outbound ones.
 - **Disk.** Cached remote attachments are the largest thing this app stores.
   `retention_days` is what bounds them; on an instance that federates widely,

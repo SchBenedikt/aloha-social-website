@@ -7,7 +7,7 @@ export const PITCH =
   "Aloha Social is a new and better social network. It focuses on the digital wellbeing of its users, amplifying good and fun content instead of negative emotions. It is easy to use and made for everyone, not only for geeks. It supports every modern way of social networking — from text microblogging to photos, video and Shorts — and it is fully federated and decentralised without adding complexity for the user.";
 
 export const BOILERPLATE = {
-  intro: "Aloha Social is a fully open-source social network for Nextcloud.",
+  intro: "Aloha Social is a fully open-source social network for Aloha.",
   bullets: [
     "Every user gets one account that reaches the open social web: Mastodon, Pixelfed, PeerTube, GoToSocial and Akkoma today, and Bluesky as well.",
     "It brings posts, photos, Shorts and video channels together in one carefully designed app, on infrastructure the organisation controls.",
@@ -43,9 +43,9 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
     reasons: [
       {
         number: 1,
-        title: "Your Nextcloud becomes a social network server.",
+        title: "Your Aloha becomes a social network server.",
         bullets: [
-          "Aloha is a Nextcloud app, not another service to run.",
+          "Aloha is an Aloha app, not another service to run.",
           "Every user gets a social identity, @you@your.cloud, with no new account and no new password.",
           "It uses the login people already have, including SSO and two-factor authentication.",
         ],
@@ -260,7 +260,7 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
   {
     id: "nextcloud",
     index: "06",
-    title: "Built into Nextcloud",
+    title: "Built into Aloha",
     blurb: "Files, chat, calendar, search and notifications — already there.",
     reasons: [
       {
@@ -276,8 +276,8 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         title: "Part of the whole workspace.",
         bullets: [
           "Links to posts unfurl in Talk, Text and Deck.",
-          "Posts appear in Nextcloud’s unified search.",
-          "Notifications use the Nextcloud bell and its mail digest.",
+          "Posts appear in Aloha’s unified search.",
+          "Notifications use the Aloha bell and its mail digest.",
           "Translations use the organisation’s own translation provider.",
         ],
       },
@@ -293,7 +293,7 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         number: 24,
         title: "Team accounts and group lists.",
         bullets: [
-          "A Nextcloud group can post as one account, and who wrote each post stays internal.",
+          "An Aloha group can post as one account, and who wrote each post stays internal.",
           "Groups automatically become lists to read.",
         ],
       },
@@ -310,7 +310,7 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         number: 26,
         title: "Serious moderation.",
         bullets: [
-          "Silence, suspend and take down posts, all recorded in Nextcloud’s audit log.",
+          "Silence, suspend and take down posts, all recorded in Aloha’s audit log.",
           "A review queue for spam and for an account’s first post.",
           "Domain blocks that also clean up what a blocked server already sent.",
           "A dashboard of how well delivery to other servers is working.",
@@ -338,7 +338,7 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         title: "Find people from day one.",
         bullets: [
           "Search across several fediverse directories at once.",
-          "Colleagues are suggested from the shared Nextcloud.",
+          "Colleagues are suggested from the shared Aloha.",
           "Starter packs follow a whole group in one click.",
           "Trending hashtags, plus what other servers are talking about.",
           "Relays fill a new server’s timeline.",
@@ -393,7 +393,7 @@ export const PROOF_POINTS: readonly ProofPoint[] = [
   { fact: "Home timeline on 400,000 posts", value: "50 ms (was 1,661 ms)" },
   { fact: "Automated tests", value: "about 7,900 PHP and 4,000 JavaScript tests" },
   { fact: "License", value: "AGPL-3.0-or-later, fully open source" },
-  { fact: "Requirements", value: "Nextcloud 34 to 36, PHP 8.3 to 8.5" },
+  { fact: "Requirements", value: "Aloha 34 to 36, PHP 8.3 to 8.5" },
   { fact: "Source code", value: "github.com/alohasocial/social" },
 ];
 

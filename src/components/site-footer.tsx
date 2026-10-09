@@ -26,7 +26,7 @@ const COLUMNS: FooterColumn[] = [
       { label: "How Aloha Social works", href: "/activitypub/native" },
       { label: "The server", href: "/server" },
       { label: "About us", href: "/about" },
-      { label: "Why it runs on Nextcloud", href: "/nextcloud" },
+      { label: "Why it runs on Aloha", href: "/nextcloud" },
     ],
   },
   {
@@ -40,6 +40,8 @@ const COLUMNS: FooterColumn[] = [
       { label: "How Aloha protects you", href: "/protect" },
       { label: "Privacy at a glance", href: "/privacy" },
       { label: "Rules for using Aloha", href: "/rules" },
+      { label: "Well-being in Aloha", href: "/wellbeing" },
+      { label: "Aloha Directory", href: "/directory" },
     ],
   },
   {
@@ -48,7 +50,6 @@ const COLUMNS: FooterColumn[] = [
       { label: "Setup guide", href: "/install" },
       { label: "Administration overview", href: "/admins" },
       { label: "Admin guide", href: SITE.docs.admin },
-      { label: "OCC commands", href: SITE.docs.occ },
       { label: "AT Protocol status", href: SITE.docs.atproto },
     ],
   },
@@ -72,7 +73,7 @@ export function SiteFooter() {
           <div className="max-w-sm">
             <BrandLogo height={38} onDark />
             <p className="mt-5 text-[15px] leading-relaxed text-sand/75">
-              A fully open-source social network for Nextcloud. One account
+              A fully open-source social network for Aloha. One account
               reaches the whole open social web — no advertising, no tracking,
               counts hidden by default.
             </p>

@@ -1,6 +1,6 @@
 # Aloha Social — OCC Commands Reference
 
-All commands are invoked via `php occ <command>` from the Nextcloud root directory.
+All commands are invoked via `php occ <command>` from the Aloha root directory.
 
 This page documents the commands the app registers in
 `appinfo/info.xml`. Every command extends `OCA\Social\Command\SocialCommand`,
@@ -15,7 +15,7 @@ but only `social:timeline` reads it (see below).
 
 ### `social:account:create`
 
-Create the Aloha Social actor for an existing Nextcloud user.
+Create the Aloha Social actor for an existing Aloha user.
 
 ```
 php occ social:account:create [--handle HANDLE] <userId>
@@ -23,13 +23,13 @@ php occ social:account:create [--handle HANDLE] <userId>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Nextcloud username of the account |
+| `userId` | Yes | Aloha username of the account |
 
 | Option | Value | Description |
 |--------|-------|-------------|
 | `--handle` | required | Aloha Social handle. If omitted, the `userId` is used as the handle. |
 
-Fails with `Unknown user` if no such Nextcloud user exists. On success the command
+Fails with `Unknown user` if no such Aloha user exists. On success the command
 prints nothing.
 
 ---
@@ -60,7 +60,7 @@ php occ social:account:following [--local] [--unfollow] <userId> <account>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Nextcloud user performing the action |
+| `userId` | Yes | Aloha user performing the action |
 | `account` | Yes | Account to follow (e.g. `user@example.org`) |
 
 | Option | Value | Description |
@@ -89,7 +89,7 @@ php occ social:account:alias [--add URL] [--remove URL] [--list] <userId>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Nextcloud user whose actor is aliased |
+| `userId` | Yes | Aloha user whose actor is aliased |
 
 | Option | Value | Description |
 |--------|-------|-------------|
@@ -124,7 +124,7 @@ php occ social:account:move [-f|--force] <userId> <target>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Nextcloud user whose actor moves away |
+| `userId` | Yes | Aloha user whose actor moves away |
 | `target` | Yes | The new account, as `@you@new.example` or its `https://…` actor id |
 
 | Option | Value | Description |
@@ -169,7 +169,7 @@ php occ social:account:import-posts [--no-media] [--limit LIMIT] <userId> <archi
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Nextcloud user whose account the posts are written as |
+| `userId` | Yes | Aloha user whose account the posts are written as |
 | `archive` | Yes | Path to the export: a zip with an `outbox.json` (this app's, under `social/`; Mastodon's and GoToSocial's, at the root), an **Instagram** archive (the JSON one — `content/posts_*.json` and the reels beside them, with the pictures under `media/`), or a JSON export on its own — an `outbox.json`, or Pixelfed's `pixelfed-statuses.json` |
 
 | Option | Value | Description |
@@ -208,7 +208,7 @@ php occ social:account:import-follows <userId> <csv>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Nextcloud user whose actor follows the accounts |
+| `userId` | Yes | Aloha user whose actor follows the accounts |
 | `csv` | Yes | Path to the export. The current Mastodon format with the header `Account address,Show boosts,Notify on new posts,Languages` is read by its `Account address` column wherever it is; the older format — one handle per line, no header — works too. A file that parses as JSON is read as Pixelfed's export: an array of actor URLs (or handles, or objects naming one), each URL fetched and followed as the actor it resolves to. |
 
 Each entry goes through the same path as `social:account:following`: the
@@ -238,7 +238,7 @@ php occ social:note:create [-r|--replyTo REPLYTO] [-t|--to TO] [-y|--type TYPE] 
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `user_id` | Yes | Nextcloud user ID of the author |
+| `user_id` | Yes | Aloha user ID of the author |
 | `content` | Yes | Content of the post |
 
 | Option | Value | Description |
@@ -267,7 +267,7 @@ php occ social:note:boost [--unboost] <user_id> <note_id>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `user_id` | Yes | Nextcloud user ID boosting the note |
+| `user_id` | Yes | Aloha user ID boosting the note |
 | `note_id` | Yes | Id of the note |
 
 | Option | Value | Description |
@@ -288,7 +288,7 @@ php occ social:note:like [--unlike] <user_id> <note_id>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `user_id` | Yes | Nextcloud user ID liking the note |
+| `user_id` | Yes | Aloha user ID liking the note |
 | `note_id` | Yes | Id of the note |
 
 | Option | Value | Description |
@@ -311,7 +311,7 @@ php occ social:timeline [--local] [--min_id MIN] [--max_id MAX] [--since SINCE] 
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Nextcloud user whose view is used. Fails with `Unknown user` if unknown. |
+| `userId` | Yes | Aloha user whose view is used. Fails with `Unknown user` if unknown. |
 | `timeline` | Yes | See the table of supported values below |
 
 | Option | Value | Default | Description |
@@ -419,7 +419,7 @@ php occ social:worker [--once] [--max-seconds SECONDS] [--quiet-log]
 budget for deliveries (and 120 seconds of its own for the inbound queue). It
 delivers twenty servers at a time and takes batch after batch of 200 while time
 is left — up to 6,000 deliveries a run when peers answer within a second, and
-about 160 when every batch runs into a dead peer's 30-second timeout — and Nextcloud runs one `cron.php` at a time, so that is its ceiling.
+about 160 when every batch runs into a dead peer's 30-second timeout — and Aloha runs one `cron.php` at a time, so that is its ceiling.
 An instance whose accounts are followed across tens of thousands of servers
 reaches it with one popular post.
 
@@ -487,7 +487,7 @@ php occ social:atproto:identities [--user USER] [--list]
 
 | Option | Value | Description |
 |--------|-------|-------------|
-| `--user` | string | Only this Nextcloud user |
+| `--user` | string | Only this Aloha user |
 | `--list` | none | List the identities there are instead of making any |
 
 An identity is a `did:plc` registered with the PLC directory, a handle
@@ -539,7 +539,7 @@ php occ social:atproto:repo USER [--verify]
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `user` | Yes | The Nextcloud user id, the handle or the DID |
+| `user` | Yes | The Aloha user id, the handle or the DID |
 
 | Option | Value | Description |
 |--------|-------|-------------|
@@ -867,7 +867,7 @@ instance with a large media library should choose when that happens.
 
 ### `social:team`
 
-Give a Nextcloud group an account to post from.
+Give an Aloha group an account to post from.
 
 ```
 php occ social:team <group> <username>
@@ -877,7 +877,7 @@ php occ social:team --remove <username>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `group` | No | The Nextcloud group. Required unless `--list` or `--remove` is used |
+| `group` | No | The Aloha group. Required unless `--list` or `--remove` is used |
 | `username` | No | The handle the team posts under. Required unless `--list` or `--remove` is used |
 
 | Option | Value | Description |
@@ -887,9 +887,9 @@ php occ social:team --remove <username>
 
 **What it is.** Pixelfed's answer to "several people, one voice" is its
 `Group*` family: twenty models, still in beta, and a second social graph beside
-the one it already has. Nextcloud's answer is the one it has had all along — a
+the one it already has. Aloha's answer is the one it has had all along — a
 group of people who already work together — and this gives that group an
-account. It is the one thing in this comparison Nextcloud can do and Pixelfed
+account. It is the one thing in this comparison Aloha can do and Pixelfed
 cannot, because Pixelfed has no idea who works with whom.
 
 A team account is **an actor like any other**: a key pair, a followers
@@ -1025,7 +1025,7 @@ Total on disk                 20506 files    10.8 GiB
 
 Three counts are printed after the total when they are not zero: copies that are
 *streamed* (a pointer at a file on the server that holds it, so no bytes here),
-copies served from Nextcloud's own avatar store rather than by this app, and
+copies served from Aloha's own avatar store rather than by this app, and
 copies a row names that are **not in appdata** — reported rather than counted as
 zero bytes, because a cached remote one is simply fetched again when it is next
 asked for.
@@ -1328,7 +1328,7 @@ php occ social:external promote <handle>
 `add` checks the handle, the email address and the room left under the
 maximum the same way the registration page does, and needs external users to
 be switched on. It skips email confirmation and approval. `promote` moves the
-user to Nextcloud's database backend with the same user id and password hash;
+user to Aloha's database backend with the same user id and password hash;
 from then on the normal app and group rules apply to them. A refusal prints
 the reason and exits with 1.
 
@@ -1401,7 +1401,7 @@ nobody is there, so without this the command would exit `0` having done nothing.
 
 It refuses with exit code `1`, before asking anything, while self-registered
 external users exist: their logins are rows of this app, and flushing them
-would leave Nextcloud users nobody can log in as. Delete them, or promote them
+would leave Aloha users nobody can log in as. Delete them, or promote them
 with `social:external promote`, first.
 
 Without `--uninstall`:
@@ -1436,7 +1436,7 @@ The app files themselves are not removed, and the app is not disabled.
 ## Background Jobs
 
 The `TimedJob`s below are among those registered in `<background-jobs>` in
-`appinfo/info.xml` (that list is the complete one), run by Nextcloud's cron;
+`appinfo/info.xml` (that list is the complete one), run by Aloha's cron;
 the last four are queued on demand instead:
 
 | Job | Class | Description |

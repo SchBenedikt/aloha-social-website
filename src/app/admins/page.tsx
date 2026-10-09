@@ -20,6 +20,7 @@ import {
   SectionHeading,
 } from "@/components/ui";
 import { SITE } from "@/lib/site";
+import { ProgressChecklist } from "@/components/progress-checklist";
 
 export const metadata: Metadata = {
   title: "For administrators",
@@ -32,7 +33,7 @@ const DUTIES = [
   {
     icon: Gavel,
     title: "Moderation",
-    body: "Reports arrive with the post, account and relevant server context. Administrators can limit accounts or domains, suspend users, remove posts and reverse decisions. Moderation actions are recorded in the Nextcloud’s audit log.",
+    body: "Reports arrive with the post, account and relevant server context. Administrators can limit accounts or domains, suspend users, remove posts and reverse decisions. Moderation actions are recorded in the Aloha’s audit log.",
     bullets: [
       "A review queue before anything goes out to your users",
       "Per-user and per-domain limits, applied without unfollowing anybody",
@@ -108,6 +109,24 @@ export default function AdminsPage() {
         </Container>
       </section>
 
+      <section className="py-10 sm:py-12">
+        <Container>
+          <ProgressChecklist
+            id="administrator-setup"
+            title="Administrator setup checklist"
+            steps={[
+              { label: "Verify the installation and supported versions", href: "/install", description: "Check compatibility and complete the installation steps." },
+              { label: "Check the public URL and WebFinger", href: "/install#webfinger", description: "The public address must match the address used to build account IDs." },
+              { label: "Verify client access and API routes", href: "/install#web-server", description: "Make sure compatible apps can reach the /api and /oauth endpoints." },
+              { label: "Start cron or a delivery worker", href: "/developers/docs/operations", description: "Run background jobs and process outgoing deliveries reliably." },
+              { label: "Set moderation, community rules and federation policy", href: "/docs/admin-moderation-and-federation", description: "Decide how to handle community rules and remote servers before opening registration." },
+              { label: "Review reports, queues and storage regularly", href: "/developers/docs/operations", description: "Monitor delivery failures, moderation reports and storage growth." },
+              { label: "Test backups and recovery", description: "Make sure the database, app files and configuration can be restored." },
+            ]}
+          />
+        </Container>
+      </section>
+
       {/* --------------------------------------------------------- panel */}
       <section className="border-y border-line bg-surface py-16 sm:py-20">
         <Container className="grid items-center gap-10 lg:grid-cols-[1fr_1.05fr]">
@@ -155,7 +174,7 @@ export default function AdminsPage() {
           <SectionHeading
             eyebrow="The weekly rhythm"
             title="Four things to keep an eye on."
-            lede="Aloha Social uses the Nextcloud’s scheduled jobs, storage and audit tools, so operators can manage it alongside their existing services."
+            lede="Aloha Social uses the Aloha’s scheduled jobs, storage and audit tools, so operators can manage it alongside their existing services."
           />
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
             {[
@@ -203,7 +222,7 @@ export default function AdminsPage() {
 
       <CtaBand
         title="Set up Aloha Social for your community."
-        body="Install it on Nextcloud 34 to 36, configure federation and client routing, then test the service before opening registration."
+        body="Install it on Aloha 34 to 36, configure federation and client routing, then test the service before opening registration."
         primary={{ label: "Install Aloha Social", href: "/install" }}
         secondary={{
           label: "Admin guide",

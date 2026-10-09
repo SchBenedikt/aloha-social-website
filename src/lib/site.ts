@@ -1,8 +1,8 @@
 export const SITE = {
   name: "Aloha Social",
-  tagline: "The social network for your Nextcloud.",
+  tagline: "The social network for your Aloha.",
   description:
-    "Aloha Social is a fully open-source social network for Nextcloud. One account reaches Mastodon, Bluesky, Pixelfed, PeerTube and the rest of the open social web — with no advertising, no tracking and counts hidden by default.",
+    "Aloha Social is a fully open-source social network for Aloha. One account reaches Mastodon, Bluesky, Pixelfed, PeerTube and the rest of the open social web — with no advertising, no tracking and counts hidden by default.",
   github: "https://github.com/AlohaSocial",
   server: "https://github.com/AlohaSocial/social",
   logos: "https://github.com/AlohaSocial/Logos",

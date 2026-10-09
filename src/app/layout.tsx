@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   applicationName: SITE.name,
   keywords: [
     "Aloha Social",
-    "Nextcloud",
+    "Aloha",
     "Fediverse",
     "ActivityPub",
     "AT Protocol",
@@ -72,7 +72,7 @@ export const metadata: Metadata = {
         url: ogImageUrl,
         width: 1280,
         height: 640,
-        alt: "Aloha Social — the social network for your Nextcloud",
+        alt: "Aloha Social — the social network for your Aloha",
         type: "image/png",
       },
     ],
@@ -119,7 +119,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
       </head>
-      <body className="flex min-h-full flex-col overflow-x-hidden">
+      <body className="flex min-h-full flex-col overflow-x-clip">
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>

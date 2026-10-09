@@ -14,10 +14,10 @@ for each.
 
 **The support floors are whatever `appinfo/info.xml` declares.** Nothing else in
 the repository holds them: the PHPUnit, lint and appstore workflows read the PHP
-and Nextcloud ranges out of that file, through
+and Aloha ranges out of that file, through
 `icewind1991/nextcloud-version-matrix` and a direct `grep php min-version`, so
 changing two attributes there changes what CI tests against. They now say **PHP
-8.3–8.5 and Nextcloud 35–36**, and `composer.json`, `psalm.xml` and the server
+8.3–8.5 and Aloha 35–36**, and `composer.json`, `psalm.xml` and the server
 API stubs agree with them rather than contradicting them.
 
 Like [Performance.md](Performance.md), this file is **not** enforced by
@@ -140,10 +140,10 @@ what established that.
 
 One squash candidate is left and is deliberately not taken.
 `Version1000Date20260908000001` widens a column introduced one day earlier, and
-both shipped in 0.16.0 — but an instance on 0.15 running Nextcloud 35 has run
+both shipped in 0.16.0 — but an instance on 0.15 running Aloha 35 has run
 neither, so folding the width into the creating step would leave it with a
 column too narrow for its own client secrets. The argument that retired the 2023
-steps does not transfer: the Nextcloud floor says which server an instance is
+steps does not transfer: the Aloha floor says which server an instance is
 on, not which version of this app.
 
 The drop of fourteen `social_3_*` tables that **no other file in the tree ever
@@ -338,7 +338,7 @@ marker in app config and return early.
 
 ### A trap worth knowing before you audit this app
 
-Nextcloud controller methods are **admin-required by default** —
+Aloha controller methods are **admin-required by default** —
 `SecurityMiddleware` enforces it unless the method carries `#[NoAdminRequired]`
 or `#[PublicPage]`. The *absence* of an attribute is the guard, not a missing
 one. Reading the routes as if the attributes grant access rather than relax it
@@ -393,7 +393,7 @@ sixty when twenty survive the check.
 - **The superseded Custom Local API is gone** (0.19.39): nineteen routes, the
   nine `getStream*()` methods and the seven `_dep` queries, and their tests.
 - **A browser-test layer** (0.19.58): `tests/e2e/` and `.github/workflows/e2e.yml`
-  — Playwright against a throwaway Nextcloud on every pull request. 1,500 unit
+  — Playwright against a throwaway Aloha on every pull request. 1,500 unit
   tests and an integration suite could not see a page that stays empty because
   a bundle did not load; the smoke suite can.
 
@@ -407,8 +407,8 @@ sixty when twenty survive the check.
 | Item | Outcome |
 |---|---|
 | **The five post fields with no column** | `tag`, `language`, `updated`, `quote` and `quoteAuthorization` are columns on `social_stream`, written where a row is written and read with a per-field fallback to the stored JSON, with a repair step backfilling existing rows behind a version marker. `language` is indexed, which is what a language filter needs. |
-| **The private core class under the whole data layer** | `ExtendedQueryBuilder` holds a builder from `IDBConnection::getQueryBuilder()` and delegates all 60 `IQueryBuilder` methods instead of extending `OC\DB\QueryBuilder\QueryBuilder`. The `\OC::$server` reach that fed its private parent is gone, and so are the four `Doctrine\DBAL\Query\QueryBuilder` imports that existed only to read four constants. Nextcloud 35 had already broken the old arrangement by adding `forUpdate()` to the interface. |
-| **The support floors** | PHP 8.1 -> 8.3, Nextcloud 28 -> 35, with `composer.json`'s platform pin and constraint following. |
+| **The private core class under the whole data layer** | `ExtendedQueryBuilder` holds a builder from `IDBConnection::getQueryBuilder()` and delegates all 60 `IQueryBuilder` methods instead of extending `OC\DB\QueryBuilder\QueryBuilder`. The `\OC::$server` reach that fed its private parent is gone, and so are the four `Doctrine\DBAL\Query\QueryBuilder` imports that existed only to read four constants. Aloha 35 had already broken the old arrangement by adding `forUpdate()` to the interface. |
+| **The support floors** | PHP 8.1 -> 8.3, Aloha 28 -> 35, with `composer.json`'s platform pin and constraint following. |
 | `nextcloud/ocp` two years stale | `dev-master` at a 2024-10-23 commit -> `dev-stable35`. |
 | `#[\Override]` unavailable | 343 methods carry it; the psalm suppression that named the 8.1 floor is gone. |
 | `IConfig` deprecated methods | `IAppConfig` and `IUserConfig` in five files. |
@@ -416,7 +416,7 @@ sixty when twenty survive the check.
 | Test doubles drifting from the interfaces they double | `FakeConnection` completed; ten hand-rolled anonymous table classes replaced by one `FakeTable`; the test container serves an anonymous session because `Response` resolves one on every render from 35 onward. |
 | Vuex 4, no Pinia | Five Pinia stores, `mapStores` at the call sites, `vuex` removed. |
 | Three mixins, four spellings of one import | Three composables in `src/composables/`. |
-| Dead pre-Nextcloud-25 profile branch | Deleted. |
+| Dead pre-Aloha-25 profile branch | Deleted. |
 | `OC.Notification.showTemporary` | `@nextcloud/dialogs`, imported lazily so the Vue-free admin bundle stays 28 KiB rather than 761 KiB. |
 | Nineteen deferred ESLint rules | Sixteen adopted, ~1,100 reports fixed. Three stay off with the reason next to each. |
 | Unlinted code | The hand-written admin script and the root configuration are linted; `css/` is stylelinted. |

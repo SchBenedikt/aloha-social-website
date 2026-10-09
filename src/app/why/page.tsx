@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Check, Quote } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Check, Quote, Shield } from "lucide-react";
 import { Container, CtaBand, PageHeader } from "@/components/ui";
 import {
   BOILERPLATE,
@@ -26,7 +26,7 @@ const JSON_LD = {
 export const metadata: Metadata = {
   title: "Why Aloha Social",
   description:
-    "Thirty reasons Aloha Social is special: a Nextcloud social network with full Bluesky compatibility, calm feeds, privacy by default and no advertising.",
+    "Thirty reasons Aloha Social is special: an Aloha social network with full Bluesky compatibility, calm feeds, privacy by default and no advertising.",
   alternates: { canonical: "/why" },
   openGraph: {
     title: "Why Aloha Social — 30 reasons it is special",
@@ -50,7 +50,11 @@ export default function WhyPage() {
         lede={PITCH}
         actions={
           <>
-            <Link href="/get-started" className="btn btn-primary">
+            <Link href="/protect" className="btn btn-primary">
+              How Aloha protects you
+              <ArrowRight className="size-4" />
+            </Link>
+            <Link href="/get-started" className="btn btn-outline">
               Get started
               <ArrowRight className="size-4" />
             </Link>
@@ -66,6 +70,29 @@ export default function WhyPage() {
           </>
         }
       />
+
+      <section className="border-b border-line bg-surface py-12 sm:py-14">
+        <Container className="grid gap-6 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-center">
+          <div>
+            <span className="eyebrow">Designed around people</span>
+            <h2 className="mt-3 text-[1.8rem] leading-tight text-ink-strong sm:text-[2rem]">
+              Your attention and safety matter here.
+            </h2>
+            <p className="mt-3 max-w-3xl text-[15.5px] leading-relaxed text-muted">
+              Aloha Social avoids engagement scoreboards and ranked timelines,
+              gives you control over notifications and filters, and provides
+              practical tools to mute, block and report. Privacy-minded defaults
+              reduce unnecessary exposure, while moderators can review reports
+              and take action. These controls help; they cannot guarantee how
+              other people behave or what remote servers do with public posts.
+            </p>
+          </div>
+          <Link href="/protect" className="btn btn-primary">
+            Explore safety and privacy
+            <ArrowRight className="size-4" />
+          </Link>
+        </Container>
+      </section>
 
       {/* ---------------------------------------------------- jump to a group */}
       <nav
@@ -272,9 +299,78 @@ export default function WhyPage() {
         </Container>
       </section>
 
+      {/* --------------------------------------------------- safety & privacy */}
+      <section className="border-t border-line py-16 sm:py-20" aria-labelledby="safety-heading">
+        <Container>
+          <div className="max-w-2xl" data-reveal="">
+            <span className="eyebrow">Safety, privacy & well-being</span>
+            <h2
+              id="safety-heading"
+              className="mt-5 text-[2.1rem] leading-[1.1] tracking-[-0.025em] text-ink-strong sm:text-[2.7rem]"
+            >
+              Designed to protect you.
+            </h2>
+            <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-muted">
+              Every default is a choice for your wellbeing — not engagement metrics.
+            </p>
+          </div>
+
+          <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
+            {[
+              {
+                icon: Shield,
+                title: "How Aloha protects you",
+                body: "Calm notifications, filtered words, mute, block, moderation tools and the defaults that keep your timeline peaceful.",
+                href: "/protect",
+              },
+              {
+                icon: Shield,
+                title: "Privacy in Aloha Social",
+                body: "What is stored, what leaves your server, what is stripped from photos, and the two switches worth knowing.",
+                href: "/privacy",
+              },
+              {
+                icon: Shield,
+                title: "Rules for using Aloha",
+                body: "The baseline expectations, what the software enforces, and how to report problems.",
+                href: "/rules",
+              },
+              {
+                icon: Shield,
+                title: "Well-being in Aloha",
+                body: "The research behind the design: why hiding counts, batching notifications and removing friction matters.",
+                href: "/wellbeing",
+              },
+            ].map((item) => {
+              const Icon = item.icon;
+              return (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className="card card-hover group flex min-h-52 flex-col p-5"
+                >
+                  <span className="grid size-10 place-items-center rounded-xl bg-coral-soft text-coral">
+                    <Icon className="size-5" strokeWidth={2} aria-hidden="true" />
+                  </span>
+                  <h3 className="mt-4 text-[1.35rem] leading-tight text-ink-strong transition-colors group-hover:text-coral">
+                    {item.title}
+                  </h3>
+                  <p className="mt-3 text-[14.5px] leading-relaxed text-muted">
+                    {item.body}
+                  </p>
+                  <span className="mt-auto pt-4 text-[13.5px] font-semibold text-coral">
+                    Read more <span aria-hidden="true">→</span>
+                  </span>
+                </Link>
+              );
+            })}
+          </div>
+        </Container>
+      </section>
+
       <CtaBand
         title="Ready to run your own?"
-        body="Aloha Social is an app you install on your Nextcloud. Set it up in minutes, invite your organisation, and every account on it reaches the open social web."
+        body="Aloha Social is an app you install on your Aloha. Set it up in minutes, invite your organisation, and every account on it reaches the open social web."
         primary={{ label: "Install Aloha Social", href: "/install" }}
         secondary={{ label: "Read the docs", href: "/docs" }}
       />

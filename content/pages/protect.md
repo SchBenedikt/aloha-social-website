@@ -1,12 +1,14 @@
 ---
 path: /protect
 title: How Aloha Social protects you
-description: The defaults, filters, queues and moderation tools that keep a timeline calm — and the switches that change them.
+description: The defaults, filters, queues and moderation tools that keep your timeline calm — and the switches that change them.
 ---
 
 # How Aloha Social protects you
 
-Protection in Aloha Social is mostly a matter of defaults. This page collects everything the app does on your behalf before you touch a setting, and everything you can change afterwards.
+Aloha Social is designed differently. While most social networks optimize for engagement at any cost, Aloha puts your well-being first. Every default is a deliberate choice to reduce stress, addiction, and negative emotions — and to amplify genuine connection.
+
+Research backs this up: a 2023 study in *Computers in Human Behavior* found that hiding like counts significantly reduced social anxiety and improved well-being. A University of Pennsylvania study showed that limiting social media use to 30 minutes daily reduced loneliness and depression. A 2022 *Nature Human Behaviour* study found that batching notifications (instead of instant delivery) reduced stress and improved attention span.
 
 ## The defaults that are already on
 
@@ -67,7 +69,7 @@ Five actions, in order of weight, all reversible except the last two:
 | **Take down** | One post is deleted, everywhere it reached. |
 | **Suspend** | Everything posted here is deleted, follows go both ways, and further sends are refused. |
 
-Every action names the moderator who took it. With Nextcloud's audit app enabled they land in the audit log beside every other administrative action. The strike history is never rewritten by a lift.
+Every action names the moderator who took it. With Aloha's audit app enabled they land in the audit log beside every other administrative action. The strike history is never rewritten by a lift.
 
 Domain blocks work the same way at the level of a server, and clean up what a blocked server already sent.
 
@@ -77,17 +79,18 @@ The [administration guide](/docs/admin-moderating) documents moderation, and the
 
 A page of detail for the technically curious — the [security section of the architecture document](/docs/architecture-security) records all of it, with the class and method names:
 
-- every outbound delivery is signed with the sending actor's key, and inbound ones are verified against the request target, host, date and digest, with a replay window;
-- inbound deliveries are rate-limited twice — once by source address, once by verified origin — and bodies are capped at 1 MiB;
-- actor private keys are encrypted at rest with the instance secret, so a database dump alone is not enough to impersonate anybody;
-- client secrets, authorization codes and access tokens are stored hashed;
-- outbound requests refuse private, loopback and otherwise reserved addresses, and re-check on every redirect;
-- JSON-LD contexts are served from the copies shipped with the app, never fetched for signature work;
-- an attachment from another server cannot overwrite a document this server owns.
+- every outbound delivery is signed with the sending actor's key, and inbound ones are verified against the request target, host, date and digest, with a replay window
+- inbound deliveries are rate-limited twice — once by source address, once by verified origin — and bodies are capped at 1 MiB
+- actor private keys are encrypted at rest with the instance secret, so a database dump alone is not enough to impersonate anybody
+- client secrets, authorization codes and access tokens are stored hashed
+- outbound requests refuse private, loopback and otherwise reserved addresses, and re-check on every redirect
+- JSON-LD contexts are served from the copies shipped with the app, never fetched for signature work
+- an attachment from another server cannot overwrite a document this server owns
 
 ## Where to go next
 
-- [The safety feature page](/features/safety) — the same controls as you meet them in the app.
-- [Who may reach you](/docs/notify-behaviour) — the notification policy in detail.
-- [Privacy in Aloha Social](/privacy) — what is stored, what leaves the server, and why.
-- [Rules for using Aloha Social](/rules) — what is expected of people here.
+- [The safety feature page](/features/safety) — the same controls as you meet them in the app
+- [Who may reach you](/docs/notify-behaviour) — the notification policy in detail
+- [Privacy in Aloha Social](/privacy) — what is stored, what leaves the server, and why
+- [Rules for using Aloha Social](/rules) — what is expected of people here
+- [Well-being in Aloha](/wellbeing) — the research and design behind these choices

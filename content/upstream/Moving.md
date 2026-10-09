@@ -1,5 +1,5 @@
 <!--
-  - SPDX-FileCopyrightText: 2026 Nextcloud GmbH and Nextcloud contributors
+  - SPDX-FileCopyrightText: 2026 Aloha GmbH and Aloha contributors
   - SPDX-License-Identifier: AGPL-3.0-or-later
 -->
 # Moving to Aloha Social, and moving away
@@ -70,7 +70,7 @@ posts come over; your followers have to follow you again.
 to ask for a move from outside, which is why the last step is always done on
 the old server. Another Aloha Social does: once the run is through, the
 Migration page offers **Finish the move from here**. You are sent to your old
-Nextcloud to log in and to agree — the only permission asked for is to move
+Aloha to log in and to agree — the only permission asked for is to move
 the account, nothing else — and the old server moves your followers here.
 It checks, as it would for its own button, that this account names the old
 one; the thirty days between moves apply there as everywhere.

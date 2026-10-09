@@ -1,6 +1,6 @@
 # User guide
 
-How to use Aloha Social as a person with an account on this Nextcloud:
+How to use Aloha Social as a person with an account on this Aloha:
 getting onto the fediverse, following people, writing and reading posts, and
 looking after the account. It describes the web client that comes with the
 app; where something is only reachable through the Mastodon-compatible API or
@@ -27,17 +27,17 @@ names are the English strings of the web client.
 
 ## Getting an account
 
-A Nextcloud account is the account: the first time you
+An Aloha account is the account: the first time you
 open **Aloha** from the app menu, a short screen asks whether you want a
 fediverse identity here, or would rather name the one you already have
 somewhere else. Nothing is created until you choose. You pick your handle on
-that screen — it starts out as a suggestion made from your Nextcloud user id,
+that screen — it starts out as a suggestion made from your Aloha user id,
 may use letters, digits and underscore with dot and dash inside, and **cannot
 be changed later** — and your address is `@handle@your-nextcloud-host`. Anyone
 on Mastodon, Pixelfed, PeerTube or any other server that speaks ActivityPub can
 follow it.
 
-Your display name and avatar come from your Nextcloud account and are changed
+Your display name and avatar come from your Aloha account and are changed
 there. The rest of the profile — banner, bio, profile fields — is edited in
 Aloha Social (see [Managing your account](#managing-your-account)).
 
@@ -47,7 +47,7 @@ another server, and a button that puts you in the composer. Every step can be
 skipped; once closed it stays closed, and **Settings → Help → Introduction** shows it
 again.
 
-### Registering without a Nextcloud account
+### Registering without an Aloha account
 
 Where the administrators allow it, the login page has a **Create an account**
 button, and an invitation link from somebody here leads to the same form. The
@@ -60,7 +60,7 @@ Such an account is for Aloha Social only. You log in on the normal login page, w
 two-factor authentication if you set it up or the server requires it, and
 land in Aloha Social. Your personal settings for your details, password, security,
 appearance and notifications are there; Files, Talk and the other apps are
-not, and Nextcloud's own desktop and mobile clients are refused. Mastodon apps
+not, and Aloha's own desktop and mobile clients are refused. Mastodon apps
 can. **Settings → Apps and account → Your storage** shows how much of the space the server gives
 each such account your pictures and videos take up. Deleting your Aloha Social
 account deletes the whole account.
@@ -75,8 +75,8 @@ people** makes an invitation link: it works once and for a week.
   met is found by their full handle, `@user@example.org`: the app resolves it
   over WebFinger and shows the account.
 - **Discover** (in the sidebar) has five tabs: **People** (suggestions, with
-  the people who share your Nextcloud and have said where they are on the
-  fediverse listed first under *On your Nextcloud*), **Starter packs**,
+  the people who share your Aloha and have said where they are on the
+  fediverse listed first under *On your Aloha*), **Starter packs**,
   **Pictures** and **Videos** being looked at, and **Hashtags** that are
   trending, ranked over a window you pick.
 - **Your island and its neighbours** opens the People tab: a map of the
@@ -154,7 +154,7 @@ starting one does not take the place of a post you were still writing.
   on this server straight away, and your own copy says *Converting video —
   reaches other servers when done* until it has. Drag them in, use
   **Add attachment**, or **Add from Files** to attach something already in
-  your Nextcloud without uploading it again — the Files app's own menu also
+  your Aloha without uploading it again — the Files app's own menu also
   has **Share to Aloha Social** for the same thing. Every picture has its Exif
   metadata (including the location a phone writes) removed before it is
   stored or sent anywhere. A picture can be given one of eight mild filters,
@@ -169,7 +169,7 @@ starting one does not take the place of a post you were still writing.
 - **The GIF button** opens a picker with 881 animated emoji in it, searchable by
   name — "party", "sad", "hedgehog" — plus whatever your administrator has added
   for this instance, which comes first. Nothing you type goes anywhere but your
-  own Nextcloud, and neither does your browser: your server keeps its own copy of
+  own Aloha, and neither does your browser: your server keeps its own copy of
   every picture it has been asked for. Picking one attaches it to the post you are
   writing, exactly as though you had uploaded it.
 - **Alt text.** Each attachment has a **Describe this for people who cannot
@@ -280,7 +280,7 @@ The sidebar is the map:
 
 - **My Feed**, **Local**, **Global** — a switcher above the posts. My Feed is
   what the people and hashtags you follow post; Local is every public post
-  written on this Nextcloud; Global is every public post this server has
+  written on this Aloha; Global is every public post this server has
   received. **Photos** and **Videos** carry the same switcher over posts that
   are pictures, or videos — including videos from PeerTube channels anyone
   here follows — with **For you** in it as well (see below). A thin line
@@ -327,7 +327,7 @@ The sidebar is the map:
   It is in the sidebar, between Shorts and Direct messages. The badge
   beside it counts what arrived since you last looked, plus the people
   [waiting for your review](#who-may-reach-you-and-requests); the same
-  events reach the Nextcloud bell and its mail digest; a follow request can be
+  events reach the Aloha bell and its mail digest; a follow request can be
   accepted or declined from the bell itself. While anybody is waiting, the
   first line of the page says so — *3 people are waiting — Review* — and
   opens the list of them in place. The page says how many new activities there are at
@@ -368,7 +368,7 @@ The sidebar is the map:
 - **Explore** — one collapsible entry holding everything there is to look at
   besides your own feed: the hashtags you follow, your **lists**, and the tags
   this server is busy with right now, in that order. Each list is a timeline of
-  its own; a Nextcloud group you belong to (up to 500 members) is a list too
+  its own; an Aloha group you belong to (up to 500 members) is a list too
   when your administrator has chosen that group for it — none are, until they
   do — kept in step with the group, and your own are made in
   **Settings → Reading → Lists**. Explore shows as much as the sidebar has room for and
@@ -449,7 +449,7 @@ only the web interface knows how long you looked at something.
 
 ### Announcements from your administrators
 
-When the administrators of this Nextcloud post a notice — a maintenance
+When the administrators of this Aloha post a notice — a maintenance
 window, a move, a new rule — it appears at the top of the timeline, above the
 composer, on every page except a single post's own. It is there because you
 have not read it yet.
@@ -574,7 +574,7 @@ description and audience, **Remove posts** from their own squares, or
 
 ### Posting as a team
 
-If an administrator has given one of your Nextcloud groups an account, a small
+If an administrator has given one of your Aloha groups an account, a small
 picker appears in the composer beside the language and the audience: **As
 myself**, or the team. Choose the team and the post goes out from the team's
 account — its name, its picture, its followers — rather than from yours.
@@ -681,7 +681,7 @@ Under the rows, **Always allowed** lists everybody you accepted, each with
 until you accept somebody.
 
 **Digests and quiet hours.** Who may reach you is about *whether* you are
-told; **Settings → Notifications → When to tell you** is about *when* the Nextcloud
+told; **Settings → Notifications → When to tell you** is about *when* the Aloha
 bell — and with it the mobile app and the notification mail — rings for what
 happens in Aloha Social. Left at **instant**, it rings the moment somebody
 mentions, favourites, boosts or follows you, as it always did. Set to
@@ -692,7 +692,7 @@ follower". Two kinds of news can still reach you at once, each on its own
 switch: a direct message, and a mention from somebody you follow. **Quiet
 hours** work in either mode — between the two times you set, nothing but those
 pass-throughs rings, and one digest of what arrived is raised when the window
-ends. The times are read in the time zone of your Nextcloud account. None of
+ends. The times are read in the time zone of your Aloha account. None of
 this changes the notifications page itself: everything is listed there the
 moment it happens, read or unread, and the digest only counts what you have
 not read yet. Switching a digest on does not deliver a backlog, and switching
@@ -832,7 +832,7 @@ hand, it is picked up as one.
   fifth field is dropped by the server without saying so, so the editor stops
   at four, and a row with only one half filled in is dropped the same way;
   emptying the table and saving removes it from your profile everywhere.
-- **Your Nextcloud profile page.** The native `/u/username` page shows your
+- **Your Aloha profile page.** The native `/u/username` page shows your
   custom Aloha Social banner across the profile header, behind your profile picture,
   and your posts below. The banner starts at the top of the native profile
   content and meets the profile details without an extra coloured strip.
@@ -884,7 +884,7 @@ hand, it is picked up as one.
   in the sidebar, lists both with unblock and unmute inline.
 - **Follow requests.** When your account is locked, people asking to follow
   you appear under **Follow requests** in the sidebar — **Accept** or
-  **Reject** — and on the Nextcloud bell. Locking the account itself is the
+  **Reject** — and on the Aloha bell. Locking the account itself is the
   **Approve who follows you** switch under **Settings → Profile and privacy**, which
   is `locked` on `PATCH /api/v1/accounts/update_credentials` underneath.
 - **Reporting.** **Report** in a post's menu sends the post, with an optional
@@ -915,7 +915,7 @@ hand, it is picked up as one.
   [Moving.md](Moving.md). **Settings → Migration** has these sections.
   **Export** downloads a zip of your profile, follows, followers, blocks,
   mutes, bookmarks, likes and every post you wrote — your private key is
-  deliberately not in it. **Import** reads such an archive (or a Nextcloud
+  deliberately not in it. **Import** reads such an archive (or an Aloha
   account export) back in without deleting anything; posts in it are listed,
   not published again. The third section imports the follows from another
   network's export — a `following_accounts.csv`, or Pixelfed's
@@ -939,7 +939,7 @@ hand, it is picked up as one.
   follow, as on Mastodon, so anybody you have not followed again yet is counted
   as skipped rather than followed by a button that says lists. A list you
   already have is filled rather than made a second time, and a list that
-  follows a Nextcloud group is left alone — its members are the group's.
+  follows an Aloha group is left alone — its members are the group's.
 - **Moving in from another server.** The quickest way in is the first thing
   on **Settings → Migration**: type the handle of your old account
   (`@you@mastodon.example`) and press **Look it up**. You are shown who that
@@ -957,7 +957,7 @@ hand, it is picked up as one.
   about when the run is done: on Mastodon, *Preferences → Account → Move to a
   different account*, and enter your handle here. If the old server is Aloha
   Social too, the page offers **Finish the move from here** instead: you are
-  sent to your old Nextcloud to log in and agree, and your followers are moved
+  sent to your old Aloha to log in and agree, and your followers are moved
   without a visit to its settings.
 - **Naming your old account.** Your old server will not send your followers
   here until this account says it is also you. **Settings → Migration →
@@ -1000,7 +1000,7 @@ hand, it is picked up as one.
   public. And **what Instagram showed for only a day, your archived posts and
   anything you deleted are not imported**: you put those away on purpose.
 - **Leaving.** **Settings → Apps and account → Delete your Aloha Social account** deletes your fediverse
-  account and keeps your Nextcloud one. Everything you posted goes, your
+  account and keeps your Aloha one. Everything you posted goes, your
   followers and the people you follow are let go, and every server that knew
   the account is told it is gone — a post already on somebody else's server is
   deleted by asking that server to delete it, which almost all of them do and
@@ -1009,7 +1009,7 @@ hand, it is picked up as one.
   first if you might want one. Afterwards you are back at the setup screen and
   can make a new account straight away, under a different handle: the old one
   is held for an hour so that nobody can take it the moment you let it go.
-  Deleting the Nextcloud user does the same thing to the Aloha Social account along
+  Deleting the Aloha user does the same thing to the Aloha Social account along
   the way.
 
 ### Bluesky

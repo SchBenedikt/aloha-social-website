@@ -12,7 +12,7 @@ const JSON_LD = {
   "@type": "SoftwareApplication",
   name: SITE.name,
   applicationCategory: "SocialNetworkingApplication",
-  operatingSystem: "Nextcloud",
+  operatingSystem: "Aloha",
   description: SITE.description,
   url: SITE.url,
   license: "https://opensource.org/licenses/AGPL-3.0",
@@ -75,8 +75,8 @@ const HIGHLIGHTS = [
   {
     href: "/why#big-picture",
     icon: Rocket,
-    title: "Your Nextcloud becomes the server",
-    body: "A Nextcloud app, not another service to run. Every user gets @you@your.cloud, using the login they already have.",
+    title: "Your Aloha becomes the server",
+    body: "An Aloha app, not another service to run. Every user gets @you@your.cloud, using the login they already have.",
   },
   {
     href: "/why#calm-social-media",
@@ -159,11 +159,11 @@ export default function Home() {
           <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[12px] tracking-[0.14em] text-muted uppercase">
             <span className="text-coral">Aloha Social</span>
             <span aria-hidden>·</span>
-            <span>Fully open source · AGPL-3.0-or-later · for Nextcloud</span>
+            <span>Fully open source · AGPL-3.0-or-later</span>
           </p>
 
           <h1 className="mt-7 max-w-[17ch] text-[2.75rem] leading-[0.98] tracking-[-0.04em] text-ink-strong sm:text-[3.9rem] lg:text-[4.75rem]">
-            Your Nextcloud becomes a social network.
+            Your Aloha becomes a social network.
           </h1>
 
           <p className="mt-8 max-w-2xl text-[17.5px] leading-relaxed text-muted sm:text-[18.5px]">
@@ -237,7 +237,7 @@ export default function Home() {
             Aloha Social
           </p>
           <ul className="flex flex-wrap items-center gap-x-7 gap-y-2 font-mono text-[13px] text-muted">
-            <li>Nextcloud 34–36 · PHP 8.3–8.5</li>
+            <li>Aloha 34–36 · PHP 8.3–8.5</li>
             <li>ActivityPub + AT Protocol</li>
             <li>Mastodon client API</li>
             <li>AGPL-3.0-or-later</li>
@@ -508,7 +508,7 @@ export default function Home() {
               Your account belongs to the server you choose.
             </h2>
             <p className="mt-6 max-w-xl text-[16.5px] leading-relaxed text-muted">
-              Each Aloha Social server is a Nextcloud with its own accounts and
+              Each Aloha Social server is an Aloha with its own accounts and
               policies. Its operator sets registration, moderation and retention
               rules, and posts travel on to every compatible service.
             </p>
@@ -557,7 +557,7 @@ export default function Home() {
               Set up Aloha Social for your community.
             </h2>
             <p className="mt-4 text-[16.5px] leading-relaxed text-sand/75">
-              Install the app on Nextcloud 34 to 36, run the checks, and invite
+              Install the app on Aloha 34 to 36, run the checks, and invite
               your organisation. Every account on it reaches the open social web.
             </p>
           </div>

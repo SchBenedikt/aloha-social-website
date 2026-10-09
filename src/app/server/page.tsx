@@ -28,7 +28,7 @@ const HOW = [
   {
     icon: Send,
     title: "Outgoing",
-    body: "When a post is published, the server builds the Activity, signs the HTTP request and sends it to the remote followers who can receive it. Delivery is queued, retried and logged by the Nextcloud’s background jobs.",
+    body: "When a post is published, the server builds the Activity, signs the HTTP request and sends it to the remote followers who can receive it. Delivery is queued, retried and logged by the Aloha’s background jobs.",
   },
   {
     icon: Inbox,
@@ -53,7 +53,7 @@ export default function ServerPage() {
       <PageHeader
         eyebrow="The server"
         title="An ActivityPub server for Aloha Social."
-        lede="Aloha Social handles accounts, signed requests, inbox and outbox delivery, and server-to-server federation. It is installed as an app on a compatible Nextcloud rather than operated as a separate service."
+        lede="Aloha Social handles accounts, signed requests, inbox and outbox delivery, and server-to-server federation. It is installed as an app on a compatible Aloha rather than operated as a separate service."
         actions={
           <>
             <a
@@ -82,7 +82,7 @@ export default function ServerPage() {
           <SectionHeading
             eyebrow="How a post travels"
             title="Out, in, and out again."
-            lede="Federation runs as scheduled background jobs in Nextcloud. Delivery failures are logged and retried; operators can run a worker for continuous delivery."
+            lede="Federation runs as scheduled background jobs in Aloha. Delivery failures are logged and retried; operators can run a worker for continuous delivery."
           />
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2" data-stagger>
@@ -165,15 +165,15 @@ export default function ServerPage() {
               What it needs to run.
             </h2>
             <p className="mt-5 text-[16.5px] leading-relaxed text-muted">
-              Aloha Social needs a compatible Nextcloud release, PHP and
+              Aloha Social needs a compatible Aloha release, PHP and
               scheduled background jobs. Check the app release notes and
               platform requirements before installation.
             </p>
             <CheckList
               className="mt-7"
               items={[
-                "A compatible Nextcloud installation, accessible over HTTPS",
-                "The PHP extensions required by the Nextcloud and Aloha Social release",
+                "A compatible Aloha installation, accessible over HTTPS",
+                "The PHP extensions required by the Aloha and Aloha Social release",
                 "Scheduled background jobs enabled for federation and housekeeping",
                 "ffmpeg if you want video transcoded on upload",
                 "Storage for media: every attachment is a file your server holds",
@@ -197,7 +197,7 @@ export default function ServerPage() {
                 "Remote media growth — retention can prune what nobody here read",
                 "A review queue when your server becomes reachable from outside",
                 "occ commands for the things that must not be done in a browser",
-                "Back up Aloha Social data together with the rest of Nextcloud",
+                "Back up Aloha Social data together with the rest of Aloha",
               ]}
             />
             <a

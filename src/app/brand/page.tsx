@@ -120,7 +120,7 @@ export default function BrandPage() {
           <SectionHeading
             eyebrow="Colour"
             title="Three colours, published as they are."
-            lede="Coral is the action, deep sea is the voice, sand is the room. These are Aloha Social’s published brand colours; other colours in the interface belong to Nextcloud or to the website theme."
+            lede="Coral is the action, deep sea is the voice, sand is the room. These are Aloha Social’s published brand colours; other colours in the interface belong to Aloha or to the website theme."
           />
 
           <div className="mt-10 grid gap-5 sm:grid-cols-3" data-stagger>

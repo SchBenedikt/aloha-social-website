@@ -29,7 +29,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Servers",
   description:
-    "Find an Aloha Social server: ask your organisation, search from your account, or run your own on Nextcloud.",
+    "Find an Aloha Social server: ask your organisation, search from your account, or run your own on Aloha.",
   alternates: { canonical: "/servers" },
 };
 
@@ -48,10 +48,18 @@ export default function ServersPage() {
       <PageHeader
         eyebrow="Directory"
         title="Find an Aloha Social server."
-        lede="Aloha Social runs on Nextcloud servers operated by organisations, communities and individuals. Most are private to the people they were built for — here is how to find yours."
+        lede="Aloha Social runs on Aloha servers operated by organisations, communities and individuals. Most are private to the people they were built for — here is how to find yours."
         actions={
           <>
-            <a href="#how" className="btn btn-primary">
+            <Link href="/servers/list" className="btn btn-primary">
+              Go to the server list
+              <ArrowRight className="size-4" />
+            </Link>
+            <Link href="/directory" className="btn btn-outline">
+              Aloha Directory
+              <ArrowRight className="size-4" />
+            </Link>
+            <a href="#how" className="btn btn-outline">
               How to find one
             </a>
             <Link href="/install" className="btn btn-outline">
@@ -75,7 +83,7 @@ export default function ServersPage() {
               {
                 icon: Inbox,
                 title: "Ask your organisation",
-                body: "If your school, company or community runs a Nextcloud, it can run Aloha Social too. One question is usually all it takes — and there is no new account or password to hand out.",
+                body: "If your school, company or community runs an Aloha, it can run Aloha Social too. One question is usually all it takes — and there is no new account or password to hand out.",
                 link: { label: "Show them the setup guide", href: "/install" },
               },
               {
@@ -87,7 +95,7 @@ export default function ServersPage() {
               {
                 icon: Lock,
                 title: "Run your own",
-                body: "Install the app on Nextcloud 34 to 36 with PHP 8.3 to 8.5, run the federation checks, and you have a social network server in an afternoon.",
+                body: "Install the app on Aloha 34 to 36 with PHP 8.3 to 8.5, run the federation checks, and you have a social network server in an afternoon.",
                 link: { label: "Install Aloha Social", href: "/install" },
               },
             ].map((way) => (
@@ -400,7 +408,7 @@ export default function ServersPage() {
 
       <CtaBand
         title="Want to run an Aloha Social server?"
-        body="Aloha Social is installed on Nextcloud 34 to 36 with PHP 8.3 to 8.5. Install it, run the checks, and your server joins the open social web."
+        body="Aloha Social is installed on Aloha 34 to 36 with PHP 8.3 to 8.5. Install it, run the checks, and your server joins the open social web."
         primary={{ label: "Install Aloha Social", href: "/install" }}
         secondary={{ label: "How the server works", href: "/server" }}
       />

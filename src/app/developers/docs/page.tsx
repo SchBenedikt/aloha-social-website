@@ -8,6 +8,7 @@ import {
   SectionHeading,
 } from "@/components/ui";
 import { SITE } from "@/lib/site";
+import { ProgressChecklist } from "@/components/progress-checklist";
 
 export const metadata: Metadata = {
   title: "Developer docs",
@@ -94,6 +95,21 @@ export default function DevDocsPage() {
           </>
         }
       />
+
+      <section className="py-10 sm:py-12">
+        <Container>
+          <ProgressChecklist
+            id="developer-chapters"
+            title="Developer documentation reading progress"
+            steps={[
+              { label: "01 · Protocol", href: "/developers/docs/protocol", description: "Follow an ActivityPub post from publication through signing, delivery and reply." },
+              { label: "02 · Federation", href: "/developers/docs/federation", description: "Review interoperability, discovery, moderation boundaries and known limits." },
+              { label: "03 · API", href: "/developers/docs/api", description: "Explore client and federation endpoints, authentication and response formats." },
+              { label: "04 · Operations", href: "/developers/docs/operations", description: "Learn about background jobs, queues, storage, upgrades and diagnostics." },
+            ]}
+          />
+        </Container>
+      </section>
 
       {/* ------------------------------------------------------ chapters */}
       <section className="py-16 sm:py-20">

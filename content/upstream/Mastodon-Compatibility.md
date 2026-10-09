@@ -109,11 +109,11 @@ nothing else in this section is reachable by a stock client.
 ### 3.1a Fixed — account pictures
 
 Fixed in #2468: a local account that had never set a picture was sent with
-`avatar: ""` and its Nextcloud avatar in `header`, because the model's header
+`avatar: ""` and its Aloha avatar in `header`, because the model's header
 fell back to the avatar and the cached copy of the actor handed that fallback
 back as if it were a banner; clients drew the face as the banner over an empty
 circle. The Account entity now always carries a URL in all four picture fields:
-the avatar is the account's own or, for a local account, Nextcloud's generated
+the avatar is the account's own or, for a local account, Aloha's generated
 one; the header is the banner or a plain placeholder picture
 (`img/header-missing.png`), a PNG as Mastodon's `missing.png` so that clients
 which decode only raster images draw it too, never the avatar.
@@ -189,7 +189,7 @@ Three, and only three:
   reason, though it belongs to the admin API rather than to this count.
 
 What used to be on this list and is not any more: `POST /statuses/{id}/translate`
-(a real translation through Nextcloud's own provider, answering a Translation
+(a real translation through Aloha's own provider, answering a Translation
 entity, with `instance/translation_languages` beside it and a 503 where the
 server has no provider); the Mastodon 4.3 notification routes
 (`/api/v2/notifications` and its four, `/api/v1/notifications/policy`, and
@@ -197,7 +197,7 @@ server has no provider); the Mastodon 4.3 notification routes
 the status half of v2 filters (`/api/v2/filters/{id}/statuses` and
 `/api/v2/filters/statuses/{id}`); `DELETE /api/v1/profile/avatar` and `/header`;
 `DELETE /api/v1/suggestions/{id}`; `/api/v1/instance/privacy_policy` and
-`/terms_of_service`, from Nextcloud's own Theming settings; and `/api/oembed`,
+`/terms_of_service`, from Aloha's own Theming settings; and `/api/oembed`,
 answered as `type: link` because there is no embed page here and framing the
 whole app would publish something nobody meant to.
 
@@ -239,7 +239,7 @@ is an empty object, which is how a client learns there is no streaming
 endpoint, and `vapid_key` is an empty string, so a client decides against
 offering Web Push before it asks for it — which is what it does against any
 server with no VAPID key. `configuration.translation.enabled` is no longer
-always `false`: it is `true` where this Nextcloud has a translation provider,
+always `false`: it is `true` where this Aloha has a translation provider,
 and the languages that provider offers are at
 `/api/v1/instance/translation_languages`.
 
@@ -291,7 +291,7 @@ A second extension lives beside the notifications: `GET`/`PATCH
 /api/v1/social/notification_delivery`, and the `notifications:delivery` key
 `/api/v1/preferences` echoes. Mastodon has nothing to compare it with — its
 notifications *are* the list, and a client's push is the client's business —
-whereas here the list has a second half, the Nextcloud bell, and this is the
+whereas here the list has a second half, the Aloha bell, and this is the
 setting for when that half rings: at once, or as a digest at times of the
 reader's choosing, with direct messages and mentions from followed accounts
 passing through and optional quiet hours. A Mastodon client never sees the
@@ -300,7 +300,7 @@ the setting only decides when the bell is told about them.
 
 The notification policy goes further than Mastodon's in one respect and
 starts differently in another. **A held notification raises nothing**: the
-Nextcloud notification is the only push there is here (the bell, the mobile
+Aloha notification is the only push there is here (the bell, the mobile
 apps, mail), and `NotificationService::emit()` asks the policy — the same
 rules `/api/v1/notifications` applies to the list — before raising it, so a
 held sender does not reach a phone app either. The same goes for a post in a
@@ -335,7 +335,7 @@ Fixed in #2126. `update_credentials` used to accept `header` and
 200 — and a client's profile editor sends all of them in one PATCH, so somebody
 changing their name, picture and bio together got a success and only the bio.
 
-All three are written now. The name and the picture belong to the Nextcloud
+All three are written now. The name and the picture belong to the Aloha
 account rather than to the actor, so they are written there and the actor cache
 is refreshed; `bot` needed a column of its own and sets the actor's *type* with
 it, because an account marked automated that went on publishing `Person` would
@@ -370,7 +370,7 @@ this keep `[]`.
 ## 4. The peer test
 
 This is where the app is strongest, and it deserves saying plainly. A remote
-server talking to a Aloha Social instance on its own domain would find very little to
+server talking to an Aloha Social instance on its own domain would find very little to
 complain about.
 
 **Working and correct:** signed delivery and verification including RFC 9421, a
@@ -389,7 +389,7 @@ Two findings from the 0.11.63 review are fixed: outbound content is no longer
 escaped plain text, and delivery no longer sends one copy per mentioned user on
 the same host. Three more have gone since: `Add` and `Remove` federate a pin,
 `Move` is built by `occ social:account:move` with an `alsoKnownAs`
-back-reference check, and the WebFinger profile-page link points at a Aloha Social
+back-reference check, and the WebFinger profile-page link points at an Aloha Social
 profile rather than at `/index.php/u/alice`.
 
 **What a peer would still notice — one thing, and it is live today:**
@@ -498,7 +498,7 @@ keeping the same domain.
 
 The archive half has moved since this was written, in one direction. An account
 can now take its data out and put it back: `SocialMigrator` — driven by
-`occ user:export`, by Nextcloud's account migration, and by the Migration page's
+`occ user:export`, by Aloha's account migration, and by the Migration page's
 two buttons — writes the profile, the follows and followers as CSV, the
 bookmarks and favourites as URLs, the account's **own posts as an ActivityPub
 `OrderedCollection`**, and **the files of those posts**, under
@@ -569,7 +569,7 @@ Genuinely absent, in rough order of how much they would be missed:
 1. Web Push and streaming — every client polls, and both are announced as
    absent rather than left to time out.
 2. Registration management: sign-up, approval queue, invites, email
-   confirmation. Accounts are Nextcloud users, so provisioning lives in the
+   confirmation. Accounts are Aloha users, so provisioning lives in the
    server, and an approval queue and invite links have no equivalent anywhere.
    This one is not going to be built here; what changed is that
    `POST /api/v1/accounts` answers **403** with the server's registration
@@ -601,7 +601,7 @@ conversation mute; all four of the notification types that were missing —
 `poll`, `status`, `moderation_warning` and `severed_relationships`; the three
 standalone `instance` sub-routes; warnings and strikes; an account browser and a
 post-takedown button; custom emoji; admin metrics; IP and email-domain blocks;
-and a moderator role distinct from Nextcloud admin.
+and a moderator role distinct from Aloha admin.
 
 The moderation gap that was a correctness bug rather than a missing feature —
 **suspending a local account purged its posts here and federated nothing**, so
@@ -616,27 +616,27 @@ would act on.
 ## 7. Deliberate differences that are not gaps
 
 Worth stating so they are not mistaken for work. Authentication, 2FA and sessions
-come from Nextcloud. Accounts are Nextcloud users, so `accountEnable` is a
+come from Aloha. Accounts are Aloha users, so `accountEnable` is a
 deliberate no-op and there is no per-actor login to disable. Notifications go
-through the Nextcloud notification system — bell, mobile app, mail digest —
+through the Aloha notification system — bell, mobile app, mail digest —
 rather than Web Push, and they are emitted for mention, favourite,
 reblog, follow, follow request and update from the single write path
 (`NotificationService`). There is no materialised home feed
 to rebuild, because timelines are queried live. Rules and retention are app
-values and occ commands. Moderation lives in Nextcloud admin settings.
+values and occ commands. Moderation lives in Aloha admin settings.
 
 `POST /api/v1/media` accepts more than Mastodon does, on purpose. Beside the
 pictures, video and audio, a post here may carry a **document** — a PDF, a
-spreadsheet, a text file — which is what people on a Nextcloud actually have to
+spreadsheet, a text file — which is what people on an Aloha actually have to
 share, and Mastodon would answer one of those `422 File content type is
 invalid`. The answer here is `200` with `type: "unknown"`, which is exactly what
 Mastodon's own entity says about an attachment it cannot draw, so a Mastodon
-client renders it as a link and a reader on another Nextcloud gets a file card.
+client renders it as a link and a reader on another Aloha gets a file card.
 Nothing a browser would execute is accepted: HTML and SVG are refused `422`, and
 everything served carries `X-Content-Type-Options: nosniff`.
 
 And in the other direction, Mastodon has no equivalent for: dashboard
-widgets, profile-page integration, posting a picture straight from Nextcloud
+widgets, profile-page integration, posting a picture straight from Aloha
 Files, Aloha Social data in `occ user:export`, and occ commands as an admin
 surface.
 
@@ -652,16 +652,16 @@ are fixed — takedowns federate a `Delete`, domain blocks purge stored content
 through a background job, reports are forwarded outbound signed by the instance
 actor, and a suspension of a local account federates its `Delete` (#2126).
 Notifications, called the largest functional gap in that review, now reach the
-Nextcloud bell.
+Aloha bell.
 
 Since that paragraph was written, four more waves landed. **#2134** filled the
 small client gaps — the v1 filter routes, `instance/peers` and `instance/activity`,
 `preferences`, `familiar_followers`. **#2135** went after what a peer would
 notice — `Add` and `Remove` federate a pin, the WebFinger profile link points at
-a Aloha Social profile, and `mediaType`, which §4 has now reopened because the fix
+an Aloha Social profile, and `mediaType`, which §4 has now reopened because the fix
 never reached the object a peer is served. **#2136** is the admin and
 moderation tier almost entire: instance silencing, a moderator role that is
-Nextcloud's own settings delegation, an account browser and a takedown button,
+Aloha's own settings delegation, an account browser and a takedown button,
 warnings and strikes, IP and email-domain blocks, admin metrics, the instance's
 own custom emoji, announcement reactions, and authorized fetch with secure mode.
 And the whole of tier 2b followed it: conversation mute, the `poll`, `status`,
@@ -720,7 +720,7 @@ whether it is done. Query and scalability work has its own list in
 
 | # | Work | Effort | Why it is first | Status |
 |---|---|---|---|---|
-| 1 | **Serve `/api` and `/oauth` at the domain root**, or document the reverse-proxy rewrite and ship a setup check for it | Days | Every route is a `#[FrontpageRoute]` under `/apps/social/`, and the Mastodon client protocol has no way to be told about a non-root API base. No stock client can reach *any* of the surface below without it | done as the second: `contrib/webserver/`, [Admin.md](Admin.md#mastodon-apps-cannot-connect), the `ClientApiAtRoot` setup check and the in-app warning. The app cannot do it by itself: Nextcloud lets only a short list of apps claim root URLs |
+| 1 | **Serve `/api` and `/oauth` at the domain root**, or document the reverse-proxy rewrite and ship a setup check for it | Days | Every route is a `#[FrontpageRoute]` under `/apps/social/`, and the Mastodon client protocol has no way to be told about a non-root API base. No stock client can reach *any* of the surface below without it | done as the second: `contrib/webserver/`, [Admin.md](Admin.md#mastodon-apps-cannot-connect), the `ClientApiAtRoot` setup check and the in-app warning. The app cannot do it by itself: Aloha lets only a short list of apps claim root URLs |
 | 2 | **Per-user OAuth tokens** — an authorization table keyed to (app, account) instead of one `token` column on `social_client` | Days | A second authorization against the same `client_id` revoked the first, so user B signing into Elk signed user A out | done (`social_client_auth`) |
 
 ### Tier 2 — days of work each, and each one a thing a client shows
@@ -747,7 +747,7 @@ missing. All of them have since landed.
 | 31 | **Conversation mute** — `/api/v1/statuses/{id}/mute` and `/unmute` | Days | `ActionService` refused both by name; a thread could not be muted | done |
 | 32 | **The `poll` notification** | Days | A voter never learned that the poll closed | done |
 | 33 | **The `status` notification and `notify` on follow** | Days | Mastodon's bell on a profile. `POST /accounts/{id}/follow` now takes `notify` and writes a per-account subscription | done |
-| 34 | **`moderation_warning` as a client notification** | Hours | A warning reached a local account through Nextcloud's bell, which a Mastodon client cannot see | done |
+| 34 | **`moderation_warning` as a client notification** | Hours | A warning reached a local account through Aloha's bell, which a Mastodon client cannot see | done |
 | 35 | **`severed_relationships`** | Days | When a domain block cuts follows, the accounts that lost them are told | done |
 | 36 | **The three `instance` sub-routes** — `/rules`, `/domain_blocks`, `/extended_description` | Hours | The rules were served only *inside* the instance entity; the standalone routes 404ed | done |
 | 37 | **`/api/v1/timelines/link`** | Days | The posts behind a trending link, whose links were already at `/api/v1/trends/links` | done |
@@ -760,13 +760,13 @@ that is not Web Push, streaming or a sign-up this app does not own is done.
 
 | # | Work | Effort | What it fixes | Status |
 |---|---|---|---|---|
-| 40 | **`POST /api/v1/statuses/{id}/translate`** — a real translation | Days | It used to return the post *unchanged*, which a client cannot tell from a translation: the button worked and did nothing. Now answered by whatever translation provider this Nextcloud has, as a Translation entity, with `instance/translation_languages` beside it and a 503 where there is no provider | done |
+| 40 | **`POST /api/v1/statuses/{id}/translate`** — a real translation | Days | It used to return the post *unchanged*, which a client cannot tell from a translation: the button worked and did nothing. Now answered by whatever translation provider this Aloha has, as a Translation entity, with `instance/translation_languages` beside it and a 503 where there is no provider | done |
 | 41 | **Grouped notifications** — `/api/v2/notifications` and its four routes | Days | "Eight people favourited your post" instead of eight rows. A client cannot group for itself: it would have to fetch every page to know how many there were | done |
 | 42 | **The notification policy and requests inbox** — `/api/v1/notifications/policy`, `/requests*` | Days | An account that strangers write to could either read every notification or turn notifications off. Five questions about the sender; what is held waits per account, so the reader decides about the account once | done |
 | 43 | **The status half of v2 filters** — `/api/v2/filters/{id}/statuses`, `/statuses/{id}` | Days | A client's "filter this post". The filter entity's `statuses` was hard-coded `[]` | done |
 | 44 | **`DELETE /api/v1/profile/avatar` and `/header`** | Hours | Multipart has no way to send "none", so a client could offer "change picture" and not "remove picture" | done |
 | 45 | **`DELETE /api/v1/suggestions/{id}`** | Hours | Without it the "who to follow" panel offers the same accounts on every visit, the ones already decided about included | done |
-| 46 | **`instance/privacy_policy`, `/terms_of_service`, `/oembed`** | Hours | From Nextcloud's own Theming settings; oEmbed as `type: link`, since there is no embed page here to frame | done |
+| 46 | **`instance/privacy_policy`, `/terms_of_service`, `/oembed`** | Hours | From Aloha's own Theming settings; oEmbed as `type: link`, since there is no embed page here to frame | done |
 | 47 | **`reblogs` on the follow, and `showing_reblogs`** | Days | The flag was hardcoded `true` and nothing wrote it. Now a row in `social_actor_relation`, applied as a predicate of the home and list queries | done |
 
 ### Tier 2d — the web client, where most people read this app
@@ -788,7 +788,7 @@ meet. These three were it.
 | 11 | **Authorized fetch inbound** — verify the HTTP signature on GET and resolve the remote reader | Weeks | Signature verification ran on inbox POSTs only, so a followers-only object could not be served to an authorized remote reader and secure mode was impossible. It failed closed, so nothing leaked | done (`AuthorizedFetchService`) |
 | 12 | **`Add` and `Remove` outbound** for pins | Days | A pin was only visible to a peer that re-polled `featured` | done |
 | 13 | **`mediaType` on attachments** | Hours | The stored row (`MediaAttachment::asLocal()`) now carries `media_type`, `import()` reads it back — with a guess from the extension for rows written before it existed — and the Document a post is served as states it. Since 0.20.5 the Document also **leaves out what it does not know** rather than sending `"width": 0`, `"height": 0` and `"blurhash": ""`: Pixelfed validates all three as `nullable|min:…` *when the key is present* and drops the whole post when one fails, so an attachment with no stored dimensions took its post with it, silently | done |
-| 14 | **The WebFinger profile-page link** | Hours | Pointed at the Nextcloud user profile rather than a Aloha Social one | done |
+| 14 | **The WebFinger profile-page link** | Hours | Pointed at the Aloha user profile rather than an Aloha Social one | done |
 | 15 | **Emoji reactions** | Days | Announcement reactions are stored and served. Reactions to a *status* are a Misskey and Pleroma extension Mastodon does not handle either, and are deliberately not implemented | done (announcements) |
 | 39 | **Serve attachments as ActivityPub `Document`s** | Hours | New, and verified on the wire rather than in a unit test: everything served on request — a single status, the outbox, `featured`, `replies`, and any re-fetch by a peer — carries Mastodon's *client* shape under `attachment` (`"type": "video"`, `preview_url`, `remote_url`, `meta`) instead of `{"type": "Document", "mediaType": "video/mp4", "name": …}`. `MediaAttachment::asDocument()` is correct and `ACore::FORMAT_ACTIVITYPUB` is set on the attachments of a freshly created post, so the original `Create` goes out right; but `StreamRequest::save()` stores `asLocal()` and hydration leaves the objects in the local format, so every later read of the same post is wrong. `WireCompatibilityTest` calls `asDocument()` directly and therefore passes | done — `Stream::jsonSerialize()` maps every attachment through `asDocument()` whatever format it was hydrated in, so a re-read post goes out the same as the original `Create`; `StreamTest::testAHydratedPostServesItsAttachmentsAsDocuments` pins it |
 | 51 | **Publish a video as a `Note`, not a `Video`, by default** | Hours | `Note::asVideoIfItIsOne()` sent a sole-video post in PeerTube's shape, and Pixelfed's `HandlesCreates` processes only a `Note` with a parent or an attachment — a `Video` is dropped without a word, so no video posted here ever reached a Pixelfed follower. Mastodon draws both shapes, PeerTube only the `Video`, Pixelfed only the `Note` | done — `publish_video_objects` defaults to `0`; an instance whose audience is on PeerTube turns it on |
@@ -797,12 +797,12 @@ meet. These three were it.
 
 | # | Work | Effort | What it fixes | Status |
 |---|---|---|---|---|
-| 16 | **Registration management** — sign-up, an approval queue, invites, email confirmation | Weeks | Accounts are Nextcloud users, so provisioning lives in the server. See "Two answers rather than a tick" | answered, not built |
+| 16 | **Registration management** — sign-up, an approval queue, invites, email confirmation | Weeks | Accounts are Aloha users, so provisioning lives in the server. See "Two answers rather than a tick" | answered, not built |
 | 17 | **Warnings and strikes**, and "email this user" | Weeks | The ladder jumped from silence straight to suspend, with nothing in between and no record | done (`StrikeService`) |
 | 18 | **An account browser in the admin UI**, and a button for post takedown | Days | Only *reported* accounts were actionable from the web | done |
 | 19 | **Graded domain blocks** — a silence and a limit tier, and `reject_media` | Days | The app has a silence tier (`FediverseService::silenceAddress()`), but the *admin API* does not expose it: `AdminApiService::assertSeverity()` refuses any severity but `suspend`, `AdminDomainBlock` reports every entry as `suspend`, and silenced domains are not in that list at all. A Mastodon admin client still sees block-outright or nothing | done — `AdminApiService` lists the deny list as `suspend` and the silenced list as `silence`, takes both on create, moves a domain between them on update and lifts either on delete; `noop` stays a 422, there being no list for it. `reject_media`/`reject_reports` follow the tier. Pixelfed's own admin routes (`/api/admin/instances/*`) read the same two lists as `banned` and `unlisted` |
 | 20 | **IP blocks, email-domain blocks, canonical email blocks** | Days | The first two are there (`/api/v1/admin/ip_blocks`, `/admin/email_domain_blocks`); canonical email blocks are not, and belong to a sign-up this app does not own | partly done |
-| 21 | **A moderator role distinct from Nextcloud admin** | Days | Every admin route asked `IGroupManager::isAdmin()`, so moderating meant full server administration. It is now Nextcloud's own settings delegation rather than a second list of names | done |
+| 21 | **A moderator role distinct from Aloha admin** | Days | Every admin route asked `IGroupManager::isAdmin()`, so moderating meant full server administration. It is now Aloha's own settings delegation rather than a second list of names | done |
 | 22 | **Admin metrics** — trends, measures, dimensions, retention | Weeks | Absent | done |
 | 23 | **`tootctl` equivalents** — `accounts cull`/`prune`, `preview_cards remove`, media-only sweeps | Days | `social:cache:refresh`, `social:stream:prune` and `social:domain:purge` cover neighbouring ground; the culls and the media-only sweep had no equivalent | **partly done** — both culls are now continuous rather than commands: `CacheActorService` stops refreshing a remote actor after ten consecutive failures (`accounts cull`), and `CacheActorSweepService` evicts the cached accounts nobody here follows, that follow nobody here and that wrote no stored post, with their avatars, after `cache_actor_days` (`accounts prune`). `occ social:media:usage` answers what the media is costing, split into local uploads and cached remote files; `preview_cards remove` and a media-only sweep are still open |
 
@@ -829,7 +829,7 @@ the route is the other half of the choice and is a decision about breaking
 whatever still calls it — which is why it is still here rather than quietly
 done either way.
 
-**16 — registration management.** An account on this server is a Nextcloud
+**16 — registration management.** An account on this server is an Aloha
 account: the server creates it, through whatever provisioning it is configured
 with, and this app is handed one that already exists. A sign-up form, an
 approval queue, invite links and email confirmation all belong to the server,

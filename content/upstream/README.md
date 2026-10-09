@@ -4,7 +4,7 @@
 
 # Aloha Social
 
-### Your Nextcloud is a Fediverse server.
+### Your Aloha is a Fediverse server.
 
 Post, follow and reply across Mastodon, Pixelfed, PeerTube, GoToSocial and Akkoma —
 from the same place your files, calendar and chat already live.
@@ -49,7 +49,7 @@ One box, and everything a post can carry.
   and the Office formats ride on a post too (`DOCUMENT_MIME_TYPES` in
   `lib/Service/CacheDocumentService.php`), stored as they are and drawn as a card you
   press to download. On the wire they are an ActivityPub `Document` carrying its mime
-  type, which Mastodon shows as a link and another Nextcloud shows as a file.
+  type, which Mastodon shows as a link and another Aloha shows as a file.
 - **Every picture is stripped of its metadata** before it is stored or sent — Exif,
   XMP, IPTC, and the GPS coordinates a phone quietly attaches. Done on the container
   rather than by re-encoding, so nothing loses a generation of quality, and the colour
@@ -71,12 +71,12 @@ One box, and everything a post can carry.
   and no Giphy, no Tenor, nobody's tracker. They are Google's Noto Animated Emoji,
   CC BY 4.0. Only the *list* ships — half a gigabyte of pictures does not — so your
   server fetches each one the first time somebody here uses it and keeps it from
-  then on. The grid points at your own Nextcloud throughout: no search term leaves
+  then on. The grid points at your own Aloha throughout: no search term leaves
   the instance and no reader's browser ever talks to anybody else. An administrator
   can add their own on top with `occ social:gif add`, or turn the shipped set off
   with `occ config:app:set social gif_pack --value=0`.
 - **Quote a post**, with the original author's permission carried on the wire (FEP-044f).
-- **Say what language it is in**, starting from your Nextcloud language.
+- **Say what language it is in**, starting from your Aloha language.
 - **Send it later.** Pick a time at least five minutes out and Post becomes Schedule.
 - **A short post as a card.** Anything up to 120 characters, with nothing attached, can
   go out drawn big on colour — six backgrounds, the first in your own colour. It is
@@ -191,7 +191,7 @@ you follow, of this instance and of the whole Fediverse are one click apart.
 - **PeerTube, properly — in both directions.** A PeerTube video arrives with its
   title, its channel, its thumbnail and something to play. The video **streams from
   the instance that holds it** — a two-hour talk is not something to mirror onto
-  somebody's Nextcloud — and is proxied, so nobody's IP address reaches a server they
+  somebody's Aloha — and is proxied, so nobody's IP address reaches a server they
   never chose to talk to. Going the other way, a post that is one video is published
   as an ActivityPub `Video` **filed under a channel**, which is the thing PeerTube
   cannot take a video without: it resolves one by looking for a `Group` in the video's
@@ -226,7 +226,7 @@ you follow, of this instance and of the whole Fediverse are one click apart.
 - **An ALT badge on every described picture**, wherever it is drawn, that shows the
   description when pressed.
 - **Lists**, made and filled in Settings or from anybody's profile — and **the
-  Nextcloud groups your administrator chose** are lists of their own, built and
+  Aloha groups your administrator chose** are lists of their own, built and
   maintained by nobody.
 - **Follow a hashtag** and it reads exactly like following a person.
 - **Filter out words you would rather not read** — **Blocking → Filtered words**. A
@@ -275,7 +275,7 @@ reference, so nothing is uploaded twice. What you post next is a new post, and t
 dialog says so before anything happens: the boosts, likes and replies the old one
 collected stay with it and are gone.
 
-**A post in another language offers to be translated**, where this Nextcloud has a
+**A post in another language offers to be translated**, where this Aloha has a
 translation provider — the same one Talk, Mail and the assistant use. The translation
 appears in place of the post and says which provider produced it, because a reader is
 entitled to know they are reading a machine. A server without a provider draws no
@@ -294,7 +294,7 @@ six ways:
   servers publish for strangers to read and holds no credentials for any of them,
   aggregates nothing and stores nobody. Directories that did not answer are named
   under the results, so a short list is never mistaken for an empty Fediverse.
-- **The people you already share a Nextcloud with.** Every Nextcloud profile has a
+- **The people you already share an Aloha with.** Every Aloha profile has a
   `fediverse` field; this app fills in yours and reads everybody else's, so your
   colleagues are suggested before any algorithm has a thing to say.
 - **Starter packs** — a named handful of accounts with one button that follows all of
@@ -322,7 +322,7 @@ to be trending.
 ![Search](img/readme/search.png)
 
 Search covers people, hashtags and the **full text of every post you are allowed to
-see** — your own, public content and anything addressed to you — through Nextcloud's
+see** — your own, public content and anything addressed to you — through Aloha's
 own unified search. No external search engine to run.
 
 ## 👤 Your profile
@@ -352,7 +352,7 @@ own unified search. No external search engine to run.
   collection**), and edit, empty or delete it on its page. A collection holds only
   its owner's own posts with a picture or a video in them, and a followers-only one
   is shown to followers and nobody else.
-- **Team accounts** — an administrator can give a Nextcloud group an account to
+- **Team accounts** — an administrator can give an Aloha group an account to
   post from, and everybody in the group finds it in the composer beside the
   audience picker. It is an actor like any other: followable from Mastodon and
   Pixelfed, moderatable, with its own followers. The membership is the group,
@@ -372,7 +372,7 @@ own unified search. No external search engine to run.
   being empty: a relay rebroadcasts the public posts of every server on it, and
   carries this server's public posts out to all of them. Public posts only, and
   a relayed post arrives as the post it is rather than as a boost by the relay.
-- **Delete your Aloha Social account** from Settings, keeping your Nextcloud one —
+- **Delete your Aloha Social account** from Settings, keeping your Aloha one —
   the posts, the follows and a `Delete` to every server that knew you. No
   administrator, and no password to type for an account signed in through SSO. A
   self-registered external user, who has nothing here but Aloha Social, loses the whole
@@ -489,8 +489,8 @@ favourited your post" rather than eight rows.
 **Mute a conversation**, from any post's menu or a mention in Activities: the thread
 stays on your timelines, and stops notifying you until you unmute it.
 
-**Nextcloud's own bell rings too.** Mentions, favourites, boosts, new followers, follow
-requests, edits of posts you boosted and polls you voted in all reach Nextcloud
+**Aloha's own bell rings too.** Mentions, favourites, boosts, new followers, follow
+requests, edits of posts you boosted and polls you voted in all reach Aloha
 notifications and its mail digest, each linking into this app rather than out to a
 remote server. A **follow request carries Accept and Decline on the bell entry itself**.
 
@@ -501,7 +501,7 @@ remote server. A **follow request carries Accept and Decline on the bell entry i
 Everything about your account in one page: whether people must ask before they follow
 you, whether other servers may suggest you and index your public posts, whether this is
 an automated account, and the audience every new post starts with. Only what you changed
-is sent. The name you publish under is not here — it belongs to your Nextcloud account
+is sent. The name you publish under is not here — it belongs to your Aloha account
 and the page links to where it is changed, rather than offering a second place to edit
 it that would do nothing on an instance whose accounts come from LDAP.
 
@@ -567,7 +567,7 @@ start with their sound on. All three are kept on the device rather than the
 account, so the laptop at work can stay quiet while your phone taps back. The sounds
 are synthesised in the browser, so there is nothing to download.
 
-## 🧩 It is a Nextcloud app, so it behaves like one
+## 🧩 It is an Aloha app, so it behaves like one
 
 - **Share to Aloha Social, from Files.** Select a picture or a video — up to ten — pick
   *Share to Aloha Social* from the menu, and the composer opens with them already attached.
@@ -584,7 +584,7 @@ are synthesised in the browser, so there is nothing to download.
   them in the Activity digest mail. Activity's own notifications stay off: the bell is
   the bell.
 - **Unified search**, so Aloha Social posts turn up where every other search result does.
-- **Deleting a Nextcloud user takes their Fediverse account with it** — tombstoned,
+- **Deleting an Aloha user takes their Fediverse account with it** — tombstoned,
   dropped, and a `Delete` federated so other servers drop their copies too.
 
 ## 🛡️ Safety, and privacy that is the default
@@ -626,7 +626,7 @@ deliveries about to be given up on and late background jobs, each a link to wher
 dealt with.
 
 - **Reports** with **Silence**, **Suspend**, **Lift** and take-a-post-down, each
-  recorded with the moderator who did it and written to Nextcloud's audit log.
+  recorded with the moderator who did it and written to Aloha's audit log.
   Suspending deletes what the account posted here, and the confirmation says so.
 - **A review queue before anything goes out.** The first post of an account that has
   published nothing here yet, and posts that trip a very short list of spam rules —
@@ -727,11 +727,11 @@ These are absent from the code today, not merely rough edges:
 - **No streaming API and no push subscriptions.** Third-party clients poll. (The web
   client does get live timelines when
   [notify_push](https://github.com/nextcloud/notify_push) is installed — that is a
-  Nextcloud channel, not a Mastodon one.)
+  Aloha channel, not a Mastodon one.)
 
 ## 📦 Quickstart (install & develop)
 
-1. Clone this repository into your Nextcloud `apps/` directory.
+1. Clone this repository into your Aloha `apps/` directory.
 2. Install the dependencies and build the frontend:
 
 ```bash
@@ -741,7 +741,7 @@ npm ci
 npm run build        # production bundle into js/
 ```
 
-3. Enable the app in Nextcloud (`occ app:enable social`) and check the install with
+3. Enable the app in Aloha (`occ app:enable social`) and check the install with
    `occ social:check:install`.
 4. While working on the UI, use `npm run dev` for a development build or
    `npm run watch` to rebuild on change. The `Makefile` wraps the same scripts
@@ -809,7 +809,7 @@ If an uploaded banner does not appear immediately:
 
 ## ✅ Tests
 
-Backend and frontend unit tests run without a Nextcloud server or database.
+Backend and frontend unit tests run without an Aloha server or database.
 
 ```bash
 composer install            # PHPUnit + OCP interface stubs
@@ -836,10 +836,10 @@ knows a silent logger and a session with nobody in it and raises a named error
 for anything else (see `tests/Helper/TestContainer.php`). Migration steps are
 given a `FakeTable` that records the schema they ask for rather than building it
 (`tests/Migration/`). Frontend tests use Vitest with
-`@vue/test-utils` and jsdom; `tests/js/setup.js` provides the Nextcloud globals
+`@vue/test-utils` and jsdom; `tests/js/setup.js` provides the Aloha globals
 (`t`, `n`, `OC`, `OCA`, `localStorage`, router webroots).
 
-A second PHP suite in `tests/Integration/` runs against a real Nextcloud and
+A second PHP suite in `tests/Integration/` runs against a real Aloha and
 database — migrations, query SQL and storage boundaries the mocks cannot reach.
 CI runs it on SQLite, MySQL and PostgreSQL; locally, point it at an installed
 server:
@@ -870,7 +870,7 @@ composer run test:interop
 ```
 
 `.github/workflows/interop.yml` stands the whole thing up — Postgres, Redis,
-Mastodon, PeerTube, a Nextcloud and an account on each side — weekly and on
+Mastodon, PeerTube, an Aloha and an account on each side — weekly and on
 demand. Deliberately
 not on every pull request: it depends on a third-party image whose startup this
 repository does not control. See `tests/Interop/README.md`, including what it
@@ -878,7 +878,7 @@ cannot prove.
 
 ### Browser tests
 
-`tests/e2e/` drives a real Nextcloud with the app installed, in Chromium,
+`tests/e2e/` drives a real Aloha with the app installed, in Chromium,
 through [Playwright](https://playwright.dev): sign in, open the app, write a
 post and see it in the feed, walk the Discover page, switch scopes, open a
 group list, add and remove a keyword filter, and check that a post of your own
@@ -891,7 +891,7 @@ npx playwright install chromium
 E2E_BASE_URL=https://cloud.example E2E_USER=alice E2E_PASSWORD=… E2E_GROUP="Design" npm run test:e2e
 ```
 
-`E2E_GROUP` is optional — the display name of a Nextcloud group the account is
+`E2E_GROUP` is optional — the display name of an Aloha group the account is
 in, for the list test; without it that test is skipped.
 
 ## 🛠️ Contributing

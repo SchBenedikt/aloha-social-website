@@ -43,7 +43,7 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "Pictures, video and audio",
-        body: "JPEG, PNG, GIF, WebP, AVIF and HEIC/HEIF images, plus common video and audio formats, are supported subject to Nextcloud and server limits. Videos are uploaded in chunks with an app-level ceiling of 2 GB; actual limits can be lower.",
+        body: "JPEG, PNG, GIF, WebP, AVIF and HEIC/HEIF images, plus common video and audio formats, are supported subject to Aloha and server limits. Videos are uploaded in chunks with an app-level ceiling of 2 GB; actual limits can be lower.",
         bullets: [
           "Where ffmpeg is installed, supported .mov or HEVC videos can be converted to H.264 MP4. Conversion is optional and availability depends on server configuration.",
           "An H.264 MP4 is never re-encoded, so nothing is lost twice.",
@@ -169,7 +169,7 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "Translation, honestly labelled",
-        body: "Where the Nextcloud has a translation provider configured, a post in another language can be translated in place. The interface identifies the provider so readers know they are seeing a machine translation.",
+        body: "Where the Aloha has a translation provider configured, a post in another language can be translated in place. The interface identifies the provider so readers know they are seeing a machine translation.",
       },
       {
         heading: "Notifications that behave",
@@ -218,7 +218,7 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "Explore, and search",
-        body: "The sidebar links to followed hashtags, lists and local trends. Search covers people, hashtags and posts visible to your account. Availability of unified search results depends on the Nextcloud’s search integration.",
+        body: "The sidebar links to followed hashtags, lists and local trends. Search covers people, hashtags and posts visible to your account. Availability of unified search results depends on the Aloha’s search integration.",
       },
     ],
     docs: [
@@ -250,7 +250,7 @@ export const FEATURES: Feature[] = [
         heading: "Collections and team accounts",
         bullets: [
           "Collections — Pixelfed's albums — as a tab of the profile: a shelf of the account's collections, each a page of its posts drawn as the profile grid.",
-          "Team accounts can be connected to a Nextcloud group, so the group’s membership determines who can post from the shared identity.",
+          "Team accounts can be connected to an Aloha group, so the group’s membership determines who can post from the shared identity.",
           "Who wrote each post is recorded and shown to the team and to moderators, and to nobody else.",
         ],
         body: "A team account is an actor like any other: followable from Mastodon and Pixelfed, moderatable, with its own followers.",
@@ -316,7 +316,7 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "For administrators",
-        body: "Moderators can review reports, limit or suspend accounts, remove posts and reverse decisions. Actions are recorded with the responsible moderator in the Nextcloud’s audit log. Operators can configure review queues, domain blocks and retention rules for remote content.",
+        body: "Moderators can review reports, limit or suspend accounts, remove posts and reverse decisions. Actions are recorded with the responsible moderator in the Aloha’s audit log. Operators can configure review queues, domain blocks and retention rules for remote content.",
       },
     ],
     docs: [
@@ -361,8 +361,8 @@ export const FEATURES: Feature[] = [
         ],
       },
       {
-        heading: "Nextcloud's own bell rings too",
-        body: "Mentions, favourites, boosts, new followers, follow requests, edits of posts you boosted and polls you voted in all reach Nextcloud notifications and its mail digest, each linking into this app rather than out to a remote server.",
+        heading: "Aloha's own bell rings too",
+        body: "Mentions, favourites, boosts, new followers, follow requests, edits of posts you boosted and polls you voted in all reach Aloha notifications and its mail digest, each linking into this app rather than out to a remote server.",
         bullets: [
           "A follow request carries Accept and Decline on the bell entry itself.",
           "Mute a conversation from any post's menu: the thread stays on your timelines and stops notifying you until you unmute it.",
@@ -377,12 +377,12 @@ export const FEATURES: Feature[] = [
   },
   {
     slug: "nextcloud",
-    nav: "Nextcloud",
+    nav: "Aloha",
     index: "08",
-    title: "It behaves like the Nextcloud it lives in.",
+    title: "It behaves like the Aloha it lives in.",
     lede: "Share from Files, replies in the Comments tab, link cards in Talk and Deck, dashboard widgets, unified search — and one account, one login, one set of rules.",
     image: "/brand/screenshot.png",
-    alt: "Aloha Social inside a Nextcloud, with the app menu and the surrounding navigation visible",
+    alt: "Aloha Social inside an Aloha, with the app menu and the surrounding navigation visible",
     width: 1918,
     height: 930,
     facts: [
@@ -410,15 +410,15 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "One identity, and one way to end it",
-        body: "Your display name and avatar come from your Nextcloud account and are changed there — there is no second place to edit a name that would do nothing on an instance whose accounts come from LDAP.",
+        body: "Your display name and avatar come from your Aloha account and are changed there — there is no second place to edit a name that would do nothing on an instance whose accounts come from LDAP.",
         bullets: [
-          "Deleting a Nextcloud user takes their Fediverse account with it: tombstoned, dropped, and a Delete federated so other servers drop their copies too.",
+          "Deleting an Aloha user takes their Fediverse account with it: tombstoned, dropped, and a Delete federated so other servers drop their copies too.",
           "Group membership decides who may post from a shared team account.",
           "Same login, same password, same two-factor authentication you already use for files, calendar and chat.",
         ],
       },
       {
-        heading: "Where Nextcloud stops and the fediverse starts",
+        heading: "Where Aloha stops and the fediverse starts",
         body: "Everything federation-shaped — moderation, deliveries, remote media, retention — is handled by the app, not by a setting you have to find. The administrator gets it under Administration → Aloha Social, and you get your account under Settings.",
         bullets: [
           "Announcements from your administrators arrive at the top of your timeline.",
@@ -428,7 +428,7 @@ export const FEATURES: Feature[] = [
       },
     ],
     docs: [
-      { href: "/nextcloud", label: "Why it runs on Nextcloud" },
+      { href: "/nextcloud", label: "Why it runs on Aloha" },
       { href: "/docs/feature-safety-and-privacy-that-is-the-default", label: "Safety and privacy" },
       { href: "/activitypub/native", label: "How the app talks to the fediverse" },
     ],

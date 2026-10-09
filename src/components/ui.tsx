@@ -119,7 +119,7 @@ export function CheckList({
   );
 }
 
-/** A screenshot presented inside its Nextcloud window. */
+/** A screenshot presented inside its Aloha window. */
 export function Screenshot({
   src,
   alt,

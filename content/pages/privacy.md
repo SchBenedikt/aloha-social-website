@@ -8,22 +8,22 @@ description: What Aloha Social collects, where it is stored, what leaves your se
 
 Aloha Social has no advertising and no tracking, and nothing about your reading is measured on anybody's behalf. This page is the full account: what is stored, where it is stored, what leaves the server, and which settings change the answers.
 
-Your server's operator is the data controller. Where Aloha Social runs on your organisation's Nextcloud, that is your organisation — not the Aloha Social project, and not a company behind it.
+Your server's operator is the data controller. Where Aloha Social runs on your organisation's Aloha, that is your organisation — not the Aloha Social project, and not a company behind it.
 
 ## What is stored, and where
 
-Everything below sits in your Nextcloud's database and storage, on infrastructure your organisation runs and backs up.
+Everything below sits in your Aloha's database and storage, on infrastructure your organisation runs and backs up.
 
 | Data | Where it lives | Leaves the server |
 |---|---|---|
-| Your posts, replies and media | Nextcloud database and data directory | Yes — to the servers of people who follow you, as ActivityPub |
-| Your profile, avatar and banner | Nextcloud database | Yes — served to anyone who asks, publicly |
-| Who you follow, who follows you | Nextcloud database | Yes — the follower list is public, as on every federated service |
-| Private notes you write about accounts | Nextcloud database | Never |
-| Your For You interests | Nextcloud database | Never |
-| Private statistics and read counts | Nextcloud database | Never |
-| Account keys | Nextcloud database, encrypted with the instance secret | Never |
-| Filters, mutes, blocks, notification policy | Nextcloud database | Never |
+| Your posts, replies and media | Aloha database and data directory | Yes — to the servers of people who follow you, as ActivityPub |
+| Your profile, avatar and banner | Aloha database | Yes — served to anyone who asks, publicly |
+| Who you follow, who follows you | Aloha database | Yes — the follower list is public, as on every federated service |
+| Private notes you write about accounts | Aloha database | Never |
+| Your For You interests | Aloha database | Never |
+| Private statistics and read counts | Aloha database | Never |
+| Account keys | Aloha database, encrypted with the instance secret | Never |
+| Filters, mutes, blocks, notification policy | Aloha database | Never |
 
 ## What leaves the server, and why
 

@@ -21,6 +21,7 @@ const routes: SitemapEntry[] = [
   { path: "/activitypub/native", changeFrequency: "monthly", priority: 0.7 },
   { path: "/activitypub/federation", changeFrequency: "monthly", priority: 0.7 },
   { path: "/servers", changeFrequency: "monthly", priority: 0.6 },
+  { path: "/servers/list", changeFrequency: "monthly", priority: 0.6 },
   { path: "/clients", changeFrequency: "monthly", priority: 0.7 },
   { path: "/admins", changeFrequency: "monthly", priority: 0.7 },
   { path: "/developers", changeFrequency: "monthly", priority: 0.6 },

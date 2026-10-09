@@ -6,7 +6,7 @@ export function DocsSidebar({ current, source }: { current: DocPage; source: str
   return (
     <nav
       aria-label="Documentation"
-      className="lg:sticky lg:top-24 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto lg:pb-6"
+      className="lg:pb-2"
     >
       <div className="card p-4 sm:p-5">
         <Link
