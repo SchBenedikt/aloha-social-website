@@ -24,27 +24,45 @@ export function PageHeader({
   title,
   lede,
   actions,
+  compact = false,
 }: {
   eyebrow: string;
   title: ReactNode;
   lede?: ReactNode;
   actions?: ReactNode;
+  compact?: boolean;
 }) {
   return (
     <header className="relative overflow-hidden border-b border-line">
-      <div className="bg-dots pointer-events-none absolute inset-x-0 top-0 h-56 opacity-70" aria-hidden />
-      <Container className="relative py-16 sm:py-20">
-        <div className="max-w-3xl">
+      {compact ? null : (
+        <div className="bg-dots pointer-events-none absolute inset-x-0 top-0 h-56 opacity-70" aria-hidden />
+      )}
+      <Container className={`relative ${compact ? "py-9 sm:py-11" : "py-16 sm:py-20"}`}>
+        <div className={compact ? "max-w-3xl" : "max-w-3xl"}>
           <span className="eyebrow">{eyebrow}</span>
-          <h1 className="mt-5 text-[2.5rem] leading-[1.06] tracking-[-0.03em] text-ink-strong sm:text-[3.4rem]">
+          <h1
+            className={
+              compact
+                ? "mt-3 text-[1.9rem] leading-[1.15] tracking-[-0.025em] text-ink-strong sm:text-[2.4rem]"
+                : "mt-5 text-[2.5rem] leading-[1.06] tracking-[-0.03em] text-ink-strong sm:text-[3.4rem]"
+            }
+          >
             {title}
           </h1>
           {lede ? (
-            <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-muted">
+            <p
+              className={
+                compact
+                  ? "mt-3 max-w-2xl text-[15.5px] leading-relaxed text-muted"
+                  : "mt-6 max-w-2xl text-[17px] leading-relaxed text-muted"
+              }
+            >
               {lede}
             </p>
           ) : null}
-          {actions ? <div className="mt-8 flex flex-wrap gap-3">{actions}</div> : null}
+          {actions ? (
+            <div className={`flex flex-wrap gap-3 ${compact ? "mt-5" : "mt-8"}`}>{actions}</div>
+          ) : null}
         </div>
       </Container>
     </header>

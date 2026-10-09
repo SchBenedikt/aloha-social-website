@@ -28,6 +28,31 @@ export async function generateMetadata(
   };
 }
 
+type SectionLink = { path: string; title: string; description: string; parent: boolean };
+
+function sectionGroups(sections: SectionLink[]) {
+  const groups: {
+    path: string;
+    title: string;
+    description: string;
+    children: { path: string; title: string }[];
+  }[] = [];
+  for (const section of sections) {
+    const last = groups.at(-1);
+    if (section.parent && last) {
+      last.children.push({ path: section.path, title: section.title });
+    } else {
+      groups.push({
+        path: section.path,
+        title: section.title,
+        description: section.description,
+        children: [],
+      });
+    }
+  }
+  return groups;
+}
+
 export default async function DocPage(
   props: { params: Promise<{ slug: string }> },
 ) {
@@ -43,9 +68,10 @@ export default async function DocPage(
         eyebrow={group?.title ?? "Documentation"}
         title={page.title}
         lede={page.description}
+        compact
       />
 
-      <section className="py-10 sm:py-14">
+      <section className="py-9 sm:py-11">
         <Container className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_17rem] lg:items-start">
           <div className="min-w-0">
             <article className="md-prose max-w-3xl">
@@ -65,21 +91,34 @@ export default async function DocPage(
                   In this section
                 </h2>
                 <ul className="mt-5 grid gap-3 sm:grid-cols-2">
-                  {page.sections.map((section) => (
-                    <li key={section.path} className={section.parent ? "sm:col-start-2" : undefined}>
-                      <Link
-                        href={section.path}
-                        className={`card card-hover block h-full transition ${
-                          section.parent ? "border-l-2 border-coral/40 p-4" : "p-4"
-                        }`}
-                      >
-                        <span className="block text-[15px] font-semibold text-ink-strong">
-                          {section.title}
-                        </span>
-                        <span className="mt-1 block text-[13.5px] leading-relaxed text-muted">
-                          {section.description}
-                        </span>
-                      </Link>
+                  {sectionGroups(page.sections).map((group) => (
+                    <li key={group.path}>
+                      <div className="card h-full p-4">
+                        <Link
+                          href={group.path}
+                          className="block text-[15px] font-semibold text-ink-strong transition hover:text-coral"
+                        >
+                          {group.title}
+                        </Link>
+                        <p className="mt-1 text-[13.5px] leading-relaxed text-muted">
+                          {group.description}
+                        </p>
+                        {group.children.length > 0 ? (
+                          <ul className="mt-3 space-y-1.5 border-t border-line pt-3">
+                            {group.children.map((child) => (
+                              <li key={child.path}>
+                                <Link
+                                  href={child.path}
+                                  className="flex items-baseline gap-2 text-[13.5px] text-ink transition hover:text-coral"
+                                >
+                                  <span className="size-1.5 shrink-0 translate-y-[-1px] rounded-full bg-coral/60" />
+                                  {child.title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
+                      </div>
                     </li>
                   ))}
                 </ul>

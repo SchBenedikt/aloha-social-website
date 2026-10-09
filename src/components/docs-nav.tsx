@@ -66,7 +66,7 @@ function GroupDetails({ group, current }: { group: (typeof DOC_GROUPS)[number]; 
         </span>
       </summary>
 
-      <ul className="mb-2 mt-0.5 space-y-0.5 border-l border-line pl-2">
+      <ul className="mb-2 mt-0.5 max-h-64 space-y-0.5 overflow-y-auto border-l border-line pl-2 pr-1">
         {group.pages.map((path) => {
           const page = DOC_BY_PATH[path];
           if (!page) return null;

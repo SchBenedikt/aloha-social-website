@@ -306,6 +306,7 @@ const slugify = (text) =>
   cleanTitle(text)
     .toLowerCase()
     .replace(/&/g, " and ")
+    .replace(/[_:/.]+/g, "-")
     .replace(/[^a-z0-9\s-]/g, "")
     .trim()
     .replace(/\s+/g, "-")
@@ -333,13 +334,19 @@ const tokensText = (tokens) => {
 const headingText = (token) => tokensText(token.tokens ?? []);
 
 const firstParagraph = (tokens) => {
+  const candidates = [];
   for (const token of tokens) {
-    if (token.type === "paragraph") {
-      const text = tokensText(token.tokens ?? []);
-      if (text) return text;
-    }
+    if (token.type !== "paragraph") continue;
+    const text = tokensText(token.tokens ?? []).trim();
+    if (text) candidates.push(text);
+    if (candidates.length >= 4) break;
   }
-  return "";
+  return (
+    candidates.find((text) => text.length >= 70 && !/[:;]$/.test(text)) ??
+    candidates.find((text) => text.length >= 40) ??
+    candidates[0] ??
+    ""
+  );
 };
 
 const clip = (text, max = 190) =>
@@ -388,7 +395,13 @@ const pushPage = (page) => {
   return page;
 };
 
-const splitSections = (tokens) => {
+const dropLeadingSpace = (tokens) => {
+  while (tokens[0]?.type === "space") tokens.shift();
+  return tokens;
+};
+
+const splitSections = (allTokens) => {
+  const tokens = dropLeadingSpace(allTokens);
   let title = "";
   let cursor = 0;
   if (tokens[0]?.type === "heading" && tokens[0].depth === 1) {
@@ -540,7 +553,7 @@ if (fs.existsSync(PAGES_DIR)) {
   for (const file of fs.readdirSync(PAGES_DIR).sort()) {
     if (!file.endsWith(".md")) continue;
     const { front, body } = stripFrontmatter(fs.readFileSync(path.join(PAGES_DIR, file), "utf8"));
-    const tokens = marked.lexer(body);
+    const tokens = dropLeadingSpace(marked.lexer(body));
     const fromHeading =
       tokens[0]?.type === "heading" && tokens[0].depth === 1 ? headingText(tokens[0]) : "";
     if (fromHeading) tokens.shift();
@@ -689,7 +702,10 @@ instance.use({ renderer });
 
 for (const page of allPages) {
   shiftHeadings(page.tokens, Math.max(0, page.baseDepth - 1));
-  page.html = instance.parser(page.tokens);
+  page.html = instance
+    .parser(page.tokens)
+    .replace(/<table>/g, '<div class="md-table"><table>')
+    .replace(/<\/table>/g, "</table></div>");
 
   const toc = [];
   const seen = new Set();
