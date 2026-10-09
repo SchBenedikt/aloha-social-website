@@ -319,11 +319,11 @@ const tokensText = (tokens) => {
   const walk = (list) => {
     for (const token of list ?? []) {
       if (token.type === "code") {
-        out += `${token.text} `;
+        out += token.text;
         continue;
       }
       if (token.tokens) walk(token.tokens);
-      else if (token.text) out += `${token.text} `;
+      else if (token.text) out += token.text;
       if (token.items) token.items.forEach((item) => walk(item.tokens));
     }
   };
@@ -841,6 +841,15 @@ const leadOf = (inline) => {
   return null;
 };
 
+/* A lead only becomes a heading when what follows reads as a new sentence:
+   `**StreamRequest**, the repository of ...` is one sentence, not a heading
+   with a paragraph under it. */
+const leadsWell = (rest) => {
+  const text = tokensText(rest).trim();
+  if (!text) return false;
+  return !/^[,;:.!?)}\]]/.test(text);
+};
+
 const dropLeadDash = (tokens) => {
   const [first, ...rest] = tokens;
   if (first?.type !== "text") return tokens;
@@ -867,7 +876,7 @@ const isDefinitionTable = (token, { allowDuplicateKeys } = {}) => {
   if (token.type !== "table") return false;
   const cols = token.header?.length ?? 0;
   const rows = token.rows ?? [];
-  if (cols < 3 || rows.length < 5) return false;
+  if (cols < 2 || rows.length < 5) return false;
 
   const keys = rows.map((row) => tokensText(row[0]?.tokens ?? []).trim());
   if (keys.some((key) => !key || key.length > 60)) return false;
@@ -944,6 +953,7 @@ const synthesizeHeadings = (page) => {
   };
 
   const blocksFromLead = (block, lead, { allowLabel, restMin, rawMin }) => {
+    if (lead.rest.length && !leadsWell(lead.rest)) return null;
     if (!lead.rest.length) {
       if (!allowLabel || !lead.strong || lead.head.length > 60) return null;
       created += 1;
