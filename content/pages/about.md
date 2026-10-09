@@ -36,14 +36,16 @@ Aloha Social is built by a small core team at Nextcloud together with contributo
 
 | | |
 |---|---|
-| **Benedikt Schächner** | Current maintainer & lead developer |
+| **Andy Scherzinger** | Core developer |
+| **Anna** | Core developer |
+| **Benedikt Schächner** | Maintainer & lead developer |
 | **Frank Karlitschek** | Nextcloud founder, project initiator |
-| **Maxence Lange** | Core developer (ArtificialOwl) |
-| **Julius Härtl** | Core developer |
-| **Carl Schwan** | Core developer |
-| **Jan-Christoph Borchardt** | Design & UX lead |
+| **Hamza** | Core developer |
+| **Jan C. Borchardt** | Design & UX lead |
 
+<div style="border: none; box-shadow: none;">
 [![All contributors](https://contrib.rocks/image?repo=AlohaSocial/social&max=100&columns=20)](https://github.com/AlohaSocial/social/graphs/contributors)
+</div>
 
 **All contributors:** [github.com/AlohaSocial/social/graphs/contributors](https://github.com/AlohaSocial/social/graphs/contributors)
 
