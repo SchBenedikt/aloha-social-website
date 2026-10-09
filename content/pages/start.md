@@ -13,7 +13,7 @@ Everything on this page happens in the Aloha Social app inside your Aloha. If yo
 
 You need an Aloha account on a server that runs Aloha Social. That is the whole requirement: the same login, the same password, the same two-factor authentication you already use for files, calendar and chat. There is no second account to create and no separate password to remember.
 
-Open the app menu in Aloha and choose **Aloha**. The first screen asks whether you want a fediverse identity here. Nothing is created until you answer.
+Open the app menu in Nextcloud and choose **Aloha Social**. The first screen asks whether you want a fediverse identity here. Nothing is created until you answer.
 
 ## Step 1 — Pick your handle
 

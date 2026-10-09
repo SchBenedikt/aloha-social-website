@@ -15,7 +15,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "ActivityPub",
   description:
-    "How ActivityPub works in Aloha Social: actors, WebFinger, signed inbox and outbox delivery, eight steps from pressing Post to a reply arriving back.",
+    "How ActivityPub works in your Nextcloud: actors, WebFinger, signed inbox and outbox delivery, eight steps from pressing Post to a reply arriving back.",
   alternates: { canonical: "/activitypub" },
 };
 

@@ -82,7 +82,7 @@ export default function ServerPage() {
           <SectionHeading
             eyebrow="How a post travels"
             title="Out, in, and out again."
-            lede="Federation runs as scheduled background jobs in Aloha. Delivery failures are logged and retried; operators can run a worker for continuous delivery."
+            lede="Federation runs as scheduled background jobs in Nextcloud. Delivery failures are logged and retried; operators can run a worker for continuous delivery."
           />
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2" data-stagger>

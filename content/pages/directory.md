@@ -66,7 +66,7 @@ The app **chooses the server on your device** — no data about you is sent anyw
 
 ## Server operators: how to get listed
 
-1. Enable "Advertise on aloha.social" in Aloha admin settings
+1. Enable "Advertise on aloha.social" in Nextcloud admin settings
 2. Your server proves domain control automatically
 3. Fill in the profile: terms, privacy policy, rules, languages, jurisdiction, operator info, moderation details, account offer, search offer
 4. Two curators review — automatic checks first (HTTPS, nodeinfo, terms URLs, abuse contact, version), then human review (operator legitimacy, moderation quality, legal compliance, test signup, diversity)
