@@ -28,19 +28,24 @@ Aloha Social is a Nextcloud app, not another service to run. That choice buys th
 
 Read [why it runs on Nextcloud](/nextcloud) for the full list.
 
-## Who builds it
+## The team
 
-Aloha Social grew out of Nextcloud Social and is maintained by a small core team together with contributors from across the Nextcloud and fediverse communities.
+Aloha Social is built by a small core team at Nextcloud together with contributors from across the Nextcloud and fediverse communities.
 
-### Core Team & Maintainers
+### Core team
 
-The project is led by a dedicated core team at Nextcloud, with ongoing contributions from the wider community. All maintainers are listed in [AUTHORS.md](https://github.com/AlohaSocial/social/blob/master/AUTHORS.md).
+| | |
+|---|---|
+| **Benedikt Schächner** | Current maintainer & lead developer |
+| **Frank Karlitschek** | Nextcloud founder, project initiator |
+| **Maxence Lange** | Core developer (ArtificialOwl) |
+| **Julius Härtl** | Core developer |
+| **Carl Schwan** | Core developer |
+| **Jan-Christoph Borchardt** | Design & UX lead |
 
-### All Contributors
+[![All contributors](https://contrib.rocks/image?repo=AlohaSocial/social&max=100&columns=20)](https://github.com/AlohaSocial/social/graphs/contributors)
 
-[![Contributors](https://contrib.rocks/image?repo=AlohaSocial/social&max=100&columns=20)](https://github.com/AlohaSocial/social/graphs/contributors)
-
-**View all contributors on GitHub:** [github.com/AlohaSocial/social/graphs/contributors](https://github.com/AlohaSocial/social/graphs/contributors)
+**All contributors:** [github.com/AlohaSocial/social/graphs/contributors](https://github.com/AlohaSocial/social/graphs/contributors)
 
 There is no closed core and no proprietary cloud service. Everything the app does is in the repository: server code, web client, translations, tests and documentation.
 
