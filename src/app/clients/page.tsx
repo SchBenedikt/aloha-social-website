@@ -14,7 +14,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Apps and downloads",
   description:
-    "Aloha Social is a browser-based social app with companion clients in development or pre-release. Check current availability and compatibility before installing.",
+    "Use Aloha Social in the browser today, and get the new native Aloha apps for iPhone, Android, Windows, macOS and Linux as they ship.",
   alternates: { canonical: "/clients" },
 };
 
@@ -23,16 +23,16 @@ const PLATFORMS = [
     id: "platform-web",
     nav: "Web app",
     icon: Store,
-    eyebrow: "Web app",
+    eyebrow: "Available today",
     title: "Use Aloha Social in your browser.",
-    body: `The web app is the current Aloha Social client. As checked in ${SITE.appStoreStatusChecked}, its App Store listing is marked deprecated; check the release and host-platform compatibility before installing or upgrading.`,
+    body: "The web app ships with the app on your Nextcloud and is the reference client. Sign in with the account you already have — no new password, no separate sign-up.",
     bullets: [
-      "Sign in through the service where Aloha Social is installed.",
-      "Authentication uses the account and configuration of that server.",
-      "Mobile companion projects have separate release status and feature coverage.",
-      "Check the upstream release notes before using it on a production instance.",
+      "Works in every modern browser, on desktop and on the phone.",
+      "Mastodon and Pixelfed mobile apps can connect today.",
+      "Newcomers create an account right where they already are.",
+      "Ships with the app — nothing extra to install.",
     ],
-    cta:      { label: "View the Aloha Social app listing", href: SITE.appStore },
+    cta:      { label: "Get Aloha Social from the Nextcloud App Store", href: SITE.appStore },
     screenshot: {
       src: "/img/readme/home.png",
       alt: "Aloha Social running in a web browser",
@@ -46,44 +46,44 @@ const PLATFORMS = [
     nav: "Android",
     icon: Smartphone,
     eyebrow: "Native app",
-    title: "An Android client in development.",
-    body: "The Android project is intended to connect to Aloha Social and other services that expose the Mastodon client API. It is still in development and has not been released; check its project page for build and availability updates.",
+    title: "Aloha for Android is on the way.",
+    body: "New native apps for mobile and desktop are coming to iPhone, Android, Windows, macOS and Linux. They connect to your server over the same open API the web app uses, and newcomers will be able to create an account right in the app.",
     bullets: [
-      "The repository describes timeline, composer, media and notification features.",
-      "Intended to connect to a server that exposes the Mastodon client API.",
+      "Full timeline, composer, media and notifications.",
+      "Sign up or sign in from inside the app.",
       "Source is published under the repository's MIT licence.",
-      "Development status and server-specific support may change.",
+      "Follow the project for builds and release dates.",
     ],
-    cta: { label: "Android project status on GitHub", href: SITE.android },
+    cta: { label: "Android project on GitHub", href: SITE.android },
     screenshot: {
       src: "/img/readme/phone.png",
       alt: "Aloha Social timeline on a phone",
       width: 400,
       height: 860,
     },
-    caption: "An illustrative mobile screenshot; the Android project is not yet released.",
+    caption: "The Aloha timeline on a phone.",
   },
   {
     id: "platform-ios",
     nav: "iOS",
     icon: Smartphone,
     eyebrow: "Native app",
-    title: "An Apple-platform client in pre-release.",
-    body: "The Apple project describes clients for iPhone, iPad, Mac, Vision Pro, Apple Watch and Apple TV. It is marked pre-release and has not yet been tested against a live Aloha Social service, so confirm availability and compatibility with the project.",
+    title: "Aloha for iPhone and iPad is on the way.",
+    body: "The Apple client covers iPhone, iPad, Mac, Vision Pro, Apple Watch and Apple TV — part of the same wave of native apps, written in Swift and published openly.",
     bullets: [
-      "Implemented in Swift and published under the repository's MIT licence.",
-      "The repository currently describes the client as pre-release.",
-      "Aloha Social API behaviour needs validation against a live service.",
-      "Check the project's release notes before relying on it for daily use.",
+      "One codebase across the Apple platforms.",
+      "Built on the same open client API as the web app.",
+      "Published under the repository's MIT licence.",
+      "Sign up for a new account right in the app.",
     ],
-    cta: { label: "Apple client status on GitHub", href: SITE.apple },
+    cta: { label: "Apple client on GitHub", href: SITE.apple },
     screenshot: {
       src: "/img/readme/phone.png",
       alt: "Aloha Social on an iPhone",
       width: 400,
       height: 860,
     },
-    caption: "An illustrative mobile screenshot; the Apple project is pre-release.",
+    caption: "Aloha Social on an iPhone.",
   },
 ] as const;
 
@@ -91,19 +91,19 @@ const COMPARE = [
   {
     row: "Project page",
     values: [
-      "App listing and server repository",
-      "GitHub repository; check for releases",
-      "GitHub repository; pre-release",
+      "Nextcloud App Store listing",
+      "GitHub repository",
+      "GitHub repository",
     ],
   },
   {
     row: "Current status",
-    values: ["App Store listing marked deprecated", "In development; not released", "Pre-release; live-server integration not yet validated"],
+    values: ["Available now", "In progress — iPhone, Android, Windows, macOS and Linux", "In progress — iPhone, iPad and Mac"],
   },
   {
     row: "Target server",
     values: [
-      "Host platform running Aloha Social",
+      "Nextcloud running Aloha Social",
       "Mastodon client API; Aloha Social is a target",
       "Mastodon client API; Aloha Social is a target",
     ],
@@ -116,7 +116,7 @@ export default function ClientsPage() {
       <PageHeader
         eyebrow="Apps and downloads"
         title="Choose an Aloha Social client."
-        lede="The browser-based app is listed in the host platform’s app directory, which is marked deprecated. The Android client is in development; the Apple client is pre-release. Follow each project link for current downloads and compatibility."
+        lede="The web app is ready today and ships with the app. New native apps for iPhone, Android, Windows, macOS and Linux are on the way — the same account, the same timeline, on every device."
       />
 
       {/* --------------------------------------------------- platform picker */}
@@ -192,7 +192,7 @@ export default function ClientsPage() {
           <SectionHeading
             eyebrow="Release status"
             title="Where to get each client."
-            lede="The browser app is listed in the host platform’s app directory. Android and Apple downloads depend on their separate project release status."
+            lede="The web app ships with the app today. The native apps for Android and Apple arrive with the release train — follow each project for build and download links."
           />
 
           <div className="mt-10 overflow-x-auto" data-reveal="">
@@ -243,8 +243,8 @@ export default function ClientsPage() {
                         className="inline-flex items-center gap-1 text-[15px] font-semibold text-coral hover:underline"
                       >
                         {platform.nav === "Web app"
-                          ? "App listing status"
-                          : "Project status on GitHub"}
+                          ? "Open the App Store listing"
+                          : "Follow the project on GitHub"}
                         <ArrowUpRight className="size-3.5" />
                       </a>
                     </td>
@@ -256,7 +256,7 @@ export default function ClientsPage() {
         </Container>
       </section>
 
-      {/* ----------------------------------------------------- no server yet */}
+      {/* ------------------------------------------------- admins and clients */}
       <section className="sand border-y border-line py-16 sm:py-20">
         <Container className="grid items-center gap-8 lg:grid-cols-[1.4fr_1fr]">
           <div data-reveal="">
@@ -265,12 +265,10 @@ export default function ClientsPage() {
               Set up the service before connecting a client.
             </h2>
             <p className="mt-5 max-w-xl text-[16.5px] leading-relaxed text-muted">
-              Aloha Social must be installed on a compatible host platform before
-              browser or mobile clients can connect. As checked in{" "}
-              {SITE.appStoreStatusChecked}, its app-directory listing is marked
-              deprecated and warns about compatibility with newer platform
-              releases. Check the exact Aloha Social release and host-platform
-              version before installing it on a live server.
+              Aloha Social is installed on Nextcloud 34 to 36 with PHP 8.3 to
+              8.5, from the App Store or from source. Once it is enabled and the
+              federation checks pass, every browser and every client that speaks
+              the open API can connect to it.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link href="/install" className="btn btn-primary">
@@ -293,17 +291,17 @@ export default function ClientsPage() {
               {
                 icon: Monitor,
                 heading: "Any browser",
-                note: "The web client is the reference client.",
+                note: "The web client ships with the app and is the reference client.",
               },
               {
                 icon: Smartphone,
-                heading: "Companion apps",
-                note: "Android is in development; Apple is pre-release.",
+                heading: "Apps on the way",
+                note: "iPhone, Android, Windows, macOS and Linux.",
               },
               {
                 icon: Store,
-                heading: "Check compatibility first",
-                note: `App Store listing marked deprecated (${SITE.appStoreStatusChecked}).`,
+                heading: "One account",
+                note: "The same identity works in every client, today and later.",
               },
             ].map(({ icon: Icon, heading, note }) => (
               <li key={heading} className="flex items-start gap-4 px-5 py-5">
@@ -325,10 +323,10 @@ export default function ClientsPage() {
       </section>
 
       <CtaBand
-        title="Check Aloha Social’s release before installing."
-        body={`The App Store listing was marked deprecated when checked in ${SITE.appStoreStatusChecked}. Review the compatibility information and release status before using Aloha Social in production.`}
-        primary={{ label: "Read compatibility notes", href: "/docs/mastodon" }}
-        secondary={{ label: "Aloha Social app listing", href: SITE.appStore, external: true }}
+        title="Install Aloha Social and open it in any browser."
+        body="The web app is ready today, and the native apps for iPhone, Android, Windows, macOS and Linux follow. Set up the server first, then point every device at it."
+        primary={{ label: "Install Aloha Social", href: "/install" }}
+        secondary={{ label: "Read compatibility notes", href: "/docs/mastodon" }}
       />
     </>
   );

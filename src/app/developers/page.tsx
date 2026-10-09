@@ -6,6 +6,7 @@ import {
   Container,
   CtaBand,
   PageHeader,
+  RelatedPages,
   SectionHeading,
 } from "@/components/ui";
 import { SITE } from "@/lib/site";
@@ -27,13 +28,13 @@ const REPOS = [
   {
     name: "Apple",
     role: "Apple-platform client",
-    note: "Pre-release client project for Apple platforms; verify current status before relying on it.",
+    note: "The Apple client for iPhone, iPad and Mac — part of the new Aloha apps for every platform.",
     href: SITE.apple,
   },
   {
     name: "Android",
     role: "Android client",
-    note: "In development; not released yet according to the project README.",
+    note: "The Android client, one of the new native apps shipping for mobile and desktop.",
     href: SITE.android,
   },
   {
@@ -73,7 +74,7 @@ export default function DevelopersPage() {
       <PageHeader
         eyebrow="For developers"
         title="Read the guides. Check the source."
-        lede="The server app, client projects and brand assets have their own repositories and release stages. This page links to each project without implying that every client is released or supported."
+        lede="Everything Aloha ships is open source under AGPL-3.0-or-later: the server app, the native clients and the brand assets. Read the guides here, then read the code."
         actions={
           <>
             <a
@@ -241,9 +242,18 @@ export default function DevelopersPage() {
         </Container>
       </section>
 
+      <RelatedPages
+        links={[
+          { href: "/admins", label: "For administrators", note: "Moderation, federation limits, retention and logs." },
+          { href: "/server", label: "How the server works", note: "Outgoing, incoming, follows and the network." },
+          { href: "/docs", label: "Documentation", note: "Every guide, in one list." },
+          { href: "/why", label: "30 reasons it is special", note: "What the release sets out to do." },
+        ]}
+      />
+
       <CtaBand
         title="Clone it and run it locally."
-        body="Aloha Social is distributed as an app for a host platform. Review its compatibility requirements and setup instructions before building or installing it."
+        body="Aloha Social is distributed as an app for Nextcloud. Review its compatibility requirements and setup instructions before building or installing it."
         primary={{ label: "Server repository", href: SITE.server, external: true }}
         secondary={{ label: "Installation guide", href: "/install" }}
       />

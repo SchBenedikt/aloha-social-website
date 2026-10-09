@@ -25,7 +25,7 @@ const CONFIG_SECTIONS = [
   {
     icon: FileCode,
     title: "config.php Settings",
-    description: "Persistent configuration in host platform's config.php.",
+    description: "Persistent configuration in Nextcloud's config.php.",
     items: [
       { key: "overwrite.cli.url", desc: "Base URL for CLI-generated URLs (critical for federation)", example: "'overwrite.cli.url' => 'https://social.example.com'," },
       { key: "memcache.local", desc: "Local memory cache (APCu recommended)", example: "'memcache.local' => '\\OC\\Memcache\\APCu'," },

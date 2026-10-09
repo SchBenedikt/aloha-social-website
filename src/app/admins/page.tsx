@@ -15,6 +15,7 @@ import {
   Container,
   CtaBand,
   PageHeader,
+  RelatedPages,
   Screenshot,
   SectionHeading,
 } from "@/components/ui";
@@ -31,7 +32,7 @@ const DUTIES = [
   {
     icon: Gavel,
     title: "Moderation",
-    body: "Reports arrive with the post, account and relevant server context. Administrators can limit accounts or domains, suspend users, remove posts and reverse decisions. Moderation actions are recorded in the host platform’s audit log.",
+    body: "Reports arrive with the post, account and relevant server context. Administrators can limit accounts or domains, suspend users, remove posts and reverse decisions. Moderation actions are recorded in the Nextcloud’s audit log.",
     bullets: [
       "A review queue before anything goes out to your users",
       "Per-user and per-domain limits, applied without unfollowing anybody",
@@ -154,7 +155,7 @@ export default function AdminsPage() {
           <SectionHeading
             eyebrow="The weekly rhythm"
             title="Four things to keep an eye on."
-            lede="Aloha Social uses the host platform’s scheduled jobs, storage and audit tools, so operators can manage it alongside their existing services."
+            lede="Aloha Social uses the Nextcloud’s scheduled jobs, storage and audit tools, so operators can manage it alongside their existing services."
           />
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
             {[
@@ -191,9 +192,18 @@ export default function AdminsPage() {
         </Container>
       </section>
 
+      <RelatedPages
+        links={[
+          { href: "/server", label: "How the server works", note: "Signing, delivery, queues and retention." },
+          { href: "/activitypub", label: "ActivityPub and federation", note: "What travels, and what the far side decides." },
+          { href: "/developers", label: "Developer hub", note: "API, protocol, operations and architecture." },
+          { href: "/why", label: "30 reasons it is special", note: "The release key points, in order." },
+        ]}
+      />
+
       <CtaBand
         title="Set up Aloha Social for your community."
-        body="Review the release requirements, configure federation and client routing, then test the service before opening registration."
+        body="Install it on Nextcloud 34 to 36, configure federation and client routing, then test the service before opening registration."
         primary={{ label: "Install Aloha Social", href: "/install" }}
         secondary={{
           label: "Admin guide",

@@ -6,6 +6,7 @@ import {
   CtaBand,
   Flow,
   PageHeader,
+  RelatedPages,
   SectionHeading,
   TermList,
 } from "@/components/ui";
@@ -336,7 +337,7 @@ export default function ActivityPubPage() {
               ],
               [
                 "Server-to-server WebSockets",
-                "Live updates depend on the host platform's push configuration; otherwise clients poll for new activity.",
+                "Live updates depend on the Nextcloud's push configuration; otherwise clients poll for new activity.",
               ],
               [
                 "Automatic bridges to closed networks",
@@ -351,6 +352,15 @@ export default function ActivityPubPage() {
           </ul>
         </Container>
       </section>
+
+      <RelatedPages
+        links={[
+          { href: "/activitypub/federation", label: "Federation guide", note: "Relays, directories and discovery." },
+          { href: "/activitypub/native", label: "How Aloha is built", note: "Accounts, groups, storage and jobs." },
+          { href: "/server", label: "How the server works", note: "Signing, delivery and retention." },
+          { href: "/docs/mastodon", label: "Mastodon compatibility", note: "Which routes and behaviours map." },
+        ]}
+      />
 
       <CtaBand
         title="Read it running on your own server."

@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import type { ReactNode } from "react";
 import { Check, Info } from "lucide-react";
 
@@ -100,7 +101,7 @@ export function CheckList({
   );
 }
 
-/** A screenshot presented inside its host-platform window. */
+/** A screenshot presented inside its Nextcloud window. */
 export function Screenshot({
   src,
   alt,
@@ -288,6 +289,44 @@ export function TermList({
         </div>
       ))}
     </dl>
+  );
+}
+
+export type RelatedLink = { href: string; label: string; note: string };
+
+/** A row of cross-links at the foot of a section, so every page leads somewhere. */
+export function RelatedPages({
+  eyebrow = "Keep reading",
+  links,
+}: {
+  eyebrow?: string;
+  links: readonly RelatedLink[];
+}) {
+  return (
+    <section className="border-t border-line bg-surface py-14">
+      <Container>
+        <span className="eyebrow">{eyebrow}</span>
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {links.map((link) => (
+            <Link
+              key={link.href}
+              href={link.href}
+              className="card card-hover group flex flex-col p-5"
+            >
+              <span className="text-[1.15rem] leading-snug font-semibold text-ink-strong transition-colors group-hover:text-coral">
+                {link.label}
+              </span>
+              <span className="mt-2 text-[14px] leading-relaxed text-muted">
+                {link.note}
+              </span>
+              <span className="mt-auto pt-4 text-[13.5px] font-semibold text-coral">
+                Open <span aria-hidden="true">→</span>
+              </span>
+            </Link>
+          ))}
+        </div>
+      </Container>
+    </section>
   );
 }
 

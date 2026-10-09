@@ -19,19 +19,27 @@ const COLUMNS: FooterColumn[] = [
   {
     heading: "Explore",
     links: [
+      { label: "Why Aloha — 30 reasons", href: "/why" },
       { label: "Features", href: "/features" },
       { label: "ActivityPub and federation", href: "/activitypub" },
+      { label: "Apps and downloads", href: "/clients" },
       { label: "How Aloha Social works", href: "/activitypub/native" },
-      { label: "Client availability", href: "/clients" },
+      { label: "The server", href: "/server" },
+      { label: "About us", href: "/about" },
+      { label: "Why it runs on Nextcloud", href: "/nextcloud" },
     ],
   },
   {
     heading: "For users",
     links: [
       { label: "Get started", href: "/get-started" },
-      { label: "User guide", href: SITE.docs.user },
       { label: "Find a server", href: "/servers" },
+      { label: "User guide", href: SITE.docs.user },
       { label: "Moving an account", href: SITE.docs.moving },
+      { label: "Mastodon compatibility", href: SITE.docs.mastodon },
+      { label: "How Aloha protects you", href: "/protect" },
+      { label: "Privacy at a glance", href: "/privacy" },
+      { label: "Rules for using Aloha", href: "/rules" },
     ],
   },
   {
@@ -41,14 +49,15 @@ const COLUMNS: FooterColumn[] = [
       { label: "Administration overview", href: "/admins" },
       { label: "Admin guide", href: SITE.docs.admin },
       { label: "OCC commands", href: SITE.docs.occ },
+      { label: "AT Protocol status", href: SITE.docs.atproto },
     ],
   },
   {
-    heading: "Project and references",
+    heading: "Developers and project",
     links: [
+      { label: "Developer hub", href: "/developers" },
+      { label: "Developer docs", href: "/developers/docs" },
       { label: "Documentation", href: "/docs" },
-      { label: "Mastodon compatibility", href: SITE.docs.mastodon },
-      { label: "AT Protocol status", href: SITE.docs.atproto },
       { label: "Source code on GitHub", href: SITE.server, external: true },
       { label: "Brand assets", href: "/brand" },
     ],
@@ -63,9 +72,9 @@ export function SiteFooter() {
           <div className="max-w-sm">
             <BrandLogo height={38} onDark />
             <p className="mt-5 text-[15px] leading-relaxed text-sand/75">
-              Open-source social networking for communities. Publish posts
-              and media, follow compatible ActivityPub accounts, and manage
-              your community on a server you control.
+              A fully open-source social network for Nextcloud. One account
+              reaches the whole open social web — no advertising, no tracking,
+              counts hidden by default.
             </p>
             <a
               href={SITE.server}

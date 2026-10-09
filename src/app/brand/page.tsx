@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
-import { ArrowUpRight, Download } from "lucide-react";
+import Link from "next/link";
+import { ArrowRight, ArrowUpRight, Download } from "lucide-react";
 import {
   Container,
   CtaBand,
   PageHeader,
   SectionHeading,
 } from "@/components/ui";
+import { BOILERPLATE, PITCH, PROOF_POINTS } from "@/lib/reasons";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -118,7 +120,7 @@ export default function BrandPage() {
           <SectionHeading
             eyebrow="Colour"
             title="Three colours, published as they are."
-            lede="Coral is the action, deep sea is the voice, sand is the room. These are Aloha Social’s published brand colours; other colours in the interface belong to its host platform or the website theme."
+            lede="Coral is the action, deep sea is the voice, sand is the room. These are Aloha Social’s published brand colours; other colours in the interface belong to Nextcloud or to the website theme."
           />
 
           <div className="mt-10 grid gap-5 sm:grid-cols-3" data-stagger>
@@ -290,6 +292,79 @@ export default function BrandPage() {
                 </li>
               ))}
             </ul>
+          </div>
+        </Container>
+      </section>
+
+      {/* --------------------------------------------------------- press */}
+      <section className="sand border-y border-line py-16 sm:py-20" aria-labelledby="press-heading">
+        <Container className="grid gap-10 lg:grid-cols-[1.15fr_1fr] lg:items-start">
+          <div data-reveal="">
+            <span className="eyebrow">Press</span>
+            <h2
+              id="press-heading"
+              className="mt-4 text-[2.1rem] leading-[1.14] tracking-[-0.03em] text-ink-strong sm:text-[2.4rem]"
+            >
+              Short boilerplate.
+            </h2>
+            <p className="mt-5 text-[16.5px] leading-relaxed text-ink">
+              {BOILERPLATE.intro}
+            </p>
+            <ul className="mt-5 space-y-3 border-t border-line pt-5">
+              {BOILERPLATE.bullets.map((bullet) => (
+                <li
+                  key={bullet}
+                  className="flex gap-3 text-[15px] leading-relaxed text-muted"
+                >
+                  <span className="mt-[9px] size-1.5 shrink-0 rounded-full bg-coral" aria-hidden="true" />
+                  <span>{bullet}</span>
+                </li>
+              ))}
+            </ul>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <Link href="/why" className="btn btn-primary">
+                30 reasons it is special
+                <ArrowRight className="size-4" />
+              </Link>
+              <a
+                href={SITE.server}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-outline"
+              >
+                Source code
+                <ArrowUpRight className="size-4" />
+              </a>
+            </div>
+          </div>
+
+          <div data-reveal="">
+            <span className="eyebrow">One line</span>
+            <blockquote className="mt-4 rounded-2xl border border-line bg-surface p-6 text-[17px] leading-relaxed text-ink-strong">
+              {PITCH}
+            </blockquote>
+            <dl className="mt-6 border-t border-line">
+              {PROOF_POINTS.slice(0, 6).map((point) => (
+                <div
+                  key={point.fact}
+                  className="grid gap-1 border-b border-line py-3.5 sm:grid-cols-[11rem_minmax(0,1fr)] sm:gap-5"
+                >
+                  <dt className="text-[13.5px] font-semibold text-ink-strong">
+                    {point.fact}
+                  </dt>
+                  <dd className="font-mono text-[13px] leading-relaxed text-muted">
+                    {point.value}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+            <Link
+              href="/why#proof"
+              className="mt-5 inline-flex items-center gap-1.5 text-[14px] font-semibold text-coral"
+            >
+              All proof points
+              <ArrowRight className="size-4" />
+            </Link>
           </div>
         </Container>
       </section>

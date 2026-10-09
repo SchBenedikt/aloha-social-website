@@ -17,6 +17,7 @@ export type Feature = {
   facts?: { value: string; label: string }[];
   sections: FeatureSection[];
   quote?: string;
+  docs?: { href: string; label: string }[];
 };
 
 export const FEATURES: Feature[] = [
@@ -42,11 +43,12 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "Pictures, video and audio",
-        body: "JPEG, PNG, GIF, WebP, AVIF and HEIC/HEIF images, plus common video and audio formats, are supported subject to host-platform and server limits. Videos are uploaded in chunks with an app-level ceiling of 2 GB; actual limits can be lower.",
+        body: "JPEG, PNG, GIF, WebP, AVIF and HEIC/HEIF images, plus common video and audio formats, are supported subject to Nextcloud and server limits. Videos are uploaded in chunks with an app-level ceiling of 2 GB; actual limits can be lower.",
         bullets: [
           "Where ffmpeg is installed, supported .mov or HEVC videos can be converted to H.264 MP4. Conversion is optional and availability depends on server configuration.",
           "An H.264 MP4 is never re-encoded, so nothing is lost twice.",
           "PDF, text, Markdown, CSV, ZIP, EPUB, ODF and Office files ride on a post too, drawn as a card you press to download.",
+          "Videos posted to a channel are published as real PeerTube channel videos, so the same video reaches both audiences.",
         ],
       },
       {
@@ -71,6 +73,11 @@ export const FEATURES: Feature[] = [
         heading: "Send it later",
         body: "Pick a time at least five minutes out and Post becomes Schedule. The waiting posts are listed in Settings, each with a way to cancel one.",
       },
+    ],
+    docs: [
+      { href: "/docs/feature-write", label: "Everything the composer carries" },
+      { href: "/docs/user-writing-a-post", label: "Writing a post, step by step" },
+      { href: "/docs/start", label: "Getting started" },
     ],
   },
   {
@@ -109,11 +116,11 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "Photos, videos and remote media",
-        body: "Browse image and video posts in dedicated views. Remote PeerTube videos can be viewed where supported; availability depends on the remote instance and the Aloha Social release.",
+        body: "Browse image and video posts in dedicated views. PeerTube videos play in Aloha with chapters and “continue watching”, and every channel has an RSS feed for podcast apps.",
         bullets: [
-          "The app can display supported remote video chapters and playback progress.",
-          "Aloha Social’s federation compatibility varies by feature and remote service.",
-          "Publishing an Aloha Social video as a PeerTube channel upload is not described as currently supported.",
+          "Remote video chapters and playback progress are displayed where the remote server sends them.",
+          "Photos and videos have their own views, with trending pictures and videos beside the trends.",
+          "Video channels federate with PeerTube in both directions — published out, played back in.",
         ],
       },
       {
@@ -128,6 +135,11 @@ export const FEATURES: Feature[] = [
         heading: "Keyboard and reduced motion",
         body: "The web app supports keyboard navigation, and the site respects your device’s reduced-motion preference. Live updates depend on the host server’s push configuration; otherwise the client checks periodically.",
       },
+    ],
+    docs: [
+      { href: "/docs/for-you", label: "How the For You feed is built" },
+      { href: "/docs/user-reading", label: "Reading: feeds, media and threads" },
+      { href: "/docs/user-keyboard-shortcuts", label: "Keyboard shortcuts" },
     ],
   },
   {
@@ -157,7 +169,7 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "Translation, honestly labelled",
-        body: "Where the host platform has a translation provider configured, a post in another language can be translated in place. The interface identifies the provider so readers know they are seeing a machine translation.",
+        body: "Where the Nextcloud has a translation provider configured, a post in another language can be translated in place. The interface identifies the provider so readers know they are seeing a machine translation.",
       },
       {
         heading: "Notifications that behave",
@@ -168,6 +180,11 @@ export const FEATURES: Feature[] = [
           "Mute a conversation without leaving it; follow-request actions remain available from notifications.",
         ],
       },
+    ],
+    docs: [
+      { href: "/docs/feature-converse", label: "Threads, edits and archives" },
+      { href: "/docs/user-how-a-post-reads", label: "How a post reads" },
+      { href: "/docs/user-what-a-post-used-to-say", label: "Edit history" },
     ],
   },
   {
@@ -201,8 +218,13 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "Explore, and search",
-        body: "The sidebar links to followed hashtags, lists and local trends. Search covers people, hashtags and posts visible to your account. Availability of unified search results depends on the host platform’s search integration.",
+        body: "The sidebar links to followed hashtags, lists and local trends. Search covers people, hashtags and posts visible to your account. Availability of unified search results depends on the Nextcloud’s search integration.",
       },
+    ],
+    docs: [
+      { href: "/docs/feature-discover", label: "Directories, starter packs and trends" },
+      { href: "/docs/user-finding-and-following-people", label: "Finding and following people" },
+      { href: "/docs/user-bluesky", label: "Bluesky, and what carries over" },
     ],
   },
   {
@@ -228,7 +250,7 @@ export const FEATURES: Feature[] = [
         heading: "Collections and team accounts",
         bullets: [
           "Collections — Pixelfed's albums — as a tab of the profile: a shelf of the account's collections, each a page of its posts drawn as the profile grid.",
-          "Team accounts can be connected to a host-platform group, so the group’s membership determines who can post from the shared identity.",
+          "Team accounts can be connected to a Nextcloud group, so the group’s membership determines who can post from the shared identity.",
           "Who wrote each post is recorded and shown to the team and to moderators, and to nobody else.",
         ],
         body: "A team account is an actor like any other: followable from Mastodon and Pixelfed, moderatable, with its own followers.",
@@ -246,6 +268,11 @@ export const FEATURES: Feature[] = [
         heading: "Archives and account moves",
         body: "Aloha Social documents importing posts and follows from supported services, and exporting an archive in a Mastodon-compatible layout. An account move can notify followers when both servers support ActivityPub migration; imported posts are copies, not moved originals. Check the current guide before relying on a migration or export format.",
       },
+    ],
+    docs: [
+      { href: "/docs/user-managing-your-account", label: "Managing your account" },
+      { href: "/docs/user-posting-as-a-team", label: "Posting as a team" },
+      { href: "/docs/moving", label: "Moving an account" },
     ],
   },
   {
@@ -289,11 +316,125 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "For administrators",
-        body: "Moderators can review reports, limit or suspend accounts, remove posts and reverse decisions. Actions are recorded with the responsible moderator in the host platform’s audit log. Operators can configure review queues, domain blocks and retention rules for remote content.",
+        body: "Moderators can review reports, limit or suspend accounts, remove posts and reverse decisions. Actions are recorded with the responsible moderator in the Nextcloud’s audit log. Operators can configure review queues, domain blocks and retention rules for remote content.",
       },
+    ],
+    docs: [
+      { href: "/protect", label: "How Aloha protects you" },
+      { href: "/docs/user-who-is-in-the-photo", label: "Who may reach you, and requests" },
+      { href: "/rules", label: "Rules for using Aloha Social" },
+    ],
+  },
+  {
+    slug: "notify",
+    nav: "Notify",
+    index: "07",
+    title: "Notifications that stay quiet until they matter.",
+    lede: "One page with filters across the top, a New line where you left off, and five questions that decide whether somebody is allowed to ring the bell at all.",
+    image: "/img/readme/notifications.jpg",
+    alt: "The notifications page with filters across the top and a New line marking where you left off",
+    width: 1360,
+    height: 900,
+    facts: [
+      { value: "2 s", label: "in front of you before it marks itself read" },
+      { value: "5", label: "questions deciding who may reach you" },
+      { value: "0", label: "third-party services involved" },
+    ],
+    sections: [
+      {
+        heading: "A page, not a pile",
+        body: "Filters across the top — All, Mentions, Favourites, Boosts, Follows, Polls, Edits — and a New line where you left off. A run of likes of the same post is drawn as one card with the faces stacked rather than the same post quoted twelve times.",
+        bullets: [
+          "It marks itself read after it has been in front of you for two seconds, not the instant it renders, so it stops clearing the badge on your phone for things nobody saw.",
+          "Eight people favourited your post arrives as one line, not eight rows.",
+          "Clients read the same grouping, because it is Mastodon 4.3's grouped notifications.",
+        ],
+      },
+      {
+        heading: "Who may reach you",
+        body: "Five questions about whoever is writing to you — do I follow them, do they follow me, are they new here, is this a private mention I did not ask for, has this server limited them — each answered Allow or Hold for review, in Settings → Notifications beside the digests and quiet hours.",
+        bullets: [
+          "A held person can still write: everything they do waits together at the top of Activities and raises no bell, push or mail.",
+          "Decide once — accept and they are allowed until you stop allowing them; dismiss and what they sent is gone.",
+          "New accounts start calm: strangers, brand-new accounts, unsolicited private mentions and limited accounts held.",
+          "Clients read it as Mastodon 4.3's notification policy, so drop stays available.",
+        ],
+      },
+      {
+        heading: "Nextcloud's own bell rings too",
+        body: "Mentions, favourites, boosts, new followers, follow requests, edits of posts you boosted and polls you voted in all reach Nextcloud notifications and its mail digest, each linking into this app rather than out to a remote server.",
+        bullets: [
+          "A follow request carries Accept and Decline on the bell entry itself.",
+          "Mute a conversation from any post's menu: the thread stays on your timelines and stops notifying you until you unmute it.",
+        ],
+      },
+    ],
+    docs: [
+      { href: "/docs/notify", label: "Notification policy, page by page" },
+      { href: "/docs/user-who-may-reach-you-and-requests", label: "Who may reach you" },
+      { href: "/docs/user-muting-a-conversation", label: "Muting a conversation" },
+    ],
+  },
+  {
+    slug: "nextcloud",
+    nav: "Nextcloud",
+    index: "08",
+    title: "It behaves like the Nextcloud it lives in.",
+    lede: "Share from Files, replies in the Comments tab, link cards in Talk and Deck, dashboard widgets, unified search — and one account, one login, one set of rules.",
+    image: "/brand/screenshot.png",
+    alt: "Aloha Social inside a Nextcloud, with the app menu and the surrounding navigation visible",
+    width: 1918,
+    height: 930,
+    facts: [
+      { value: "1", label: "account, password and two-factor login" },
+      { value: "10", label: "files shareable to the composer at once" },
+      { value: "0", label: "second place to edit your display name" },
+    ],
+    sections: [
+      {
+        heading: "Share to Aloha Social, from Files",
+        body: "Select a picture or a video — up to ten — pick Share to Aloha Social from the menu, and the composer opens with them already attached. Nothing is uploaded a second time.",
+        bullets: [
+          "Public replies to a picture you posted from Files appear in the file's Comments tab, and a comment you write there goes out as your reply.",
+          "Other people's comments on the file stay on your server.",
+        ],
+      },
+      {
+        heading: "Links unfurl, search is unified",
+        body: "Paste a link to a post or a profile into a Talk message, a Text document or a Deck card and it becomes a card with the author, the text and the first picture — only what anybody could read, because the card is cached once for everyone who sees the link.",
+        bullets: [
+          "Unified search, so Aloha Social posts turn up where every other search result does.",
+          "Dashboard widgets and an entry in the contacts menu.",
+          "The Activity app lists your follows, mentions, boosts and favourites, and puts them in its digest mail. Activity's own notifications stay off: the bell is the bell.",
+        ],
+      },
+      {
+        heading: "One identity, and one way to end it",
+        body: "Your display name and avatar come from your Nextcloud account and are changed there — there is no second place to edit a name that would do nothing on an instance whose accounts come from LDAP.",
+        bullets: [
+          "Deleting a Nextcloud user takes their Fediverse account with it: tombstoned, dropped, and a Delete federated so other servers drop their copies too.",
+          "Group membership decides who may post from a shared team account.",
+          "Same login, same password, same two-factor authentication you already use for files, calendar and chat.",
+        ],
+      },
+      {
+        heading: "Where Nextcloud stops and the fediverse starts",
+        body: "Everything federation-shaped — moderation, deliveries, remote media, retention — is handled by the app, not by a setting you have to find. The administrator gets it under Administration → Aloha Social, and you get your account under Settings.",
+        bullets: [
+          "Announcements from your administrators arrive at the top of your timeline.",
+          "Announcements, filters and limits are server policy, so a quiet server stays quiet for everybody.",
+          "See what is deliberately not there yet in the project's own README before you rely on it.",
+        ],
+      },
+    ],
+    docs: [
+      { href: "/nextcloud", label: "Why it runs on Nextcloud" },
+      { href: "/docs/feature-safety-and-privacy-that-is-the-default", label: "Safety and privacy" },
+      { href: "/activitypub/native", label: "How the app talks to the fediverse" },
     ],
   },
 ];
+
 
 export const FEATURE_SLUGS = FEATURES.map((feature) => feature.slug);
 

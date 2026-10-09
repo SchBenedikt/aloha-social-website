@@ -111,6 +111,25 @@ export default async function FeaturePage(
                   ))}
                 </ol>
 
+                {feature.docs?.length ? (
+                  <div className="mt-8 border-t border-line pt-5">
+                    <span className="eyebrow">Read more</span>
+                    <ul className="mt-4 space-y-2.5">
+                      {feature.docs.map((doc) => (
+                        <li key={doc.href}>
+                          <Link
+                            href={doc.href}
+                            className="group inline-flex items-start gap-1.5 text-[14px] leading-snug text-muted transition hover:text-coral"
+                          >
+                            {doc.label}
+                            <ArrowUpRight className="mt-0.5 size-3.5 shrink-0 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : null}
+
                 <div className="mt-8 border-t border-line pt-5">
                   <span className="eyebrow">All features</span>
                   <ol className="mt-4 space-y-2">

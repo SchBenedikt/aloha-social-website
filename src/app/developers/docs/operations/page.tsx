@@ -76,12 +76,12 @@ const RHYTHM = [
   {
     icon: ListChecks,
     title: "Cron does the routine work",
-    body: "Delivery, housekeeping and stream polling are background jobs registered with the host platform. Delivery speed depends on the configured schedule and workload. For continuous delivery, operators can run a worker instead.",
+    body: "Delivery, housekeeping and stream polling are background jobs registered with the Nextcloud. Delivery speed depends on the configured schedule and workload. For continuous delivery, operators can run a worker instead.",
   },
   {
     icon: Database,
     title: "Storage stays in your storage",
-    body: "Attachments use the host platform's file storage and configured quota, with previews supplied by its preview system. Retention can prune remote posts nobody here read while leaving local posts untouched.",
+    body: "Attachments use the Nextcloud's file storage and configured quota, with previews supplied by its preview system. Retention can prune remote posts nobody here read while leaving local posts untouched.",
   },
   {
     icon: ScrollText,
@@ -113,7 +113,7 @@ export default function OperationsDocPage() {
       <PageHeader
         eyebrow="Dev docs · 04"
         title="What you run, and what it does."
-        lede="Aloha Social uses the host platform’s scheduled jobs and OCC command-line interface. This guide covers delivery workers, storage, retention and diagnostics for operators."
+        lede="Aloha Social uses the Nextcloud’s scheduled jobs and OCC command-line interface. This guide covers delivery workers, storage, retention and diagnostics for operators."
         actions={
           <>
             <Link href="/install" className="btn btn-primary">
@@ -205,7 +205,7 @@ export default function OperationsDocPage() {
                 "One install from the app store, or occ app:install social",
                 "Migrations run with the app, not against a separate tool",
                 "Check which app data and files remain before removing the app",
-                "Verify Aloha Social and host-platform version compatibility before upgrading",
+                "Verify Aloha Social and Nextcloud version compatibility before upgrading",
               ]}
             />
             <div className="mt-7 flex flex-wrap gap-3">

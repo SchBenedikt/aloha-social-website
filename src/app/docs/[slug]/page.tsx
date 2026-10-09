@@ -1,123 +1,141 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, ArrowUpRight, BookOpen } from "lucide-react";
+import { ArrowLeft, ArrowRight, ArrowUpRight, Layers } from "lucide-react";
 import { Container, PageHeader } from "@/components/ui";
-import { NATIVE_DOCS, NATIVE_DOC_SLUGS, type NativeDocSlug } from "@/lib/native-docs";
-import { SITE } from "@/lib/site";
+import { DocsSidebar, DocsToc } from "@/components/docs-nav";
+import { DOC_GROUPS, DOC_PAGES, getDocBySlug } from "@/generated/docs";
 import { notFound } from "next/navigation";
 
-const TITLES: Record<NativeDocSlug, string> = {
-  user: "User guide",
-  admin: "Administrator guide",
-  api: "API reference overview",
-  occ: "OCC commands",
-  mastodon: "Mastodon compatibility",
-  atproto: "Bluesky / AT Protocol",
-  moving: "Moving an account",
-  architecture: "Architecture overview",
-};
-
 export function generateStaticParams() {
-  return NATIVE_DOC_SLUGS.map((slug) => ({ slug }));
+  return DOC_PAGES.filter((page) => !page.manual && page.path.startsWith("/docs/")).map((page) => ({
+    slug: page.slug,
+  }));
 }
 
 export async function generateMetadata(
   props: { params: Promise<{ slug: string }> },
 ): Promise<Metadata> {
   const { slug } = await props.params;
-  if (!(slug in NATIVE_DOCS)) return { title: "Documentation" };
-  const doc = NATIVE_DOCS[slug as NativeDocSlug];
+  const page = getDocBySlug(slug);
+  if (!page || page.manual) return { title: "Documentation" };
+  const group = DOC_GROUPS.find((entry) => entry.id === page.group);
   return {
-    title: doc.title,
-    description: doc.summary,
-    alternates: { canonical: `/docs/${slug}` },
+    title: page.title,
+    description: page.description,
+    alternates: { canonical: page.path },
+    openGraph: { title: page.title, description: page.description },
+    keywords: [group?.title ?? "documentation", "Aloha Social", page.title],
   };
 }
 
-export default async function NativeDocPage(
+export default async function DocPage(
   props: { params: Promise<{ slug: string }> },
 ) {
   const { slug } = await props.params;
-  if (!(slug in NATIVE_DOCS)) notFound();
-  const doc = NATIVE_DOCS[slug as NativeDocSlug];
-  const source = SITE.docSources[doc.source];
+  const page = getDocBySlug(slug);
+  if (!page || page.manual || !page.path.startsWith("/docs/")) notFound();
+
+  const group = DOC_GROUPS.find((entry) => entry.id === page.group);
 
   return (
     <>
-      <PageHeader eyebrow="Documentation" title={TITLES[slug as NativeDocSlug]} lede={doc.summary} />
+      <PageHeader
+        eyebrow={group?.title ?? "Documentation"}
+        title={page.title}
+        lede={page.description}
+      />
+
       <section className="py-10 sm:py-14">
         <Container className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_17rem] lg:items-start">
-          <article className="min-w-0 max-w-3xl">
-            {doc.status ? (
-              <aside className="mb-8 rounded-xl border border-coral/35 bg-coral-soft/50 p-5 text-[15px] leading-relaxed text-ink" aria-label="Important status">
-                <p className="font-semibold text-ink-strong">Status and scope</p>
-                <p className="mt-1.5">{doc.status}</p>
-              </aside>
-            ) : null}
-            <div className="space-y-9">
-              {doc.sections.map((section, index) => (
-                <section key={section.title} id={`section-${index + 1}`}>
-                  <h2 className="flex items-baseline gap-3 text-[1.5rem] leading-tight text-ink-strong sm:text-[1.8rem]">
-                    <span className="font-mono text-[12px] tracking-widest text-coral" aria-hidden="true">
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    {section.title}
-                  </h2>
-                  <p className="mt-4 text-[16px] leading-[1.8] text-muted">
-                    {section.body}
-                  </p>
-                  {section.bullets ? (
-                    <ul className="mt-4 space-y-2 border-l-2 border-line pl-5 text-[15px] leading-relaxed text-muted">
-                      {section.bullets.map((bullet) => <li key={bullet}>{bullet}</li>)}
-                    </ul>
-                  ) : null}
-                  {section.code ? (
-                    <pre className="code mt-5 overflow-x-auto rounded-xl border border-line bg-surface p-5" tabIndex={0} aria-label={`${section.title} example`}>
-                      <code>{section.code}</code>
-                    </pre>
-                  ) : null}
-                </section>
-              ))}
-            </div>
-          </article>
+          <div className="min-w-0">
+            <article className="md-prose max-w-3xl">
+              {page.anchor ? (
+                <span id={page.anchor} className="block h-0 scroll-mt-28" aria-hidden="true" />
+              ) : null}
+              <div dangerouslySetInnerHTML={{ __html: page.html }} />
+            </article>
 
-          <aside className="lg:sticky lg:top-28">
-            <div className="card p-5 sm:p-6">
-              <BookOpen className="size-5 text-coral" aria-hidden="true" />
-              <h2 className="mt-3 text-[1.2rem] font-semibold text-ink-strong">Original and current detail</h2>
-              <p className="mt-2 text-[14px] leading-relaxed text-muted">
-                This page is an editorial overview. The repository remains the source for full procedures and version-specific implementation details.
-              </p>
-              <a href={source} target="_blank" rel="noopener noreferrer" aria-label="Open the original GitHub documentation in a new tab" className="btn btn-primary mt-5 w-full">
-                Open original on GitHub
-                <ArrowUpRight className="size-4" aria-hidden="true" />
-              </a>
-              <p className="mt-3 break-all font-mono text-[11px] leading-relaxed text-muted">{source}</p>
-              <Link href="/developers/docs" className="mt-5 inline-flex items-center gap-1.5 text-[14px] font-semibold text-coral">
-                Developer chapters <ArrowRight className="size-3.5" aria-hidden="true" />
-              </Link>
-            </div>
-            <nav aria-label="Documentation pages" className="mt-5 border-t border-line pt-4">
-              <p className="eyebrow">More documentation</p>
-              <ul className="mt-3 space-y-1">
-                {NATIVE_DOC_SLUGS.map((docSlug) => (
-                  <li key={docSlug}>
-                    <Link href={`/docs/${docSlug}`} aria-current={docSlug === slug ? "page" : undefined} className={`block rounded-lg px-3 py-2 text-[14px] transition hover:bg-surface-2 ${docSlug === slug ? "font-semibold text-coral" : "text-muted hover:text-ink"}`}>
-                      {TITLES[docSlug]}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
+            {page.sections && page.sections.length > 0 ? (
+              <section className="mt-12 max-w-3xl" aria-labelledby="in-this-section">
+                <h2
+                  id="in-this-section"
+                  className="flex items-center gap-2 text-[1.35rem] font-semibold text-ink-strong"
+                >
+                  <Layers className="size-5 text-coral" aria-hidden="true" />
+                  In this section
+                </h2>
+                <ul className="mt-5 grid gap-3 sm:grid-cols-2">
+                  {page.sections.map((section) => (
+                    <li key={section.path} className={section.parent ? "sm:col-start-2" : undefined}>
+                      <Link
+                        href={section.path}
+                        className={`card card-hover block h-full transition ${
+                          section.parent ? "border-l-2 border-coral/40 p-4" : "p-4"
+                        }`}
+                      >
+                        <span className="block text-[15px] font-semibold text-ink-strong">
+                          {section.title}
+                        </span>
+                        <span className="mt-1 block text-[13.5px] leading-relaxed text-muted">
+                          {section.description}
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
+
+            <nav
+              aria-label="Documentation pagination"
+              className="mt-12 flex max-w-3xl flex-col gap-4 border-t border-line pt-6 sm:flex-row sm:items-center sm:justify-between"
+            >
+              {page.prev ? (
+                <Link
+                  href={page.prev.path}
+                  className="group inline-flex items-center gap-2 text-[14.5px] font-semibold text-muted transition hover:text-coral"
+                >
+                  <ArrowLeft className="size-4 transition-transform group-hover:-translate-x-1" aria-hidden="true" />
+                  {page.prev.title}
+                </Link>
+              ) : (
+                <span />
+              )}
+              {page.next ? (
+                <Link
+                  href={page.next.path}
+                  className="group inline-flex items-center gap-2 text-right text-[14.5px] font-semibold text-muted transition hover:text-coral"
+                >
+                  {page.next.title}
+                  <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+                </Link>
+              ) : (
+                <span />
+              )}
             </nav>
+
+            {page.source ? (
+              <p className="mt-6 max-w-3xl text-[13px] text-muted">
+                This page is published from the project’s own documentation.{" "}
+                <a
+                  href={page.source}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 font-semibold text-coral hover:underline"
+                >
+                  Read the source on GitHub
+                  <ArrowUpRight className="size-3.5" aria-hidden="true" />
+                </a>
+              </p>
+            ) : null}
+          </div>
+
+          <aside className="space-y-5">
+            <DocsToc toc={page.toc} />
+            <DocsSidebar current={page} source={page.source} />
           </aside>
         </Container>
       </section>
-      <Container>
-        <Link href="/developers" className="mb-12 inline-flex items-center gap-2 text-[14px] font-semibold text-coral">
-          <ArrowLeft className="size-4" aria-hidden="true" />
-          Developer resources
-        </Link>
-      </Container>
     </>
   );
 }

@@ -31,6 +31,7 @@ function ThemeSwitch() {
 }
 
 const NAV_LINKS = [
+  { label: "Why Aloha", href: "/why" },
   { label: "Features", href: "/features" },
   { label: "Documentation", href: "/docs" },
   { label: "Get started", href: "/get-started" },
@@ -70,7 +71,7 @@ export function SiteHeader() {
             <Logo priority />
           </Link>
 
-          <nav aria-label="Main navigation" className="ml-auto hidden items-center gap-1 sm:flex">
+          <nav aria-label="Main navigation" className="ml-auto hidden items-center gap-1 md:flex">
             {NAV_LINKS.map((item) => (
               <Link
                 key={item.href}
@@ -104,7 +105,7 @@ export function SiteHeader() {
               aria-controls="mobile-navigation"
               aria-expanded={open}
               onClick={() => setOpen((value) => !value)}
-              className="grid size-9 place-items-center rounded-full border border-line bg-surface/70 text-ink sm:hidden"
+              className="grid size-9 place-items-center rounded-full border border-line bg-surface/70 text-ink md:hidden"
             >
               {open ? <X className="size-4" /> : <Menu className="size-4" />}
             </button>
@@ -114,7 +115,7 @@ export function SiteHeader() {
         <div
           aria-hidden={!open}
           inert={!open}
-          className={`overflow-hidden border-t border-line transition-[max-height,opacity] duration-300 sm:hidden ${open ? "max-h-56 opacity-100" : "max-h-0 opacity-0"}`}
+          className={`overflow-hidden border-t border-line transition-[max-height,opacity] duration-300 md:hidden ${open ? "max-h-80 opacity-100" : "max-h-0 opacity-0"}`}
         >
           <nav id="mobile-navigation" aria-label="Mobile navigation" className="mx-auto flex max-w-6xl flex-col gap-1 px-5 py-4 sm:px-8 lg:px-12">
             {NAV_LINKS.map((item) => (

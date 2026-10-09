@@ -1,15 +1,14 @@
 export const SITE = {
   name: "Aloha Social",
-  tagline: "Social media for community-run servers.",
+  tagline: "The social network for your Nextcloud.",
   description:
-    "Aloha Social is open-source social networking software for community-run servers. Publish posts and media, follow compatible ActivityPub accounts, and manage a shared online community. Compatibility depends on the release and remote service.",
+    "Aloha Social is a fully open-source social network for Nextcloud. One account reaches Mastodon, Bluesky, Pixelfed, PeerTube and the rest of the open social web — with no advertising, no tracking and counts hidden by default.",
   github: "https://github.com/AlohaSocial",
   server: "https://github.com/AlohaSocial/social",
   logos: "https://github.com/AlohaSocial/Logos",
   apple: "https://github.com/AlohaSocial/Apple",
   android: "https://github.com/AlohaSocial/Android",
   appStore: "https://apps.nextcloud.com/apps/social",
-  appStoreStatusChecked: "October 2026",
   nextcloud: "https://nextcloud.com",
   docs: {
     admin: "/docs/admin",

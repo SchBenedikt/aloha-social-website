@@ -80,7 +80,7 @@ export default function DevDocsPage() {
       <PageHeader
         eyebrow="Developer docs"
         title="The technical chapters."
-        lede="Four technical chapters covering the protocol, federation, API routes and operational commands."
+        lede="Four long-form chapters covering the protocol, federation, API routes and operational commands. They sit alongside the reference documentation — API, architecture, OCC commands, compatibility — which lives in the same sidebar under For developers."
         actions={
           <>
             <Link href="/developers" className="btn btn-primary">

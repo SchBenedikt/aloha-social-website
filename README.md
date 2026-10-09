@@ -1,6 +1,6 @@
 # Aloha Social Website
 
-The official website for [Aloha Social](https://github.com/AlohaSocial) — open-source social networking software for community-run servers.
+The official website for [Aloha Social](https://github.com/AlohaSocial) — a fully open-source social network for Nextcloud.
 
 ## Stack
 

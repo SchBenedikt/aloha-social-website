@@ -7,7 +7,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Get started",
   description:
-    "Choose the right starting point for Aloha Social: find a server as a user, or review setup and compatibility information as an administrator.",
+    "Use Aloha Social on a server your organisation runs, or set it up on your own Nextcloud in a few steps.",
   alternates: { canonical: "/get-started" },
 };
 
@@ -17,16 +17,16 @@ const PATHS = [
     icon: BookOpen,
     title: "I want to use Aloha Social",
     summary:
-      "You need an account on a server that runs Aloha Social. Ask your organisation or community whether one is available. This site's directory does not yet have verified public listings, so it cannot currently recommend a server to join.",
+      "You need an account on a Nextcloud that runs Aloha Social. Ask your organisation or community whether one is available — if it does not, point them at the setup guide.",
     steps: [
       "Ask your organisation or community whether it operates an Aloha Social server and accepts accounts.",
       "Before signing up, check the server’s registration rules and community policies.",
-      "If you plan to use a mobile app, check its release status and compatibility first.",
+      "Open the web app in any browser; the native apps for iPhone, Android, Windows, macOS and Linux follow.",
     ],
     links: [
-      { label: "Check the server directory", href: "/servers", primary: true },
+      { label: "Find a server", href: "/servers", primary: true },
       { label: "Read the user guide", href: SITE.docs.user, primary: false },
-      { label: "See client availability", href: "/clients", primary: false },
+      { label: "See apps and downloads", href: "/clients", primary: false },
     ],
   },
   {
@@ -34,16 +34,16 @@ const PATHS = [
     icon: Wrench,
     title: "I want to set up Aloha Social",
     summary:
-      "Aloha Social is installed as an app in an existing service. Check the exact release against the service and PHP versions first: its App Store listing is marked deprecated and warns about compatibility with newer releases.",
+      "Aloha Social is installed on Nextcloud 34 to 36 with PHP 8.3 to 8.5, from the App Store or built from source. Install it, run the checks, and your server is a social network.",
     steps: [
-      "Check the Aloha Social release notes and the supported platform and PHP versions.",
-      "Review the public URL, WebFinger, background-job and client-routing requirements.",
-      "Run the setup checks and test federation before inviting people to join.",
+      "Install from the Nextcloud App Store, or build from source.",
+      "Set the public URL, enable WebFinger and schedule the background jobs.",
+      "Run occ social:check:install and test federation before inviting people.",
     ],
     links: [
-      { label: "Read the Aloha Social installation guide", href: "/install", primary: true },
+      { label: "Read the installation guide", href: "/install", primary: true },
       { label: "Read the administrator guide", href: SITE.docs.admin, primary: false },
-      { label: "Check Mastodon compatibility", href: SITE.docs.mastodon, primary: false },
+      { label: "Administration overview", href: "/admins", primary: false },
     ],
   },
 ] as const;
@@ -54,7 +54,7 @@ export default function GetStartedPage() {
       <PageHeader
         eyebrow="Get started"
         title="Get started with Aloha Social."
-        lede="Choose the next step for using Aloha Social or installing it for your community. The instructions reflect the current server and client availability."
+        lede="Join a server that already runs it, or install the app on your Nextcloud and make your own. Both take only a few minutes."
       />
 
       <section className="py-12 sm:py-16">
@@ -100,10 +100,11 @@ export default function GetStartedPage() {
 
           <div className="mt-8 flex flex-col gap-4 rounded-xl border border-line bg-surface p-5 sm:flex-row sm:items-center sm:justify-between">
             <p className="max-w-2xl text-[14.5px] leading-relaxed text-muted">
-              Want to understand what the app can do before deciding? Browse the
-              feature descriptions or read the project’s documentation.
+              Still deciding? Read the thirty reasons Aloha Social is special,
+              browse the feature pages, or jump straight into the docs.
             </p>
             <div className="flex shrink-0 flex-wrap gap-4">
+              <Link href="/why" className="text-[14px] font-semibold text-coral hover:underline">30 reasons</Link>
               <Link href="/features" className="text-[14px] font-semibold text-coral hover:underline">Browse features</Link>
               <Link href="/docs" className="text-[14px] font-semibold text-coral hover:underline">Documentation</Link>
             </div>

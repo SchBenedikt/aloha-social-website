@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import {
-  ArrowUpRight,
   AlertTriangle,
+  ArrowRight,
+  ArrowUpRight,
   Globe2,
   Inbox,
   Languages,
@@ -28,7 +29,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Servers",
   description:
-    "A directory of public Aloha Social servers. No listings are currently verified; server profiles and dated, self-reported counts will appear here when available.",
+    "Find an Aloha Social server: ask your organisation, search from your account, or run your own on Nextcloud.",
   alternates: { canonical: "/servers" },
 };
 
@@ -42,37 +43,80 @@ function formatCount(value: number | null) {
 }
 
 export default function ServersPage() {
-  const totalRegistered = SERVERS.reduce(
-    (sum, server) => sum + (server.registered ?? 0),
-    0,
-  );
-  const totalActive = SERVERS.reduce(
-    (sum, server) => sum + (server.active ?? 0),
-    0,
-  );
-
   return (
     <>
       <PageHeader
         eyebrow="Directory"
         title="Find an Aloha Social server."
-        lede="Aloha Social accounts belong to individual servers that set their own registration rules and community policies. This directory is maintained manually and has no verified public listings yet."
+        lede="Aloha Social runs on Nextcloud servers operated by organisations, communities and individuals. Most are private to the people they were built for — here is how to find yours."
         actions={
           <>
-            <a href="#directory" className="btn btn-primary">
-              View listings
-            </a>              <Link href="/install" className="btn btn-outline">
-                Install Aloha Social
-              </Link>
+            <a href="#how" className="btn btn-primary">
+              How to find one
+            </a>
+            <Link href="/install" className="btn btn-outline">
+              Install Aloha Social
+            </Link>
           </>
         }
       />
 
-      {/* ------------------------------------------------- example banner */}
+      {/* ---------------------------------------------------- how to find one */}
+      <section id="how" className="border-b border-line py-16 sm:py-20">
+        <Container>
+          <SectionHeading
+            eyebrow="Three ways"
+            title="How to find a server."
+            lede="Aloha is not a single website. Every server has its own registration rules, so pick the route that fits you."
+          />
+
+          <div className="mt-10 grid gap-5 sm:grid-cols-3" data-stagger>
+            {[
+              {
+                icon: Inbox,
+                title: "Ask your organisation",
+                body: "If your school, company or community runs a Nextcloud, it can run Aloha Social too. One question is usually all it takes — and there is no new account or password to hand out.",
+                link: { label: "Show them the setup guide", href: "/install" },
+              },
+              {
+                icon: Globe2,
+                title: "Search from where you already are",
+                body: "Already on Mastodon, Pixelfed or Bluesky? Search for @you@your.cloud, follow it, and reply from the app you use every day. Nothing to migrate to start with.",
+                link: { label: "See what federates", href: "/activitypub" },
+              },
+              {
+                icon: Lock,
+                title: "Run your own",
+                body: "Install the app on Nextcloud 34 to 36 with PHP 8.3 to 8.5, run the federation checks, and you have a social network server in an afternoon.",
+                link: { label: "Install Aloha Social", href: "/install" },
+              },
+            ].map((way) => (
+              <article key={way.title} className="card card-hover flex flex-col p-6">
+                <span className="grid size-10 place-items-center rounded-xl bg-coral-soft text-coral">
+                  <way.icon className="size-5" strokeWidth={1.9} aria-hidden="true" />
+                </span>
+                <h3 className="mt-4 text-[1.35rem] leading-tight text-ink-strong">
+                  {way.title}
+                </h3>
+                <p className="mt-3 text-[15px] leading-relaxed text-muted">{way.body}</p>
+                <Link
+                  href={way.link.href}
+                  className="mt-auto inline-flex items-center gap-1.5 pt-5 text-[14px] font-semibold text-coral"
+                >
+                  {way.link.label}
+                  <ArrowRight className="size-3.5" />
+                </Link>
+              </article>
+            ))}
+          </div>
+        </Container>
+      </section>
+
+      {/* -------------------------------------------------------- listings */}
       {!DIRECTORY_HAS_VERIFIED_DATA ? (
         <section className="border-b border-line py-6">
           <Container>
-            <div className="flex gap-4 rounded-2xl border border-coral/40 bg-coral-soft/60 p-5">
+            <div className="flex gap-4 rounded-2xl border border-line bg-surface p-5">
               <AlertTriangle
                 className="mt-0.5 size-5 shrink-0 text-coral"
                 strokeWidth={2}
@@ -80,13 +124,13 @@ export default function ServersPage() {
               />
               <div>
                 <p className="text-[15px] font-semibold text-ink">
-                  No verified public server listings yet.
+                  Public listings are added by server operators.
                 </p>
                 <p className="mt-1.5 text-[14.5px] leading-relaxed text-muted">
-                  This directory is maintained manually and does not fetch live
-                  server data. Until listings can be verified, it shows no
-                  server names or account counts. See the project repository for
-                  how to suggest an entry.
+                  The directory below is maintained by hand from information an
+                  operator publishes — this site never connects to a server or
+                  scrapes account counts. Until an operator asks for a listing,
+                  the table stays empty rather than showing guesses.
                 </p>
               </div>
             </div>
@@ -94,37 +138,6 @@ export default function ServersPage() {
         </section>
       ) : null}
 
-      {/* ------------------------------------------------------ at a glance */}
-      <section className="border-b border-line py-8">
-        <Container>
-          <dl className="grid gap-6 sm:grid-cols-3">
-            <div>
-              <dt className="font-mono text-[11.5px] tracking-widest text-muted uppercase">
-                Public servers listed
-              </dt>
-              <dd className="font-brand mt-2 text-[2.4rem] leading-none font-semibold text-ink-strong">
-                {number.format(SERVERS.length)}
-              </dd>
-            </div>
-            <div>
-              <dt className="font-mono text-[11.5px] tracking-widest text-muted uppercase">
-                Registered accounts, approximate
-              </dt>
-              <dd className="font-brand mt-2 text-[2.4rem] leading-none font-semibold text-coral">
-                {DIRECTORY_HAS_VERIFIED_DATA ? formatCount(totalRegistered) : "Unavailable"}
-              </dd>
-            </div>
-            <div>
-              <dt className="font-mono text-[11.5px] tracking-widest text-muted uppercase">
-                Active this month, approximate
-              </dt>
-              <dd className="font-brand mt-2 text-[2.4rem] leading-none font-semibold text-ink-strong">
-                {DIRECTORY_HAS_VERIFIED_DATA ? formatCount(totalActive) : "Unavailable"}
-              </dd>
-            </div>
-          </dl>
-        </Container>
-      </section>
 
       {/* --------------------------------------------------------- criteria */}
       <section className="py-16 sm:py-20">
@@ -162,7 +175,7 @@ export default function ServersPage() {
             <SectionHeading
             eyebrow="Side by side"
             title="The comparison."
-            lede="When listings are available, figures will be rounded, self-reported and dated — useful context, not an audit."
+            lede="Figures are rounded, self-reported and dated — useful context, not an audit."
             />
             <span className="shrink-0 font-mono text-[12px] tracking-wide text-muted">
               {DIRECTORY_HAS_VERIFIED_DATA
@@ -226,7 +239,7 @@ export default function ServersPage() {
                 )) : (
                   <tr>
                     <td colSpan={7} className="border-b border-line py-8 text-center text-[14px] text-muted">
-                      No verified server listings available.
+                      No public listings yet. Ask your operator, or run your own server.
                     </td>
                   </tr>
                 )}
@@ -328,7 +341,7 @@ export default function ServersPage() {
               </article>
             )) : (
               <p className="text-[15px] leading-relaxed text-muted">
-                Server profiles will appear here when verified listings are available.
+                Server profiles appear here once an operator publishes one. In the meantime, the three routes above are how most people find Aloha Social.
               </p>
             )}
           </div>
@@ -344,10 +357,9 @@ export default function ServersPage() {
               Running a public server?
             </h2>
             <p className="mt-5 max-w-xl text-[16.5px] leading-relaxed text-muted">
-              The directory is maintained from verified information and does
-              not connect to servers or accept listings through this page. The
-              project repository is the place to ask about adding a listing; do
-              not send account or private server data.
+              Send the server address, its registration policy, the languages
+              it speaks and who moderates it. The repository is where a listing
+              is requested — please do not send accounts or private data.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <a
@@ -388,9 +400,9 @@ export default function ServersPage() {
 
       <CtaBand
         title="Want to run an Aloha Social server?"
-        body="Aloha Social is installed into an existing host-platform service. Check the app release and compatibility requirements before setting it up."
+        body="Aloha Social is installed on Nextcloud 34 to 36 with PHP 8.3 to 8.5. Install it, run the checks, and your server joins the open social web."
         primary={{ label: "Install Aloha Social", href: "/install" }}
-        secondary={{ label: "The software", href: "/server" }}
+        secondary={{ label: "How the server works", href: "/server" }}
       />
     </>
   );

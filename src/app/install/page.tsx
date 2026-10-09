@@ -7,7 +7,7 @@ const JSON_LD = {
   "@context": "https://schema.org",
   "@type": "HowTo",
   name: "Install Aloha Social",
-  description: "Step-by-step guide to install and configure Aloha Social on a compatible host platform.",
+  description: "Step-by-step guide to install and configure Aloha Social on a compatible Nextcloud.",
   image: `${SITE.url}/brand/social-promo.png`,
   estimatedCost: {
     "@type": "MonetaryAmount",
@@ -33,14 +33,14 @@ const JSON_LD = {
       "@type": "HowToStep",
       position: 1,
       name: "Check requirements",
-      text: "Verify host platform version, PHP version, and App Store compatibility before proceeding.",
+      text: "Verify Nextcloud version, PHP version, and App Store compatibility before proceeding.",
       url: `${SITE.url}/install#requirements`,
     },
     {
       "@type": "HowToStep",
       position: 2,
       name: "Install via App Store or build from source",
-      text: "Use the host platform's App Store or clone the repository and run composer install + npm build.",
+      text: "Use Nextcloud's App Store or clone the repository and run composer install + npm build.",
       url: `${SITE.url}/install#source`,
     },
     {
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/install" },
   openGraph: {
     title: "Install Aloha Social — Aloha Social",
-    description: "Step-by-step guide to install and configure Aloha Social on a compatible host platform.",
+    description: "Step-by-step guide to install and configure Aloha Social on a compatible Nextcloud.",
     type: "website",
     images: [{ url: `${SITE.url}/brand/social-promo.png`, width: 1280, height: 640 }],
   },
@@ -177,12 +177,10 @@ export default function InstallPage() {
           Install and configure Aloha Social.
         </h1>
         <p className="mt-5 text-[17px] leading-relaxed text-muted">
-          As checked in {SITE.appStoreStatusChecked}, the App Store listing for
-          Aloha Social is marked deprecated and warns of compatibility issues
-          with newer releases of its host platform. Check the app release, host
-          platform and PHP versions before installing Aloha Social in production.
-          These guides explain the process; they are not a promise of ongoing
-          upstream support.
+          Aloha Social installs on Nextcloud 34 to 36 with PHP 8.3 to 8.5, from
+          the App Store or built from source. Set the public URL, run the
+          federation checks and it is ready — your Nextcloud becomes a social
+          network server.
         </p>
       </header>
 
@@ -201,19 +199,19 @@ export default function InstallPage() {
         <div className="min-w-0 max-w-3xl">
           <H2 id="requirements">Requirements</H2>
           <div className="mt-5 rounded-xl border border-coral/35 bg-coral-soft/50 p-5 text-[15px] leading-relaxed text-ink">
-            <p className="font-semibold text-ink-strong">App Store status</p>
+            <p className="font-semibold text-ink-strong">Supported versions</p>
             <p className="mt-1.5">
-              As checked in {SITE.appStoreStatusChecked}, the Aloha Social listing
-              is marked deprecated. Check the listing and source repository for
-              a release compatible with your host platform before proceeding.
+              Aloha Social runs on Nextcloud 34 to 36 with PHP 8.3 to 8.5. The
+              release in the App Store matches those versions; check your server
+              before installing.
             </p>
-            <a href={SITE.appStore} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1.5 font-semibold text-coral underline underline-offset-4">Check the current App Store listing <ArrowUpRight className="size-4" /></a>
+            <a href={SITE.appStore} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1.5 font-semibold text-coral underline underline-offset-4">Open the Nextcloud App Store listing <ArrowUpRight className="size-4" /></a>
           </div>
           <ul className="mt-5 space-y-3 text-[15.5px] leading-relaxed">
             {[
-              "An existing host-platform installation that you administer and can reach over HTTPS.",
+              "Nextcloud 34 to 36 with PHP 8.3 to 8.5, reachable over HTTPS.",
               "Permission to install apps — the App Store route, or a shell on the server for the source route.",
-              "The PHP extensions required by the host platform, plus Composer when building from source.",
+              "The PHP extensions required by Nextcloud, plus Composer when building from source.",
               "A configured memory cache and scheduled background jobs.",
               "Optionally ffmpeg, for transcoding some uploaded videos; effective upload limits also depend on PHP and the web server.",
             ].map((item) => (
@@ -226,13 +224,12 @@ export default function InstallPage() {
             ))}
           </ul>
 
-          <H2 id="app-store">App Store listing</H2>
+          <H2 id="app-store">Install from the App Store</H2>
           <p className="mt-5 text-[15.5px] leading-relaxed text-muted">
-            The listing remains useful for checking published Aloha Social
-            releases and supported host-platform versions. As checked in{" "}
-            {SITE.appStoreStatusChecked}, it is marked deprecated. Do not assume
-            a release is supported on your server; check its release notes and
-            source repository before upgrading or deploying.
+            Open your Nextcloud’s Apps section, search for Aloha Social and
+            install it. It appears in the app grid as soon as it is enabled, and
+            every existing account — including SSO and two-factor logins — gains
+            a social identity with no new password.
           </p>
           <a
             href={SITE.appStore}
@@ -240,18 +237,18 @@ export default function InstallPage() {
             rel="noopener noreferrer"
             className="btn btn-outline mt-5"
           >
-            Check listing and release status
+            Open the App Store listing
             <ArrowUpRight className="size-4" />
           </a>
 
           <H2 id="source">Build from source</H2>
           <p className="mt-5 text-[15.5px] leading-relaxed text-muted">
-            For maintainers familiar with deploying apps for the host platform. Building Aloha Social from source does not by itself provide a signed production release or compatibility guarantee. Use the exact branch or tag you intend to deploy and review its migration requirements.
+            For maintainers familiar with deploying apps for Nextcloud. Building Aloha Social from source does not by itself provide a signed production release or compatibility guarantee. Use the exact branch or tag you intend to deploy and review its migration requirements.
           </p>
           <div className="mt-5 space-y-4">
             <Code
               lines={[
-                "cd /path/to/host-platform/apps/social",
+                "cd /path/to/nextcloud/apps/social",
                 "composer install     # PHP dependencies",
                 "npm ci",
                 "npm run build        # production bundle into js/",
@@ -315,7 +312,7 @@ export default function InstallPage() {
           <H2 id="background">Background jobs</H2>
           <p className="mt-5 text-[15.5px] leading-relaxed text-muted">
             Outbound delivery and the stream queue are both drained by
-            the host platform&apos;s background jobs. For continuous delivery — rather
+            the Nextcloud&apos;s background jobs. For continuous delivery — rather
             than the roughly a thousand deliveries an hour cron manages — run
             one or more workers:
           </p>
@@ -338,7 +335,7 @@ export default function InstallPage() {
               apart.
             </p>
             <Callout title="One: the server does not answer /.well-known/webfinger">
-              Follow the documented redirects in the host platform’s
+              Follow the documented redirects in the Nextcloud’s
               administration manual for setting up well-known URLs.
             </Callout>
             <Callout tone="warn" title="Two: the address has changed since first use">
