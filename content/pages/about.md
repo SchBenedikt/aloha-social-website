@@ -43,9 +43,7 @@ Aloha Social is built by a small core team at Nextcloud together with contributo
 | **Hamza** | Core developer |
 | **Jan C. Borchardt** | Design & UX lead |
 
-<div style="border: none; box-shadow: none;">
 [![All contributors](https://contrib.rocks/image?repo=AlohaSocial/social&max=100&columns=20)](https://github.com/AlohaSocial/social/graphs/contributors)
-</div>
 
 **All contributors:** [github.com/AlohaSocial/social/graphs/contributors](https://github.com/AlohaSocial/social/graphs/contributors)
 
