@@ -428,6 +428,66 @@ const size = (tokens) => tokens.reduce((n, token) => n + (token.raw?.length ?? 0
 const firstDepth = (tokens, depth) =>
   tokens.findIndex((token) => token.type === "heading" && token.depth === depth);
 
+/* One upstream table is interrupted by a section and a code fence, so its
+   trailing rows arrive without a header and markdown reads them as prose full
+   of pipes. Re-attach such orphan rows to the header of an earlier table with
+   the same column count (another section's when there is one). */
+const repairSplitTables = (raw) => {
+  const lines = raw.split("\n");
+  const isRow = /^\s*\|/;
+  const isDelimiter = /^\s*\|[\s:|-]+\|\s*$/;
+  const isHeading = /^(#{1,6})\s+(.*)$/;
+  const columns = (row) =>
+    row.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").length;
+
+  const stack = [];
+  const headers = [];
+  const orphans = [];
+
+  for (let i = 0; i < lines.length; i += 1) {
+    const heading = lines[i].match(isHeading);
+    if (heading) {
+      const level = heading[1].length;
+      while (stack.length && stack[stack.length - 1].level >= level) stack.pop();
+      stack.push({ level, text: heading[2].trim() });
+      continue;
+    }
+    if (isRow.test(lines[i]) && isDelimiter.test(lines[i + 1] ?? "")) {
+      headers.push({ line: lines[i], cols: columns(lines[i]), context: stack.map((entry) => entry.text).join(" > ") });
+      while (i < lines.length && isRow.test(lines[i])) i += 1;
+      i -= 1;
+      continue;
+    }
+    if (isRow.test(lines[i])) {
+      const start = i;
+      while (i < lines.length && isRow.test(lines[i])) i += 1;
+      i -= 1;
+      orphans.push({ start, end: i + 1, cols: columns(lines[start]), context: stack.map((entry) => entry.text).join(" > ") });
+    }
+  }
+
+  if (!orphans.length) return raw;
+  const insertions = [];
+  for (const orphan of orphans) {
+    const candidates = headers.filter((header) => header.cols === orphan.cols);
+    const header =
+      candidates.filter((candidate) => candidate.context !== orphan.context).pop() ?? candidates.pop();
+    if (!header) continue;
+    insertions.push(orphan.start, header.line, `|${Array(orphan.cols).fill("---").join("|")}|`);
+  }
+  if (!insertions.length) return raw;
+
+  const out = [];
+  let cursor = 0;
+  while (insertions.length) {
+    const at = insertions.shift();
+    out.push(...lines.slice(cursor, at), "", insertions.shift(), insertions.shift());
+    cursor = at;
+  }
+  out.push(...lines.slice(cursor));
+  return out.join("\n");
+};
+
 const registerAnchor = (file, page) => {
   if (!page.anchor) return;
   const map = fragmentOwner.get(file) ?? new Map();
@@ -456,10 +516,12 @@ const addSectionPage = (source, section, baseDepth) => {
 
 
 for (const source of SOURCES) {
-  const raw = fs
-    .readFileSync(path.join(UPSTREAM_DIR, source.file), "utf8")
-    .replace(/<!--[\s\S]*?-->/g, "")
-    .replace(/^\s*\n/, "");
+  const raw = repairSplitTables(
+    fs
+      .readFileSync(path.join(UPSTREAM_DIR, source.file), "utf8")
+      .replace(/<!--[\s\S]*?-->/g, "")
+      .replace(/^\s*\n/, ""),
+  );
   const { title, intro, sections } = splitSections(marked.lexer(raw));
   const skipped = (source.skip ?? []).map(cleanTitle);
   const kept = sections.filter((section) => !skipped.includes(cleanTitle(headingText(section.heading))));
@@ -680,6 +742,287 @@ const rewriteLinks = (page) => {
   });
 };
 
+/* Turn the paragraph leads of long, heading-less pages (`` `Component.vue` ``
+   and `` **Bold lead.** ``) into real sub-headings, so a 90 KB wall of text
+   becomes something with anchors and a table of contents. */
+/* API reference tables carry a whole paragraph of prose in their Description
+   column. Rendered as a five-column table that is unreadable — so a table whose
+   header starts with Method | Route becomes one block per route instead. */
+const isRouteTable = (token) =>
+  token.type === "table" &&
+  (token.header?.length ?? 0) >= 4 &&
+  /^method$/i.test(tokensText(token.header[0]?.tokens ?? [])) &&
+  /route/i.test(tokensText(token.header[1]?.tokens ?? []));
+
+const textToken = (text) => ({ type: "text", text });
+const strongToken = (text) => ({ type: "strong", tokens: [textToken(text)] });
+
+const routeBlocks = (table, depth) => {
+  const heads = table.header.map((cell) => tokensText(cell.tokens ?? []));
+  const index = (pattern) => heads.findIndex((head) => pattern.test(head));
+  const auth = index(/auth/i);
+  const params = index(/param/i);
+  const description = index(/desc/i);
+  const out = [];
+
+  for (const row of table.rows) {
+    const method = tokensText(row[0]?.tokens ?? []);
+    const route = tokensText(row[1]?.tokens ?? []);
+    const title = `${method} ${route}`.replace(/\s+/g, " ").trim();
+    if (!title) continue;
+
+    out.push({
+      type: "heading",
+      depth,
+      raw: `${"#".repeat(depth)} ${title}`,
+      text: title,
+      tokens: [textToken(title)],
+    });
+
+    const meta = [];
+    const push = (label, cell) => {
+      if (!cell?.tokens?.length) return;
+      if (meta.length) meta.push(textToken(" · "));
+      meta.push(strongToken(`${label}: `), ...cell.tokens);
+    };
+    push("Auth", auth >= 0 ? row[auth] : null);
+    push("Parameters", params >= 0 ? row[params] : null);
+    if (meta.length) {
+      out.push({ type: "paragraph", raw: "", text: tokensText(meta), tokens: meta });
+    }
+
+    const body = description >= 0 ? row[description]?.tokens : null;
+    if (body?.length) {
+      out.push({ type: "paragraph", raw: "", text: tokensText(body), tokens: body });
+    }
+  }
+  return out;
+};
+
+const convertRouteTables = (page) => {
+  let converted = 0;
+  const rewrite = (list) => {
+    for (let i = 0; i < list.length; i += 1) {
+      const token = list[i];
+      if (isRouteTable(token)) {
+        const blocks = routeBlocks(token, page.baseDepth + 1);
+        if (blocks.length) {
+          converted += 1;
+          list.splice(i, 1, ...blocks);
+          i += blocks.length - 1;
+        }
+      } else {
+        if (token.tokens) rewrite(token.tokens);
+        if (token.items) token.items.forEach((item) => rewrite(item.tokens));
+        if (token.header) rewrite(token.header);
+        if (token.rows) token.rows.forEach((row) => rewrite(row));
+      }
+    }
+  };
+  rewrite(page.tokens);
+  return converted;
+};
+
+const leadOf = (inline) => {
+  if (!inline?.length) return null;
+  let at = 0;
+  if (inline[0]?.type === "text" && !inline[0].text.trim() && inline[1]) at = 1;
+  const lead = inline[at];
+  if (lead?.type === "codespan") {
+    return { head: String(lead.text ?? "").trim(), rest: inline.slice(at + 1), strong: false };
+  }
+  if (lead?.type === "strong") {
+    return {
+      head: tokensText(lead.tokens ?? []).trim().replace(/[.:。]+$/, ""),
+      rest: inline.slice(at + 1),
+      strong: true,
+    };
+  }
+  return null;
+};
+
+const dropLeadDash = (tokens) => {
+  const [first, ...rest] = tokens;
+  if (first?.type !== "text") return tokens;
+  const text = String(first.text ?? "").replace(/^\s*[—–-]\s*/, "");
+  if (!text) return rest;
+  return [{ ...first, text }, ...rest];
+};
+
+const headingToken = (depth, text) => ({
+  type: "heading",
+  depth,
+  raw: `${"#".repeat(depth)} ${text}`,
+  text,
+  tokens: [{ type: "text", text }],
+});
+
+/* Long, heading-less pages are built from `` **Lead.** `` paragraphs and list
+   items. Promote those leads to real sub-headings so the page gets anchors and
+   a table of contents instead of being one unbroken scroll. */
+/* `Key | Default | Meaning` style tables: one row per setting, with prose in
+   the last column. As a table that is one dense wall; as a heading per key the
+   page gets anchors and reads like the settings it documents. */
+const isDefinitionTable = (token, { allowDuplicateKeys } = {}) => {
+  if (token.type !== "table") return false;
+  const cols = token.header?.length ?? 0;
+  const rows = token.rows ?? [];
+  if (cols < 3 || rows.length < 5) return false;
+
+  const keys = rows.map((row) => tokensText(row[0]?.tokens ?? []).trim());
+  if (keys.some((key) => !key || key.length > 60)) return false;
+  if (!allowDuplicateKeys && new Set(keys).size !== keys.length) return false;
+
+  const last = rows.map((row) => tokensText(row[cols - 1]?.tokens ?? [])).join(" ");
+  return last.length / rows.length >= 100;
+};
+
+const definitionBlocks = (table, depth) => {
+  const heads = table.header.map((cell) => tokensText(cell.tokens ?? []).trim());
+  const out = [];
+
+  for (const row of table.rows) {
+    const key = tokensText(row[0]?.tokens ?? []).trim();
+    if (!key) continue;
+    out.push({ type: "heading", depth, raw: `${"#".repeat(depth)} ${key}`, text: key, tokens: [textToken(key)] });
+
+    const meta = [];
+    for (let column = 1; column < row.length - 1; column += 1) {
+      const cell = row[column];
+      if (!cell?.tokens?.length || !tokensText(cell.tokens).trim()) continue;
+      if (meta.length) meta.push(textToken(" · "));
+      meta.push(strongToken(`${heads[column] ?? `Column ${column + 1}`}: `), ...cell.tokens);
+    }
+    if (meta.length) out.push({ type: "paragraph", raw: "", text: tokensText(meta), tokens: meta });
+
+    const body = row[row.length - 1]?.tokens;
+    if (body?.length && tokensText(body).trim()) {
+      out.push({ type: "paragraph", raw: "", text: tokensText(body), tokens: body });
+    }
+  }
+  return out;
+};
+
+const convertDefinitionTables = (page, options) => {
+  let converted = 0;
+  const rewrite = (list) => {
+    for (let i = 0; i < list.length; i += 1) {
+      const token = list[i];
+      if (isDefinitionTable(token, options)) {
+        const blocks = definitionBlocks(token, page.baseDepth + 1);
+        if (blocks.length) {
+          converted += 1;
+          list.splice(i, 1, ...blocks);
+          i += blocks.length - 1;
+          continue;
+        }
+      }
+      if (token.type === "table") continue;
+      if (token.tokens) rewrite(token.tokens);
+      if (token.items) token.items.forEach((item) => rewrite(item.tokens));
+    }
+  };
+  rewrite(page.tokens);
+  return converted;
+};
+
+const synthesizeHeadings = (page) => {
+  convertRouteTables(page);
+  const structured = walkCollect(page.tokens, (token) => token.type === "heading").length > 0;
+  convertDefinitionTables(page, { allowDuplicateKeys: !structured });
+  if (structured || size(page.tokens) < 8000) return;
+
+  const depth = page.baseDepth + 1;
+  let created = 0;
+
+  const leadOfBlock = (block) => {
+    if (block?.type !== "paragraph" && block?.type !== "text") return null;
+    if (!block.tokens?.length) return null;
+    const lead = leadOf(block.tokens);
+    if (!lead?.head || lead.head.length > 90) return null;
+    return lead;
+  };
+
+  const blocksFromLead = (block, lead, { allowLabel, restMin, rawMin }) => {
+    if (!lead.rest.length) {
+      if (!allowLabel || !lead.strong || lead.head.length > 60) return null;
+      created += 1;
+      return [headingToken(depth, lead.head)];
+    }
+    const restText = tokensText(lead.rest).replace(/^[\s—–-]+/, "").trim();
+    if ((block.raw?.length ?? 0) < rawMin || restText.length < restMin) return null;
+    created += 1;
+    return [
+      headingToken(depth, lead.head),
+      { type: "paragraph", raw: block.raw, text: restText, tokens: dropLeadDash(lead.rest) },
+    ];
+  };
+
+  const out = [];
+  let first = true;
+  for (const token of page.tokens) {
+    const allowLabel = first;
+    first = false;
+
+    if (token.type === "list") {
+      const entries = token.items.map((item) => ({ item, block: item.tokens?.[0], lead: leadOfBlock(item.tokens?.[0]) }));
+      const definitionList = entries.filter((entry) => entry.lead).length >= 3 && size([token]) >= 1500;
+      let bucket = null;
+      for (const { item, block, lead } of entries) {
+        let blocks = null;
+        if (definitionList && lead) {
+          blocks = blocksFromLead(block, lead, { allowLabel: true, restMin: 10, rawMin: 0 });
+          if (blocks) blocks = [...blocks, ...(item.tokens ?? []).slice(1)];
+        }
+        if (blocks) {
+          if (bucket) {
+            out.push(bucket);
+            bucket = null;
+          }
+          out.push(...blocks);
+        } else {
+          bucket ??= { ...token, items: [] };
+          bucket.items.push(item);
+        }
+      }
+      if (bucket) out.push(bucket);
+      continue;
+    }
+
+    if (token.type === "paragraph" && (token.raw?.length ?? 0) >= 300) {
+      const lead = leadOf(token.tokens);
+      if (lead?.head && lead.head.length <= 90 && (lead.rest.length || allowLabel)) {
+        const blocks = blocksFromLead(token, lead, { allowLabel, restMin: 60, rawMin: 300 });
+        if (blocks) {
+          out.push(...blocks);
+          continue;
+        }
+      }
+    }
+    out.push(token);
+  }
+
+
+  if (created >= 3) page.tokens = out;
+  else if (process.env.DOCS_DEBUG) {
+    console.log(`  no headings: ${page.path} size=${size(page.tokens)} created=${created}`);
+  }
+};
+
+const walkCollect = (tokens, match) => {
+  const found = [];
+  const walk = (list) => {
+    for (const token of list ?? []) {
+      if (match(token)) found.push(token);
+      if (token.tokens) walk(token.tokens);
+      if (token.items) token.items.forEach((item) => walk(item.tokens));
+    }
+  };
+  walk(tokens);
+  return found;
+};
+
+for (const page of allPages) synthesizeHeadings(page);
 for (const page of allPages) assignIds(page);
 for (const page of allPages) rewriteLinks(page);
 
