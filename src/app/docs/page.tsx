@@ -21,11 +21,7 @@ const GROUP_ICONS: Record<string, typeof Rocket> = {
   occ: Wrench,
   mastodon: ArrowUpRight,
   performance: Sparkles,
-  api: Code2,
-  architecture: Code2,
   atproto: ArrowUpRight,
-  project: Shield,
-  developer: Code2,
 };
 
 const OUTSIDE = [

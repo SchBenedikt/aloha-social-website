@@ -101,23 +101,7 @@ const GROUPS = [
     description: "Every command the app adds to occ, grouped by the task it performs.",
     source: BLOB + "OCC-Commands.md",
   },
-  {
-    id: "api",
-    category: "developers",
-    title: "API reference",
-    description:
-      "The Mastodon-compatible client API, the local API, OAuth, ActivityPub federation endpoints and error handling.",
-    source: BLOB + "API.md",
-  },
-  {
-    id: "architecture",
-    category: "developers",
-    title: "Architecture",
-    description:
-      "How the app is put together: routing, schema, services, federation, timelines at scale and the frontend.",
-    source: BLOB + "Architecture.md",
-  },
-  {
+{
     id: "mastodon",
     category: "users",
     title: "Mastodon compatibility",
@@ -127,33 +111,11 @@ const GROUPS = [
   },
   {
     id: "atproto",
-    category: "developers",
+    category: "users",
     title: "Bluesky / AT Protocol",
     description:
       "How every Aloha account is also a Bluesky account — identity, repositories, the firehose, moderation and operations.",
     source: BLOB + "Atproto-Compatibility.md",
-  },
-  {
-    id: "performance",
-    category: "admins",
-    title: "Performance",
-    description: "What a page costs, what was fixed, and what is measured next.",
-    source: BLOB + "Performance.md",
-  },
-  {
-    id: "project",
-    category: "developers",
-    title: "Project internals",
-    description:
-      "Technical debt, testing and how the documentation itself is kept in step with the code.",
-    source: BLOB + "Technical-Debt.md",
-  },
-  {
-    id: "developer",
-    category: "developers",
-    title: "Developer chapters",
-    description:
-      "Long-form chapters for people extending the app: protocol, federation, API and operations.",
   },
 ];
 
@@ -215,8 +177,6 @@ const SOURCES = [
   },
   { file: "Admin.md", group: "admin", prefix: "admin", skip: ["Contents"], threshold: 15000 },
   { file: "OCC-Commands.md", group: "occ", prefix: "occ", skip: ["Contents"], threshold: 16000 },
-  { file: "API.md", group: "api", prefix: "api", skip: ["Contents"], threshold: 14000 },
-  { file: "Architecture.md", group: "architecture", prefix: "architecture", skip: ["Contents"], threshold: 14000 },
   {
     file: "Mastodon-Compatibility.md",
     group: "mastodon",
