@@ -6,7 +6,7 @@ description: Who builds Aloha Social, how it is funded and governed, and what th
 
 # About us
 
-Aloha Social is a fully open-source social network for Aloha. It is built in the open, published under the AGPL-3.0-or-later licence, and developed at [github.com/AlohaSocial/social](https://github.com/AlohaSocial/social).
+Aloha Social is a fully open-source social network for Nextcloud. It is built in the open, published under the AGPL-3.0-or-later licence, and developed at [github.com/AlohaSocial/social](https://github.com/AlohaSocial/social).
 
 ## What we are trying to be
 
@@ -18,19 +18,29 @@ A social network that is good to be in. That sounds vague, so here is what it me
 - **Complexity stays hidden.** Federation is genuinely complicated. None of that complexity is handed to the person posting.
 - **Design comes first.** A real phone layout, a dark mode that is the same design, full keyboard navigation, sound and haptics that are optional, and respect for the system's reduced-motion setting.
 
-## Why Aloha
+## Why Nextcloud
 
-Aloha Social is an Aloha app, not another service to run. That choice buys three things a separate network cannot:
+Aloha Social is a Nextcloud app, not another service to run. That choice buys three things a separate network cannot:
 
 1. **No new account, no new password.** The login people already have — including single sign-on and two-factor authentication — is the login.
 2. **The data stays where the organisation's data already is.** Posts live next to the files, calendar and chat, on infrastructure the organisation controls and backs up under its own rules.
-3. **It is part of the workspace.** Posts appear in unified search, links unfurl in Talk, Text and Deck, and notifications use the Aloha bell and mail digest.
+3. **It is part of the workspace.** Posts appear in unified search, links unfurl in Talk, Text and Deck, and notifications use the Nextcloud bell and mail digest.
 
-Read [why built into Aloha](/nextcloud) for the full list.
+Read [why it runs on Nextcloud](/nextcloud) for the full list.
 
 ## Who builds it
 
-Aloha Social grew out of Nextcloud Social and is maintained by a small core team together with contributors from across the Nextcloud and fediverse communities. The project history, the full list of previous contributors and the current maintainers are published in [AUTHORS.md](https://github.com/AlohaSocial/social/blob/master/AUTHORS.md).
+Aloha Social grew out of Nextcloud Social and is maintained by a small core team together with contributors from across the Nextcloud and fediverse communities.
+
+### Core Team & Maintainers
+
+The project is led by a dedicated core team at Nextcloud, with ongoing contributions from the wider community. All maintainers are listed in [AUTHORS.md](https://github.com/AlohaSocial/social/blob/master/AUTHORS.md).
+
+### All Contributors
+
+[![Contributors](https://contrib.rocks/image?repo=AlohaSocial/social&max=100&columns=20)](https://github.com/AlohaSocial/social/graphs/contributors)
+
+**View all contributors on GitHub:** [github.com/AlohaSocial/social/graphs/contributors](https://github.com/AlohaSocial/social/graphs/contributors)
 
 There is no closed core and no proprietary cloud service. Everything the app does is in the repository: server code, web client, translations, tests and documentation.
 
@@ -49,5 +59,5 @@ Nothing. The software is free under AGPL-3.0-or-later: anyone may run it, inspec
 
 - **Report a bug or ask for a feature** — [open an issue](https://github.com/AlohaSocial/social/issues).
 - **Contribute code or translations** — see the [contributing guide](/docs/contributing).
-- **Run it for your organisation** — the [installation guide](/install) covers Aloha 34 to 36 with PHP 8.3 to 8.5.
+- **Run it for your organisation** — the [installation guide](/install) covers Nextcloud 34 to 36 with PHP 8.3 to 8.5.
 - **Use the brand** — logos, colours and the press boilerplate are on the [brand page](/brand).

@@ -8,6 +8,7 @@ const projectRoot = process.cwd();
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
+  allowedDevOrigins: ["192.168.178.110"],
   turbopack: {
     root: path.resolve(projectRoot),
     rules: {
