@@ -155,7 +155,7 @@ export default function ContributingPage() {
           </div>
 
           <div className="mt-10 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <Link href="/docs/api" className="btn btn-primary">
+            <Link href="/developers/docs/api" className="btn btn-primary">
               View API Reference
               <ArrowRight className="size-4" />
             </Link>

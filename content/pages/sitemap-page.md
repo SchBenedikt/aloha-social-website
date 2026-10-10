@@ -46,12 +46,12 @@ All public pages on this site, organised by section.
 - [Getting an account](/docs/user-getting-an-account)
 - [Finding & following people](/docs/user-finding-and-following-people)
 - [Writing a post](/docs/user-writing-a-post)
-- [Reading timelines](/docs/user-reading)
-- [For You feed](/docs/user-for-you)
-- [Shorts](/docs/user-shorts-that-last-24-hours)
-- [Who may reach you](/docs/user-who-may-reach-you-and-requests)
-- [Filtering words](/docs/user-filtering-out-words)
-- [Managing your account](/docs/user-managing-your-account)
+- [Reading timelines](/docs/user-reading-posts)
+- [For You feed](/docs/for-you)
+- [Shorts](/features/read)
+- [Who may reach you](/docs/notify)
+- [Filtering words](/docs/user-filtering-and-control)
+- [Managing your account](/docs/user-your-profile-and-settings)
 - [Keyboard shortcuts](/docs/user-keyboard-shortcuts)
 - [Moving an account](/docs/moving)
 - [Mastodon compatibility](/docs/mastodon)
@@ -77,7 +77,7 @@ All public pages on this site, organised by section.
 ## Project & Community
 
 - [About us](/about) — Who builds it, how it works, contributors
-- [Why it runs on Nextcloud](/nextcloud) — Integration benefits
+- [Built into your workspace](/nextcloud) — Integration benefits
 - [Admin responsibilities](/admin-responsibilities) — Ethical duties for server operators
 - [Contributing](/docs/contributing) — Code style, PRs, tests, releases
 - [Brand assets](/brand) — Logos, colours, press kit

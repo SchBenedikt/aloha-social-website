@@ -76,7 +76,7 @@ const RHYTHM = [
   {
     icon: ListChecks,
     title: "Cron does the routine work",
-    body: "Delivery, housekeeping and stream polling are background jobs registered with the Aloha. Delivery speed depends on the configured schedule and workload. For continuous delivery, operators can run a worker instead.",
+    body: "Delivery, housekeeping and stream polling are background jobs registered with the server. Delivery speed depends on the configured schedule and workload. For continuous delivery, operators can run a worker instead.",
   },
   {
     icon: Database,
@@ -113,7 +113,7 @@ export default function OperationsDocPage() {
       <PageHeader
         eyebrow="Dev docs · 04"
         title="What you run, and what it does."
-        lede="Aloha Social uses the Aloha’s scheduled jobs and OCC command-line interface. This guide covers delivery workers, storage, retention and diagnostics for operators."
+        lede="Aloha Social uses the server’s scheduled jobs and OCC command-line interface. This guide covers delivery workers, storage, retention and diagnostics for operators."
         actions={
           <>
             <Link href="/install" className="btn btn-primary">

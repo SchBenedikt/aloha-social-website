@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, ArrowUpRight, Code2, Rocket, Shield, Sparkles, Users, Wrench } from "lucide-react";
+import { ArrowRight, ArrowUpRight, Rocket, Sparkles, Users, Wrench } from "lucide-react";
 import { Container, PageHeader, SectionHeading } from "@/components/ui";
 import { DOC_BY_PATH, DOC_CATEGORIES, DOC_GROUPS, type DocGroup } from "@/generated/docs";
 
@@ -28,6 +28,7 @@ const OUTSIDE = [
   { href: "/get-started", title: "Get started", description: "An account, a first post, and the people to follow." },
   { href: "/install", title: "Installation guide", description: "Requirements, App Store or source, verification." },
   { href: "/activitypub", title: "ActivityPub federation", description: "How servers talk to each other, and what federates." },
+  { href: "/activitypub/federation", title: "Federation guide", description: "Relays, directories, discovery and what breaks federation." },
   { href: "/servers", title: "Find a server", description: "Browse public servers and choose one to join." },
   { href: "/clients", title: "Apps and downloads", description: "The web app today, and the native apps." },
   { href: "/admins", title: "Administration overview", description: "A short tour for the person running a server." },

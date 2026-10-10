@@ -22,7 +22,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Protocol",
   description:
-    "ActivityPub in Nextcloud: how one post moves between servers, how requests are signed and what a receiving server checks before accepting them.",
+    "ActivityPub on an Aloha Social server: how one post moves between servers, how requests are signed and what a receiving server checks before accepting them.",
   alternates: { canonical: "/developers/docs/protocol" },
 };
 

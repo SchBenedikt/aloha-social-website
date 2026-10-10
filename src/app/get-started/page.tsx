@@ -7,7 +7,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Get started",
   description:
-    "Use Aloha Social on a server your organisation runs, or set it up on your own Aloha in a few steps.",
+    "Use Aloha Social on a server your organisation runs, or set it up on your own server in a few steps.",
   alternates: { canonical: "/get-started" },
 };
 
@@ -17,7 +17,7 @@ const PATHS = [
     icon: BookOpen,
     title: "I want to use Aloha Social",
     summary:
-      "You need an account on an Aloha that runs Aloha Social. Ask your organisation or community whether one is available — if it does not, point them at the setup guide.",
+      "You need an account on a server that runs Aloha Social. Ask your organisation or community whether one is available — if it does not, point them at the setup guide.",
     steps: [
       "Ask your organisation or community whether it operates an Aloha Social server and accepts accounts.",
       "Before signing up, check the server’s registration rules and community policies.",
@@ -36,7 +36,7 @@ const PATHS = [
     summary:
       "Aloha Social is installed on Aloha 34 to 36 with PHP 8.3 to 8.5, from the App Store or built from source. Install it, run the checks, and your server is a social network.",
     steps: [
-      "Install from the Aloha App Store, or build from source.",
+      "Install from the app store, or build from source.",
       "Set the public URL, enable WebFinger and schedule the background jobs.",
       "Run occ social:check:install and test federation before inviting people.",
     ],
@@ -54,7 +54,7 @@ export default function GetStartedPage() {
       <PageHeader
         eyebrow="Get started"
         title="Get started with Aloha Social."
-        lede="Join a server that already runs it, or install the app on your Aloha and make your own. Both take only a few minutes."
+        lede="Join a server that already runs it, or install the app on your own server and make your own. Both take only a few minutes."
       />
 
       <section className="py-12 sm:py-16">

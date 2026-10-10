@@ -7,7 +7,7 @@ export const PITCH =
   "Aloha Social is a new and better social network. It focuses on the digital wellbeing of its users, amplifying good and fun content instead of negative emotions. It is easy to use and made for everyone, not only for geeks. It supports every modern way of social networking — from text microblogging to photos, video and Shorts — and it is fully federated and decentralised without adding complexity for the user.";
 
 export const BOILERPLATE = {
-  intro: "Aloha Social is a fully open-source social network for Aloha.",
+  intro: "Aloha Social is a fully open-source social network you run on your own server.",
   bullets: [
     "Every user gets one account that reaches the open social web: Mastodon, Pixelfed, PeerTube, GoToSocial and Akkoma today, and Bluesky as well.",
     "It brings posts, photos, Shorts and video channels together in one carefully designed app, on infrastructure the organisation controls.",
@@ -43,9 +43,9 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
     reasons: [
       {
         number: 1,
-        title: "Your Aloha becomes a social network server.",
+        title: "Your server becomes a social network.",
         bullets: [
-          "Aloha is an Aloha app, not another service to run.",
+          "It runs next to your files, calendar and chat — not as another service to run.",
           "Every user gets a social identity, @you@your.cloud, with no new account and no new password.",
           "It uses the login people already have, including SSO and two-factor authentication.",
         ],
@@ -133,7 +133,7 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         title: "Video channels that work with PeerTube in both directions.",
         bullets: [
           "Videos posted on Aloha are published as real PeerTube channel videos.",
-          "PeerTube videos play in Aloha with chapters and “continue watching”.",
+          "PeerTube videos play inline with chapters and “continue watching”.",
           "Every channel has an RSS feed for podcast apps.",
         ],
       },
@@ -260,7 +260,7 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
   {
     id: "nextcloud",
     index: "06",
-    title: "Built into Aloha",
+    title: "Built into your workspace",
     blurb: "Files, chat, calendar, search and notifications — already there.",
     reasons: [
       {
@@ -277,7 +277,7 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         bullets: [
           "Links to posts unfurl in Talk, Text and Deck.",
           "Posts appear in Aloha’s unified search.",
-          "Notifications use the Aloha bell and its mail digest.",
+          "Notifications use the in-app bell and its mail digest.",
           "Translations use the organisation’s own translation provider.",
         ],
       },
@@ -301,7 +301,7 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         number: 25,
         title: "Social-only accounts for outsiders.",
         bullets: [
-          "The public, members or customers can sign up for Aloha alone.",
+          "The public, members or customers can sign up for the social app alone.",
           "They get no access to files, chat or anything else.",
           "Signup can be open, need approval, or work by invitation.",
         ],
@@ -338,7 +338,7 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         title: "Find people from day one.",
         bullets: [
           "Search across several fediverse directories at once.",
-          "Colleagues are suggested from the shared Aloha.",
+          "Colleagues are suggested from the workspace you share.",
           "Starter packs follow a whole group in one click.",
           "Trending hashtags, plus what other servers are talking about.",
           "Relays fill a new server’s timeline.",

@@ -33,7 +33,7 @@ Type a name, handle (e.g. `@user@example.org`), or topic in the search box. The 
 
 ### Discover
 The **Discover** page (in the sidebar) has tabs:
-- **People** — Suggestions, starting with people on your Aloha
+- **People** — Suggestions, starting with people on your server
 - **Starter packs** — Curated groups to follow with one click
 - **Pictures** & **Videos** — Popular media right now
 - **Hashtags** — Trending topics
@@ -56,7 +56,7 @@ Click **New post** (top of sidebar) or press `n`. The composer also sits above m
 
 **Your post can include:**
 - **Text** — up to 5,000 characters
-- **Photos** — drag in, or **Add from Files** to use files already in your Aloha (no re-upload!)
+- **Photos** — drag in, or **Add from Files** to use files already in your workspace (no re-upload!)
 - **Videos** — up to 2 GB, converted automatically for other servers
 - **Audio** — MP3, AAC, OGG, FLAC, WAV
 - **Polls** — 2-4 options, multiple choice, 30 min to 7 days

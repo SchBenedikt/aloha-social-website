@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="img/nextcloud.png" alt="" width="72">
+<img src="/brand/mark.svg" alt="" width="72">
 
 # Aloha Social
 
@@ -76,7 +76,7 @@ One box, and everything a post can carry.
   can add their own on top with `occ social:gif add`, or turn the shipped set off
   with `occ config:app:set social gif_pack --value=0`.
 - **Quote a post**, with the original author's permission carried on the wire (FEP-044f).
-- **Say what language it is in**, starting from your Aloha language.
+- **Say what language it is in**, starting from your language.
 - **Send it later.** Pick a time at least five minutes out and Post becomes Schedule.
 - **A short post as a card.** Anything up to 120 characters, with nothing attached, can
   go out drawn big on colour — six backgrounds, the first in your own colour. It is
@@ -294,7 +294,7 @@ six ways:
   servers publish for strangers to read and holds no credentials for any of them,
   aggregates nothing and stores nobody. Directories that did not answer are named
   under the results, so a short list is never mistaken for an empty Fediverse.
-- **The people you already share an Aloha with.** Every Aloha profile has a
+- **The people you already share a server with.** Every Aloha profile has a
   `fediverse` field; this app fills in yours and reads everybody else's, so your
   colleagues are suggested before any algorithm has a thing to say.
 - **Starter packs** — a named handful of accounts with one button that follows all of
@@ -352,7 +352,7 @@ own unified search. No external search engine to run.
   collection**), and edit, empty or delete it on its page. A collection holds only
   its owner's own posts with a picture or a video in them, and a followers-only one
   is shown to followers and nobody else.
-- **Team accounts** — an administrator can give an Aloha group an account to
+- **Team accounts** — an administrator can give a group an account to
   post from, and everybody in the group finds it in the composer beside the
   audience picker. It is an actor like any other: followable from Mastodon and
   Pixelfed, moderatable, with its own followers. The membership is the group,
@@ -372,7 +372,7 @@ own unified search. No external search engine to run.
   being empty: a relay rebroadcasts the public posts of every server on it, and
   carries this server's public posts out to all of them. Public posts only, and
   a relayed post arrives as the post it is rather than as a boost by the relay.
-- **Delete your Aloha Social account** from Settings, keeping your Aloha one —
+- **Delete your Aloha Social account** from Settings, keeping the account you sign in with —
   the posts, the follows and a `Delete` to every server that knew you. No
   administrator, and no password to type for an account signed in through SSO. A
   self-registered external user, who has nothing here but Aloha Social, loses the whole
@@ -731,17 +731,17 @@ These are absent from the code today, not merely rough edges:
 
 ## 📦 Quickstart (install & develop)
 
-1. Clone this repository into your Aloha `apps/` directory.
+1. Clone this repository into your server's `apps/` directory.
 2. Install the dependencies and build the frontend:
 
 ```bash
-cd /var/www/nextcloud/apps/social
+cd /var/www/aloha/apps/social
 composer install     # PHP dependencies
 npm ci
 npm run build        # production bundle into js/
 ```
 
-3. Enable the app in Aloha (`occ app:enable social`) and check the install with
+3. Enable the app on the server (`occ app:enable social`) and check the install with
    `occ social:check:install`.
 4. While working on the UI, use `npm run dev` for a development build or
    `npm run watch` to rebuild on change. The `Makefile` wraps the same scripts
@@ -809,7 +809,7 @@ If an uploaded banner does not appear immediately:
 
 ## ✅ Tests
 
-Backend and frontend unit tests run without an Aloha server or database.
+Backend and frontend unit tests run without a server or database.
 
 ```bash
 composer install            # PHPUnit + OCP interface stubs
@@ -845,7 +845,7 @@ CI runs it on SQLite, MySQL and PostgreSQL; locally, point it at an installed
 server:
 
 ```bash
-NEXTCLOUD_ROOT=/path/to/nextcloud composer run test:integration
+SERVER_ROOT=/path/to/aloha composer run test:integration
 ```
 
 See `tests/Integration/README.md` for what it covers.
@@ -870,7 +870,7 @@ composer run test:interop
 ```
 
 `.github/workflows/interop.yml` stands the whole thing up — Postgres, Redis,
-Mastodon, PeerTube, an Aloha and an account on each side — weekly and on
+Mastodon, PeerTube, a server and an account on each side — weekly and on
 demand. Deliberately
 not on every pull request: it depends on a third-party image whose startup this
 repository does not control. See `tests/Interop/README.md`, including what it
@@ -891,7 +891,7 @@ npx playwright install chromium
 E2E_BASE_URL=https://cloud.example E2E_USER=alice E2E_PASSWORD=… E2E_GROUP="Design" npm run test:e2e
 ```
 
-`E2E_GROUP` is optional — the display name of an Aloha group the account is
+`E2E_GROUP` is optional — the display name of a group the account is
 in, for the list test; without it that test is skipped.
 
 ## 🛠️ Contributing

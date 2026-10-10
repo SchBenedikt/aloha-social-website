@@ -7,17 +7,17 @@ group: start
 
 # Getting started with Aloha Social
 
-Everything on this page happens in the Aloha Social app inside your Aloha. If your organisation has not set up Aloha Social yet, the [installation guide](/install) is the page to send your administrator — it takes about ten minutes.
+Everything on this page happens in the Aloha Social app inside your workspace. If your organisation has not set up Aloha Social yet, the [installation guide](/install) is the page to send your administrator — it takes about ten minutes.
 
 ## Before you start
 
 You need an Aloha account on a server that runs Aloha Social. That is the whole requirement: the same login, the same password, the same two-factor authentication you already use for files, calendar and chat. There is no second account to create and no separate password to remember.
 
-Open the app menu in Nextcloud and choose **Aloha Social**. The first screen asks whether you want a fediverse identity here. Nothing is created until you answer.
+Open the app menu in Aloha and choose **Aloha Social**. The first screen asks whether you want a fediverse identity here. Nothing is created until you answer.
 
 ## Step 1 — Pick your handle
 
-Your address will be `@handle@your.cloud`. The handle is suggested from your Aloha user name and accepts letters, digits, underscore, dot and dash.
+Your address will be `@handle@your.cloud`. The handle is suggested from your user name and accepts letters, digits, underscore, dot and dash.
 
 Pick it carefully: **the handle cannot be changed later.** Your display name and avatar come from your Aloha account and can be changed there whenever you like.
 
@@ -41,7 +41,7 @@ A timeline with nobody in it tells you nothing. The introduction offers a starti
 Three things worth knowing:
 
 - **Starter packs** follow a whole named group of accounts with one click. Your administrator curates the ones for this server.
-- **Colleagues are suggested** from the Aloha you share, so the people you already work with are the first results.
+- **Colleagues are suggested** from the workspace you share, so the people you already work with are the first results.
 - **Followed hashtags** work like a subscription: follow `#photography` and those posts arrive in your timeline without anybody following anybody.
 
 ## Step 4 — Write your first post
@@ -71,4 +71,4 @@ Everything works with the defaults, but these four are worth two minutes:
 - [The full user guide](/docs/user) — posting, reading, following, filtering and your account, topic by topic.
 - [Keyboard shortcuts](/docs/user-keyboard-shortcuts) — `j`, `k`, `l`, `f`, `b`, and `?` for the whole list.
 - [Moving an account](/docs/moving) — bringing your posts and follows from another server.
-- [Apps and downloads](/clients) — the web app today, and the Aloha apps for iPhone, Android and desktop.
+- [Apps and downloads](/clients) — the web app today, and the apps for iPhone, Android and desktop.

@@ -29,7 +29,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Servers",
   description:
-    "Find an Aloha Social server: ask your organisation, search from your account, or run your own on Aloha.",
+    "Find an Aloha Social server: ask your organisation, search from your account, or run your own.",
   alternates: { canonical: "/servers" },
 };
 
@@ -83,7 +83,7 @@ export default function ServersPage() {
               {
                 icon: Inbox,
                 title: "Ask your organisation",
-                body: "If your school, company or community runs an Aloha, it can run Aloha Social too. One question is usually all it takes — and there is no new account or password to hand out.",
+                body: "If your school, company or community runs a server of its own, it can run Aloha Social too. One question is usually all it takes — and there is no new account or password to hand out.",
                 link: { label: "Show them the setup guide", href: "/install" },
               },
               {

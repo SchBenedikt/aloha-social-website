@@ -164,7 +164,7 @@ export function Screenshot({
         <div className="chrome">
           <div className="chrome-bar">
             <Image
-              src="/img/nextcloud.png"
+              src="/brand/mark-192.png"
               alt=""
               width={22}
               height={22}

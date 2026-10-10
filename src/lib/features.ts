@@ -116,7 +116,7 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "Photos, videos and remote media",
-        body: "Browse image and video posts in dedicated views. PeerTube videos play in Aloha with chapters and “continue watching”, and every channel has an RSS feed for podcast apps.",
+        body: "Browse image and video posts in dedicated views. PeerTube videos play inline with chapters and “continue watching”, and every channel has an RSS feed for podcast apps.",
         bullets: [
           "Remote video chapters and playback progress are displayed where the remote server sends them.",
           "Photos and videos have their own views, with trending pictures and videos beside the trends.",
@@ -138,7 +138,7 @@ export const FEATURES: Feature[] = [
     ],
     docs: [
       { href: "/docs/for-you", label: "How the For You feed is built" },
-      { href: "/docs/user-reading", label: "Reading: feeds, media and threads" },
+      { href: "/docs/user-reading-posts", label: "Reading: feeds, media and threads" },
       { href: "/docs/user-keyboard-shortcuts", label: "Keyboard shortcuts" },
     ],
   },
@@ -169,7 +169,7 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "Translation, honestly labelled",
-        body: "Where the Aloha has a translation provider configured, a post in another language can be translated in place. The interface identifies the provider so readers know they are seeing a machine translation.",
+        body: "Where the server has a translation provider configured, a post in another language can be translated in place. The interface identifies the provider so readers know they are seeing a machine translation.",
       },
       {
         heading: "Notifications that behave",
@@ -183,8 +183,7 @@ export const FEATURES: Feature[] = [
     ],
     docs: [
       { href: "/docs/feature-converse", label: "Threads, edits and archives" },
-      { href: "/docs/user-how-a-post-reads", label: "How a post reads" },
-      { href: "/docs/user-what-a-post-used-to-say", label: "Edit history" },
+      { href: "/docs/user-reading-posts", label: "How a post reads" },
     ],
   },
   {
@@ -218,13 +217,13 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "Explore, and search",
-        body: "The sidebar links to followed hashtags, lists and local trends. Search covers people, hashtags and posts visible to your account. Availability of unified search results depends on the Aloha’s search integration.",
+        body: "The sidebar links to followed hashtags, lists and local trends. Search covers people, hashtags and posts visible to your account. Availability of unified search results depends on the server’s search integration.",
       },
     ],
     docs: [
       { href: "/docs/feature-discover", label: "Directories, starter packs and trends" },
       { href: "/docs/user-finding-and-following-people", label: "Finding and following people" },
-      { href: "/docs/user-bluesky", label: "Bluesky, and what carries over" },
+      { href: "/docs/atproto", label: "Bluesky, and what carries over" },
     ],
   },
   {
@@ -250,7 +249,7 @@ export const FEATURES: Feature[] = [
         heading: "Collections and team accounts",
         bullets: [
           "Collections — Pixelfed's albums — as a tab of the profile: a shelf of the account's collections, each a page of its posts drawn as the profile grid.",
-          "Team accounts can be connected to an Aloha group, so the group’s membership determines who can post from the shared identity.",
+          "Team accounts can be connected to a group, so the group’s membership determines who can post from the shared identity.",
           "Who wrote each post is recorded and shown to the team and to moderators, and to nobody else.",
         ],
         body: "A team account is an actor like any other: followable from Mastodon and Pixelfed, moderatable, with its own followers.",
@@ -270,8 +269,8 @@ export const FEATURES: Feature[] = [
       },
     ],
     docs: [
-      { href: "/docs/user-managing-your-account", label: "Managing your account" },
-      { href: "/docs/user-posting-as-a-team", label: "Posting as a team" },
+      { href: "/docs/user-your-profile-and-settings", label: "Managing your account" },
+      { href: "/docs/user-writing-a-post", label: "Writing a post" },
       { href: "/docs/moving", label: "Moving an account" },
     ],
   },
@@ -316,12 +315,12 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "For administrators",
-        body: "Moderators can review reports, limit or suspend accounts, remove posts and reverse decisions. Actions are recorded with the responsible moderator in the Aloha’s audit log. Operators can configure review queues, domain blocks and retention rules for remote content.",
+        body: "Moderators can review reports, limit or suspend accounts, remove posts and reverse decisions. Actions are recorded with the responsible moderator in the audit log. Operators can configure review queues, domain blocks and retention rules for remote content.",
       },
     ],
     docs: [
       { href: "/protect", label: "How Aloha protects you" },
-      { href: "/docs/user-who-is-in-the-photo", label: "Who may reach you, and requests" },
+      { href: "/docs/notify", label: "Who may reach you, and requests" },
       { href: "/rules", label: "Rules for using Aloha Social" },
     ],
   },
@@ -362,7 +361,7 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "Aloha's own bell rings too",
-        body: "Mentions, favourites, boosts, new followers, follow requests, edits of posts you boosted and polls you voted in all reach Aloha notifications and its mail digest, each linking into this app rather than out to a remote server.",
+        body: "Mentions, favourites, boosts, new followers, follow requests, edits of posts you boosted and polls you voted in all reach the server’s notifications and its mail digest, each linking into this app rather than out to a remote server.",
         bullets: [
           "A follow request carries Accept and Decline on the bell entry itself.",
           "Mute a conversation from any post's menu: the thread stays on your timelines and stops notifying you until you unmute it.",
@@ -371,18 +370,17 @@ export const FEATURES: Feature[] = [
     ],
     docs: [
       { href: "/docs/notify", label: "Notification policy, page by page" },
-      { href: "/docs/user-who-may-reach-you-and-requests", label: "Who may reach you" },
-      { href: "/docs/user-muting-a-conversation", label: "Muting a conversation" },
+      { href: "/docs/user-filtering-and-control", label: "Muting and filtering" },
     ],
   },
   {
     slug: "nextcloud",
-    nav: "Aloha",
+    nav: "Workspace",
     index: "08",
-    title: "It behaves like the Aloha it lives in.",
+    title: "It behaves like a native part of your workspace.",
     lede: "Share from Files, replies in the Comments tab, link cards in Talk and Deck, dashboard widgets, unified search — and one account, one login, one set of rules.",
     image: "/brand/screenshot.png",
-    alt: "Aloha Social inside an Aloha, with the app menu and the surrounding navigation visible",
+    alt: "Aloha Social inside the workspace, with the app menu and the surrounding navigation visible",
     width: 1918,
     height: 930,
     facts: [
@@ -412,13 +410,13 @@ export const FEATURES: Feature[] = [
         heading: "One identity, and one way to end it",
         body: "Your display name and avatar come from your Aloha account and are changed there — there is no second place to edit a name that would do nothing on an instance whose accounts come from LDAP.",
         bullets: [
-          "Deleting an Aloha user takes their Fediverse account with it: tombstoned, dropped, and a Delete federated so other servers drop their copies too.",
+          "Deleting a user takes their Fediverse account with it: tombstoned, dropped, and a Delete federated so other servers drop their copies too.",
           "Group membership decides who may post from a shared team account.",
           "Same login, same password, same two-factor authentication you already use for files, calendar and chat.",
         ],
       },
       {
-        heading: "Where Aloha stops and the fediverse starts",
+        heading: "Where the workspace stops and the fediverse starts",
         body: "Everything federation-shaped — moderation, deliveries, remote media, retention — is handled by the app, not by a setting you have to find. The administrator gets it under Administration → Aloha Social, and you get your account under Settings.",
         bullets: [
           "Announcements from your administrators arrive at the top of your timeline.",
@@ -428,7 +426,7 @@ export const FEATURES: Feature[] = [
       },
     ],
     docs: [
-      { href: "/nextcloud", label: "Why it runs on Aloha" },
+      { href: "/nextcloud", label: "Why it runs in your workspace" },
       { href: "/docs/feature-safety-and-privacy-that-is-the-default", label: "Safety and privacy" },
       { href: "/activitypub/native", label: "How the app talks to the fediverse" },
     ],

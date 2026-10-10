@@ -33,7 +33,7 @@ const DUTIES = [
   {
     icon: Gavel,
     title: "Moderation",
-    body: "Reports arrive with the post, account and relevant server context. Administrators can limit accounts or domains, suspend users, remove posts and reverse decisions. Moderation actions are recorded in the Aloha’s audit log.",
+    body: "Reports arrive with the post, account and relevant server context. Administrators can limit accounts or domains, suspend users, remove posts and reverse decisions. Moderation actions are recorded in the audit log.",
     bullets: [
       "A review queue before anything goes out to your users",
       "Per-user and per-domain limits, applied without unfollowing anybody",
@@ -120,6 +120,7 @@ export default function AdminsPage() {
               { label: "Verify client access and API routes", href: "/install#web-server", description: "Make sure compatible apps can reach the /api and /oauth endpoints." },
               { label: "Start cron or a delivery worker", href: "/developers/docs/operations", description: "Run background jobs and process outgoing deliveries reliably." },
               { label: "Set moderation, community rules and federation policy", href: "/docs/admin-moderation-and-federation", description: "Decide how to handle community rules and remote servers before opening registration." },
+              { label: "Plan how servers find each other", href: "/activitypub/federation", description: "Relays, directories and discovery — the federation guide." },
               { label: "Review reports, queues and storage regularly", href: "/developers/docs/operations", description: "Monitor delivery failures, moderation reports and storage growth." },
               { label: "Test backups and recovery", description: "Make sure the database, app files and configuration can be restored." },
             ]}
@@ -174,7 +175,7 @@ export default function AdminsPage() {
           <SectionHeading
             eyebrow="The weekly rhythm"
             title="Four things to keep an eye on."
-            lede="Aloha Social uses the Aloha’s scheduled jobs, storage and audit tools, so operators can manage it alongside their existing services."
+            lede="Aloha Social uses the server’s scheduled jobs, storage and audit tools, so operators can manage it alongside their existing services."
           />
           <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4" data-stagger>
             {[

@@ -83,12 +83,12 @@ Mastodon equivalent yet and stay.
 
 Two mechanisms exist, and which one applies depends on the controller:
 
-1. **OAuth Bearer token** — `MastodonApiController` and `TagController` read it. The constructor parses the `Authorization` header, accepts a `bearer` auth type, and resolves the token through `ClientService::getFromToken()`. If no bearer token is present it falls back to the logged-in Aloha session user. Both declare their routes `#[PublicPage]` with `#[NoCSRFRequired]` and then require a viewer inside the handler: a Mastodon client has no Aloha session and no CSRF token, so `#[NoAdminRequired]` would refuse every real caller before the handler ran.
-2. **Aloha session** — `LocalController`, `ConfigController`, `NavigationController`, `OAuthController` (authorize/authorizing) and `OStatusController` use the session `userId` only. They do **not** honour bearer tokens, so the Custom Local API is effectively usable only from the app's own frontend (or with an Aloha session cookie / app password + `OCS-APIRequest`).
+1. **OAuth Bearer token** — `MastodonApiController` and `TagController` read it. The constructor parses the `Authorization` header, accepts a `bearer` auth type, and resolves the token through `ClientService::getFromToken()`. If no bearer token is present it falls back to the logged-in session user. Both declare their routes `#[PublicPage]` with `#[NoCSRFRequired]` and then require a viewer inside the handler: a Mastodon client has no session cookie and no CSRF token, so `#[NoAdminRequired]` would refuse every real caller before the handler ran.
+2. **Server session** — `LocalController`, `ConfigController`, `NavigationController`, `OAuthController` (authorize/authorizing) and `OStatusController` use the session `userId` only. They do **not** honour bearer tokens, so the Custom Local API is effectively usable only from the app's own frontend (or with a session cookie / app password + `OCS-APIRequest`).
 
 Access control is declared with **PHP attributes** (`#[PublicPage]`, `#[NoCSRFRequired]`, `#[NoAdminRequired]`, and `#[BruteForceProtection]` on the OAuth token/revoke endpoints); the legacy PHPDoc annotations are gone. The "Auth" column in the tables below records these attributes:
 
-- `public` — `#[PublicPage]`: reachable without an Aloha login (an endpoint may still fail later if it needs a viewer).
+- `public` — `#[PublicPage]`: reachable without a login (an endpoint may still fail later if it needs a viewer).
 - `user` — `#[NoAdminRequired]`: any logged-in user.
 - `admin` — no attribute at all: Aloha requires an admin session.
 - `no-csrf` — `#[NoCSRFRequired]`: no CSRF token needed, which matters for non-browser clients.
@@ -689,7 +689,7 @@ Mastodon's `/api/v1/admin/*`, over the moderation the admin panel has always
 had. Every route requires a **moderator**: the user behind the bearer token (or
 behind the session) is resolved first and asked of
 `AdminApiService::isAdministrator()`, and anyone else is a **403** having had
-nothing done on their behalf. A moderator is an Aloha administrator, or
+nothing done on their behalf. A moderator is an administrator, or
 somebody an administrator has handed the **Aloha Social** settings section to under
 *Administration privileges* — Aloha's own settings delegation
 (`IManager::getAllowedAdminSettings()`), which is the same gate the admin panel
@@ -707,7 +707,7 @@ having no token to carry one.
 
 Every write about one account (`action`, `unsilence`, `unsuspend`,
 `unsensitive`, `DELETE`, and Pixelfed's `/api/admin/users/action`) is a **403**
-with nothing done when it names the caller's own account, or an Aloha
+with nothing done when it names the caller's own account, or an
 administrator's account and the caller is only a delegate
 (`AdminApiService::assertMayActOn()`).
 
@@ -719,7 +719,7 @@ on every request, from the same checks as the gate above:
 
 | Who | `id` | `name` | `permissions` | `highlighted` |
 |-----|------|--------|---------------|---------------|
-| An Aloha administrator | `"3"` | `Admin` | every Mastodon flag (`"8388607"`), as Mastodon reports a role with the administrator bit | `true` |
+| An administrator | `"3"` | `Admin` | every Mastodon flag (`"8388607"`), as Mastodon reports a role with the administrator bit | `true` |
 | A user the section is delegated to | `"1"` | `Moderator` | `"591288"`: invite users, view dashboard, manage reports, federation, blocks, taxonomies and users, delete user data — what the admin API lets them do | `true` |
 | Anyone else | `"-99"` | `""` | `"65536"`, Mastodon's default role | `false` |
 
@@ -1150,7 +1150,7 @@ Backing routes of the Aloha Social section in the administration settings. All o
 
 ### External users
 
-Self-registered external users: people without an Aloha account who create one that reaches the Aloha Social app only. See the "External users" section of `docs/Architecture.md` for how the accounts work; these are the routes of the registration page, of the settings page's External users cards, and of the invitations people may send.
+Self-registered external users: people without an account who create one that reaches the Aloha Social app only. See the "External users" section of `docs/Architecture.md` for how the accounts work; these are the routes of the registration page, of the settings page's External users cards, and of the invitations people may send.
 
 The registration routes are public and refuse a visitor who is logged in. The administration routes carry none of the relaxing attributes: they are dispatched for an administrator with a session and a CSRF token and for nobody else, not for a group the Aloha Social section was delegated to. The ones marked **password** also need a recent password confirmation, which the page asks for.
 

@@ -32,7 +32,7 @@ Negative interactions on social media go with more depressive symptoms. Being re
 - Routes: `GET/PATCH /api/v1|v2/notifications/policy`, `GET /api/v1/notifications/requests`, accept/dismiss (single and bulk). The policy answer carries `summary.pending_requests_count`.
 - Web: `NotificationRequests.vue` (the requests list) on the Blocking page only. Nothing reads or changes the policy.
 - Conversation mute: `POST /api/v1/statuses/{id}/mute|unmute` → `ActionService::muteConversation()` stores the mute against the thread's root (`social_convo_state`).
-- Delivery: `NotificationService::emit()` raises the Aloha notification (bell, push, mail) and applies the digest/quiet-hours hold (`NotificationDeliveryService`).
+- Delivery: `NotificationService::emit()` raises the notification (bell, push, mail) and applies the digest/quiet-hours hold (`NotificationDeliveryService`).
 
 ## 4. Gaps this specification closes
 

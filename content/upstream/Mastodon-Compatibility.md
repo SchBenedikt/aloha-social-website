@@ -291,7 +291,7 @@ A second extension lives beside the notifications: `GET`/`PATCH
 /api/v1/social/notification_delivery`, and the `notifications:delivery` key
 `/api/v1/preferences` echoes. Mastodon has nothing to compare it with — its
 notifications *are* the list, and a client's push is the client's business —
-whereas here the list has a second half, the Aloha bell, and this is the
+whereas here the list has a second half, Aloha’s bell, and this is the
 setting for when that half rings: at once, or as a digest at times of the
 reader's choosing, with direct messages and mentions from followed accounts
 passing through and optional quiet hours. A Mastodon client never sees the
@@ -618,16 +618,16 @@ would act on.
 Worth stating so they are not mistaken for work. Authentication, 2FA and sessions
 come from Aloha. Accounts are Aloha users, so `accountEnable` is a
 deliberate no-op and there is no per-actor login to disable. Notifications go
-through the Aloha notification system — bell, mobile app, mail digest —
+through the notification system — bell, mobile app, mail digest —
 rather than Web Push, and they are emitted for mention, favourite,
 reblog, follow, follow request and update from the single write path
 (`NotificationService`). There is no materialised home feed
 to rebuild, because timelines are queried live. Rules and retention are app
-values and occ commands. Moderation lives in Aloha admin settings.
+values and occ commands. Moderation lives in the admin settings.
 
 `POST /api/v1/media` accepts more than Mastodon does, on purpose. Beside the
 pictures, video and audio, a post here may carry a **document** — a PDF, a
-spreadsheet, a text file — which is what people on an Aloha actually have to
+spreadsheet, a text file — which is what people on an instance actually have to
 share, and Mastodon would answer one of those `422 File content type is
 invalid`. The answer here is `200` with `type: "unknown"`, which is exactly what
 Mastodon's own entity says about an attachment it cannot draw, so a Mastodon
@@ -788,7 +788,7 @@ meet. These three were it.
 | 11 | **Authorized fetch inbound** — verify the HTTP signature on GET and resolve the remote reader | Weeks | Signature verification ran on inbox POSTs only, so a followers-only object could not be served to an authorized remote reader and secure mode was impossible. It failed closed, so nothing leaked | done (`AuthorizedFetchService`) |
 | 12 | **`Add` and `Remove` outbound** for pins | Days | A pin was only visible to a peer that re-polled `featured` | done |
 | 13 | **`mediaType` on attachments** | Hours | The stored row (`MediaAttachment::asLocal()`) now carries `media_type`, `import()` reads it back — with a guess from the extension for rows written before it existed — and the Document a post is served as states it. Since 0.20.5 the Document also **leaves out what it does not know** rather than sending `"width": 0`, `"height": 0` and `"blurhash": ""`: Pixelfed validates all three as `nullable|min:…` *when the key is present* and drops the whole post when one fails, so an attachment with no stored dimensions took its post with it, silently | done |
-| 14 | **The WebFinger profile-page link** | Hours | Pointed at the Aloha user profile rather than an Aloha Social one | done |
+| 14 | **The WebFinger profile-page link** | Hours | Pointed at the platform user profile rather than an Aloha Social one | done |
 | 15 | **Emoji reactions** | Days | Announcement reactions are stored and served. Reactions to a *status* are a Misskey and Pleroma extension Mastodon does not handle either, and are deliberately not implemented | done (announcements) |
 | 39 | **Serve attachments as ActivityPub `Document`s** | Hours | New, and verified on the wire rather than in a unit test: everything served on request — a single status, the outbox, `featured`, `replies`, and any re-fetch by a peer — carries Mastodon's *client* shape under `attachment` (`"type": "video"`, `preview_url`, `remote_url`, `meta`) instead of `{"type": "Document", "mediaType": "video/mp4", "name": …}`. `MediaAttachment::asDocument()` is correct and `ACore::FORMAT_ACTIVITYPUB` is set on the attachments of a freshly created post, so the original `Create` goes out right; but `StreamRequest::save()` stores `asLocal()` and hydration leaves the objects in the local format, so every later read of the same post is wrong. `WireCompatibilityTest` calls `asDocument()` directly and therefore passes | done — `Stream::jsonSerialize()` maps every attachment through `asDocument()` whatever format it was hydrated in, so a re-read post goes out the same as the original `Create`; `StreamTest::testAHydratedPostServesItsAttachmentsAsDocuments` pins it |
 | 51 | **Publish a video as a `Note`, not a `Video`, by default** | Hours | `Note::asVideoIfItIsOne()` sent a sole-video post in PeerTube's shape, and Pixelfed's `HandlesCreates` processes only a `Note` with a parent or an attachment — a `Video` is dropped without a word, so no video posted here ever reached a Pixelfed follower. Mastodon draws both shapes, PeerTube only the `Video`, Pixelfed only the `Note` | done — `publish_video_objects` defaults to `0`; an instance whose audience is on PeerTube turns it on |
@@ -829,7 +829,7 @@ the route is the other half of the choice and is a decision about breaking
 whatever still calls it — which is why it is still here rather than quietly
 done either way.
 
-**16 — registration management.** An account on this server is an Aloha
+**16 — registration management.** An account on this server is a platform
 account: the server creates it, through whatever provisioning it is configured
 with, and this app is handed one that already exists. A sign-up form, an
 approval queue, invite links and email confirmation all belong to the server,

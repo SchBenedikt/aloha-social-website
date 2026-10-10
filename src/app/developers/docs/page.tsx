@@ -66,7 +66,6 @@ const CHAPTERS = [
 
 const REFERENCES = [
   { label: "API reference", href: SITE.docs.api, source: SITE.docSources.api },
-  { label: "Architecture notes", href: SITE.docs.architecture, source: SITE.docSources.architecture },
   { label: "OCC commands", href: SITE.docs.occ, source: SITE.docSources.occ },
   { label: "Admin guide", href: SITE.docs.admin, source: SITE.docSources.admin },
   { label: "Mastodon compatibility", href: SITE.docs.mastodon, source: SITE.docSources.mastodon },

@@ -72,7 +72,7 @@ export const metadata: Metadata = {
         url: ogImageUrl,
         width: 1280,
         height: 640,
-        alt: "Aloha Social — the social network for your Aloha",
+        alt: "Aloha Social — the social network for your server",
         type: "image/png",
       },
     ],

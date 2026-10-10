@@ -37,7 +37,7 @@ rewriting is available, turn it on before the first account is created rather
 than after.
 
 **Behind a reverse proxy**, set `trusted_proxies` and `overwritehost`,
-`overwriteprotocol` and `overwrite.cli.url` as the Aloha documentation
+`overwriteprotocol` and `overwrite.cli.url` as the documentation
 describes. Aloha Social signs its outbound requests over the `Host` and `Date`
 headers and verifies the signatures on what arrives, so a proxy that rewrites
 the host without Aloha knowing produces signature failures on both sides
@@ -74,7 +74,7 @@ reaches this app's code, so `/api/v1/instance` and `/api/v2/instance` advertise
 (`max_size`, `max_video_size`) and PHP's. When PHP's is the smaller, every
 client is held to it: an upload over it is refused with a 422 naming the limit
 (`the file is larger than this server accepts (2 MB)`), and a warning in the
-Aloha log names the setting it went over. To let the app's own ceiling
+log names the setting it went over. To let the app's own ceiling
 apply, raise both PHP values; see
 [Raising the upload limit](#raising-the-upload-limit).
 
@@ -166,8 +166,8 @@ Listen 127.0.0.1:8081
 
 <VirtualHost 127.0.0.1:8081>
     ServerName example.com
-    DocumentRoot /path/to/nextcloud
-    <Directory /path/to/nextcloud>
+    DocumentRoot /path/to/aloha
+    <Directory /path/to/aloha>
         Options FollowSymLinks
         AllowOverride All
         Require ip 127.0.0.1
@@ -323,7 +323,7 @@ when each was last tried.
 ### No memory cache
 
 Without `memcache.local` or `memcache.distributed` in `config.php`, every cache
-Aloha Social asks Aloha for is one that forgets each write. Aloha's own check
+Aloha Social asks the platform for is one that forgets each write. Aloha's own check
 already says a memcache would be faster; this one is there because, for this
 app, some of what is lost is protection:
 
@@ -366,7 +366,7 @@ not sent again.
 A client is told, and held to, the smaller of Aloha Social's own ceilings and
 PHP's. PHP's is the smaller of `upload_max_filesize` and `post_max_size`; its
 own default is 2 MB and 8 MB. A refused upload leaves a warning in the
-Aloha log saying which of the two it went over (`file upload refused:
+log saying which of the two it went over (`file upload refused:
 larger than this server accepts, over upload_max_filesize`, or `… the request
 body is over post_max_size`).
 
@@ -438,7 +438,7 @@ checks, and the card refuses to switch Bluesky on while one fails:
 
   [Service]
   User=www-data
-  WorkingDirectory=/var/www/nextcloud
+  WorkingDirectory=/var/www/aloha
   ExecStart=/usr/bin/php occ social:atproto:serve --bind 127.0.0.1:8787
   Restart=always
   RestartSec=5
@@ -571,7 +571,7 @@ Federation health widget to `#federation`.
   timelines. Turning one off takes it out of the sidebar and stops it being
   offered; nothing already posted is touched, so a video posted while Videos
   was off is still a video and appears again the moment it is turned back on.
-  The fourth setting is the Aloha groups that become Aloha Social lists, and it is
+  The fourth setting is the groups that become Aloha Social lists, and it is
   **empty by default**: everybody in a chosen group gets a list for it holding
   the members who have an Aloha Social account, nobody is followed by it and nothing
   federates, but a group list does tell everybody in the group who else is in
@@ -676,7 +676,7 @@ the server. Server settings and Relays are the exception — neither is rendered
 delegate and their endpoints refuse them, because what they hold is a decision
 about the server rather than about a report: a relay changes what every
 federated timeline here holds and where every public post written here is
-sent. A delegate cannot act on an Aloha administrator's account, and
+sent. A delegate cannot act on an administrator's account, and
 nobody — administrator or delegate — can silence, suspend, lift or purge their
 own.
 
@@ -757,7 +757,7 @@ created by the [Guests app](https://github.com/nextcloud/guests), which uses
 the `Guests` backend and `guest_app` group. Aloha Social's account restrictions and
 collaborator filtering target only its own backend, so they do not classify a
 Guests-app account as an Aloha Social external account. The two apps can be installed
-together, but the Guests app controls which Aloha apps its accounts may
+together, but the Guests app controls which apps its accounts may
 open: add `social` to its app whitelist if those accounts should use Aloha Social.
 This setting does not grant a Guests account the Aloha Social-only restrictions;
 Guests accounts remain governed by the Guests app and Aloha group policy.
@@ -1148,7 +1148,7 @@ one row at a time, so it is more processes, not wider ones, that add capacity.
 
 **Watch the cron actually finish.** The steps are budgeted at 300 seconds a pass
 and resume where they stopped, so a pass that runs out of time is normal. A pass
-that *never* reaches the later steps is not: `social:check` and the Aloha log
+that *never* reaches the later steps is not: `social:check` and the server log
 are where that shows.
 
 **Cached remote accounts** are refreshed by `Cron\Cache` for up to 90 seconds
@@ -1199,7 +1199,7 @@ of this costs on the hardware in front of you.
   that an administrator who never opens Aloha Social still hears about it.
 - **The delivery queue.** A rising count of failing deliveries against one host
   is that instance's problem; a rising count against all of them is this one's.
-- **`social.log` / the Aloha log.** Signature verification failures on
+- **`social.log` / the server log.** Signature verification failures on
   inbound requests, and `could not federate` warnings on outbound ones.
 - **Disk.** Cached remote attachments are the largest thing this app stores.
   `retention_days` is what bounds them; on an instance that federates widely,

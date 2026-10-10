@@ -87,7 +87,7 @@ export default function DevelopersPage() {
               AlohaSocial on GitHub
               <ArrowUpRight className="size-4" />
             </a>
-            <Link href="/docs/api" className="btn btn-outline">
+            <Link href="/developers/docs/api" className="btn btn-outline">
               API reference
               <ArrowRight className="size-4" />
             </Link>
@@ -137,7 +137,7 @@ export default function DevelopersPage() {
             title="A step-by-step local development guide"
             steps={[
               { label: "Review the source and contribution guidelines", href: "/docs/contributing", description: "Read the repository, license and contribution process." },
-              { label: "Prepare a local development environment", href: "/install#source", description: "Set up an Aloha development instance, PHP/Composer and Node/npm." },
+              { label: "Prepare a local development environment", href: "/install#source", description: "Set up an Aloha Social development instance, PHP/Composer and Node/npm." },
               { label: "Install dependencies and run a build", href: "/install#source", description: "Use the lockfiles and verify the production build." },
               { label: "Understand the architecture and protocol", href: "/developers/docs/protocol", description: "Trace data flow and federation before making changes." },
               { label: "Explore the API and OCC commands", href: "/developers/docs/api", description: "Find existing interfaces and diagnostic tools." },
@@ -174,7 +174,7 @@ export default function DevelopersPage() {
                 ]}
               />
               <div className="mt-7 flex flex-wrap gap-3">
-              <Link href="/docs/api" className="btn btn-primary">
+              <Link href="/developers/docs/api" className="btn btn-primary">
                 API reference <ArrowRight className="size-4" />
               </Link>
               <Link href="/docs/occ" className="btn btn-outline">
@@ -249,9 +249,6 @@ export default function DevelopersPage() {
                 moving things around.
               </p>
               <div className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
-                <Link href="/docs/architecture" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-coral">
-                  Architecture overview <ArrowRight className="size-4" />
-                </Link>
                 <a href={SITE.docSources.architecture} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-[14px] font-semibold text-muted hover:text-coral">
                   Original on GitHub <ArrowUpRight className="size-4" />
                 </a>
@@ -272,7 +269,7 @@ export default function DevelopersPage() {
 
       <CtaBand
         title="Clone it and run it locally."
-        body="Aloha Social is distributed as an app for Aloha. Review its compatibility requirements and setup instructions before building or installing it."
+        body="Aloha Social is distributed as an app you install on your own server. Review its compatibility requirements and setup instructions before building or installing it."
         primary={{ label: "Server repository", href: SITE.server, external: true }}
         secondary={{ label: "Installation guide", href: "/install" }}
       />

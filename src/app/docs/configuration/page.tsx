@@ -77,7 +77,7 @@ const STEPS = [
 ];
 
 const REQUIREMENTS = [
-  { label: "Nextcloud", value: "28–30 (LTS recommended)" },
+  { label: "Aloha", value: "28–30 (LTS recommended)" },
   { label: "PHP", value: "8.2+ (8.3 recommended)" },
   { label: "Database", value: "PostgreSQL 14+ or MySQL 8.0+/MariaDB 10.6+" },
   { label: "Web server", value: "Apache 2.4+ or Nginx 1.18+" },
@@ -132,7 +132,7 @@ export default function ConfigurationPage() {
             <SectionHeading
               eyebrow="Requirements"
               title="Server Requirements"
-              lede="Minimum platform requirements. Most Nextcloud installations already meet these."
+              lede="Minimum platform requirements. Most servers already meet these."
             />
             <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {REQUIREMENTS.map((req) => (

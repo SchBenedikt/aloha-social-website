@@ -28,7 +28,7 @@ const HOW = [
   {
     icon: Send,
     title: "Outgoing",
-    body: "When a post is published, the server builds the Activity, signs the HTTP request and sends it to the remote followers who can receive it. Delivery is queued, retried and logged by the Aloha’s background jobs.",
+    body: "When a post is published, the server builds the Activity, signs the HTTP request and sends it to the remote followers who can receive it. Delivery is queued, retried and logged by the server’s background jobs.",
   },
   {
     icon: Inbox,
@@ -82,7 +82,7 @@ export default function ServerPage() {
           <SectionHeading
             eyebrow="How a post travels"
             title="Out, in, and out again."
-            lede="Federation runs as scheduled background jobs in Nextcloud. Delivery failures are logged and retried; operators can run a worker for continuous delivery."
+            lede="Federation runs as scheduled background jobs on the server. Delivery failures are logged and retried; operators can run a worker for continuous delivery."
           />
 
           <div className="mt-12 grid gap-5 sm:grid-cols-2" data-stagger>
@@ -173,7 +173,7 @@ export default function ServerPage() {
               className="mt-7"
               items={[
                 "A compatible Aloha installation, accessible over HTTPS",
-                "The PHP extensions required by the Aloha and Aloha Social release",
+                "The PHP extensions required by the server and the Aloha Social release",
                 "Scheduled background jobs enabled for federation and housekeeping",
                 "ffmpeg if you want video transcoded on upload",
                 "Storage for media: every attachment is a file your server holds",

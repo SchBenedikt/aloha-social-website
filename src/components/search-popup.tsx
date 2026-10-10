@@ -53,14 +53,14 @@ export default function SearchPopup() {
     { title: "Well-being in Aloha", href: "/wellbeing", description: "Research behind the design" },
     { title: "Aloha Directory", href: "/directory", description: "Discover servers, find people, starter packs" },
     { title: "Documentation", href: "/docs", description: "Guides for users, admins and developers" },
-    { title: "Installation guide", href: "/install", description: "Set up Aloha Social on your Aloha" },
+    { title: "Installation guide", href: "/install", description: "Set up Aloha Social on your server" },
     { title: "Find a server", href: "/servers", description: "Browse public Aloha Social servers" },
     { title: "Apps and downloads", href: "/clients", description: "Web, mobile and desktop apps" },
     { title: "ActivityPub federation", href: "/activitypub", description: "How servers talk to each other" },
     { title: "Administration overview", href: "/admins", description: "A short tour for server admins" },
     { title: "Developer hub", href: "/developers", description: "API, architecture and source code" },
     { title: "About us", href: "/about", description: "Who builds Aloha Social" },
-    { title: "Built into Aloha", href: "/nextcloud", description: "Why it runs on your Aloha" },
+    { title: "Built into your workspace", href: "/nextcloud", description: "Why it runs in your workspace" },
   ];
 
   const filteredResults = query
@@ -126,7 +126,7 @@ export default function SearchPopup() {
               </ul>
             ) : (
               <p className="px-4 py-6 text-center text-[14px] text-muted">
-                No results for "{query}"
+                No results for “{query}”
               </p>
             )}
           </div>

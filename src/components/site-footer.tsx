@@ -12,6 +12,7 @@ const COLUMNS = [
       { label: "Features", href: "/features" },
       { label: "Get started", href: "/get-started" },
       { label: "Find a server", href: "/servers" },
+      { label: "Aloha Directory", href: "/directory" },
       { label: "Apps & downloads", href: "/clients" },
     ],
   },
@@ -37,10 +38,11 @@ const COLUMNS = [
     heading: "Project",
     links: [
       { label: "About us", href: "/about" },
-      { label: "Why Nextcloud", href: "/nextcloud" },
+      { label: "Built into your workspace", href: "/nextcloud" },
       { label: "Admin responsibilities", href: "/admin-responsibilities" },
       { label: "Imprint", href: "/imprint" },
       { label: "Privacy", href: "/privacy" },
+      { label: "Sitemap", href: "/sitemap" },
     ],
   },
 ];

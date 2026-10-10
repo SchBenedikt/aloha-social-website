@@ -49,7 +49,7 @@ All content is served directly from this domain.
 
 This website itself does not collect personal data. No cookies are set. No analytics are run.
 
-If you install Aloha Social on your own Nextcloud server, **you are the data controller** for your instance. See the [Privacy](/privacy) page and the [Admin Responsibilities](/admin-responsibilities) page for details.
+If you install Aloha Social on your own server, **you are the data controller** for your instance. See the [Privacy](/privacy) page and the [Admin Responsibilities](/admin-responsibilities) page for details.
 
 ## Trademarks
 

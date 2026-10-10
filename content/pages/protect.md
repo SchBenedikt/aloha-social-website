@@ -77,7 +77,7 @@ The [administration guide](/docs/admin-moderating) documents moderation, and the
 
 ## Under the hood
 
-A page of detail for the technically curious — the [security section of the architecture document](/docs/architecture-security) records all of it, with the class and method names:
+A page of detail for the technically curious — the [security section of the architecture document](https://github.com/AlohaSocial/social/blob/master/docs/Architecture.md#security) records all of it, with the class and method names:
 
 - every outbound delivery is signed with the sending actor's key, and inbound ones are verified against the request target, host, date and digest, with a replay window
 - inbound deliveries are rate-limited twice — once by source address, once by verified origin — and bodies are capped at 1 MiB

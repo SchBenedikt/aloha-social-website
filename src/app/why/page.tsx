@@ -26,7 +26,7 @@ const JSON_LD = {
 export const metadata: Metadata = {
   title: "Why Aloha Social",
   description:
-    "Thirty reasons Aloha Social is special: an Aloha social network with full Bluesky compatibility, calm feeds, privacy by default and no advertising.",
+    "Thirty reasons Aloha Social is special: a social network with full Bluesky compatibility, calm feeds, privacy by default and no advertising.",
   alternates: { canonical: "/why" },
   openGraph: {
     title: "Why Aloha Social — 30 reasons it is special",
@@ -370,7 +370,7 @@ export default function WhyPage() {
 
       <CtaBand
         title="Ready to run your own?"
-        body="Aloha Social is an app you install on your Aloha. Set it up in minutes, invite your organisation, and every account on it reaches the open social web."
+        body="Aloha Social is an app you install on your own server. Set it up in minutes, invite your organisation, and every account on it reaches the open social web."
         primary={{ label: "Install Aloha Social", href: "/install" }}
         secondary={{ label: "Read the docs", href: "/docs" }}
       />

@@ -76,7 +76,7 @@ const HIGHLIGHTS = [
     href: "/why#big-picture",
     icon: Rocket,
     title: "Your Aloha becomes the server",
-    body: "An Aloha app, not another service to run. Every user gets @you@your.cloud, using the login they already have.",
+    body: "It lives with your files, chat and calendar — not another service to run. Every user gets @you@your.cloud, using the login they already have.",
   },
   {
     href: "/why#calm-social-media",
@@ -508,7 +508,7 @@ export default function Home() {
               Your account belongs to the server you choose.
             </h2>
             <p className="mt-6 max-w-xl text-[16.5px] leading-relaxed text-muted">
-              Each Aloha Social server is an Aloha with its own accounts and
+              Each Aloha Social server has its own accounts and
               policies. Its operator sets registration, moderation and retention
               rules, and posts travel on to every compatible service.
             </p>

@@ -165,7 +165,7 @@ The identity is three things stored in `social_atproto_identity` (§15):
 
 The DID document the PLC publishes names the handle (§4.2), the signing
 key under `#atproto`, and the PDS service `#atproto_pds` with endpoint
-`https://<instance host>` — the Aloha host itself, where `/xrpc/` is
+`https://<instance host>` — the server host itself, where `/xrpc/` is
 served (§6.1).
 
 ### 4.2 Handles
@@ -320,7 +320,7 @@ in here needs:
 `createSession`, `refreshSession`, `deleteSession`, `getSession`,
 `getServiceAuth`, `checkAccountStatus`, `activateAccount`,
 `deactivateAccount`, `createAccount` (migration in only, §13; open
-registration is **never** offered — a Bluesky account here is an Aloha
+registration is **never** offered — a Bluesky account here is a platform
 account); `com.atproto.repo.createRecord`, `putRecord`, `deleteRecord`,
 `getRecord`, `listRecords`, `describeRepo`, `uploadBlob`, `applyWrites`,
 `importRepo`, `listMissingBlobs`; `com.atproto.moderation.createReport`
@@ -336,12 +336,12 @@ response passed through unchanged.
 
 **Not served**: `com.atproto.admin.*`, `com.atproto.temp.*`,
 `tools.ozone.*`, `com.atproto.server.createInviteCode*`, `requestAccountDelete`
-(an account is deleted in Aloha), `com.atproto.server.requestPasswordReset`
+(an account is deleted on the server), `com.atproto.server.requestPasswordReset`
 (Aloha's password is Aloha's).
 
 ### 6.3 Authentication for Bluesky apps (D17)
 
-Phase 1 serves `createSession` with **app passwords**: an Aloha app
+Phase 1 serves `createSession` with **app passwords**: an app
 password (Settings → Security) is what a Bluesky app is given as the
 password, checked through `IProvider`/`IUserManager::checkPassword`, which
 is how Aloha's own clients log in. The session is a pair of JWTs
@@ -719,7 +719,7 @@ beside the Fediverse move-in.
    `com.atproto.server.getServiceAuth` on the old PDS (aud this instance's
    service DID, lxm `com.atproto.server.createAccount`), then
    `createAccount` here with that token and the DID — the account exists
-   here *deactivated*. The DID is bound to the Aloha user; the local
+   here *deactivated*. The DID is bound to the local user; the local
    actor's own `did:plc` is **not** created, the moved DID is its identity.
 3. **Repository**: `com.atproto.sync.getRepo` from the old PDS, imported
    with `importRepo` into this one; `listMissingBlobs` here, each fetched
@@ -915,7 +915,7 @@ A workflow like `interop.yml`: the official `@atproto/dev-env` TestNetwork
 (PLC, PDS, AppView, bsync, Ozone) plus an `indigo` relay (the dev-env
 starts none), this app behind the Caddy of the interop job with the root
 rules and the firehose proxy, the daemon started. Tests: a Bluesky user on
-the dev PDS follows `alice.nextcloud.test`, sees her post in the AppView's
+the dev PDS follows `alice.aloha.test`, sees her post in the AppView's
 author feed and timeline, likes it and replies — asserted here through
 Activities; alice follows the dev user and his post appears in her home
 feed; a picture round-trips; a label from the dev Ozone hides a post; an
@@ -1126,8 +1126,8 @@ thread root), `RecordMapper` (reply, quote and card embeds, the postgate),
 `AppViewProxy`, `Preferences`, `WriteService`, `ClientXrpc`), tables
 `social_atproto_app_password` and `social_atproto_session`:
 
-- **App passwords are this app's, not Aloha's.** §6.3 said an Aloha
-  app password; that would hand a Bluesky app the whole of Aloha —
+- **App passwords are this app's, not the platform's.** §6.3 said a
+  platform app password; that would hand a Bluesky app the whole platform —
   files, WebDAV — and can only be checked through the server's private API.
   Settings → Apps and account → Bluesky makes Bluesky-style app passwords instead (four
   groups of four, shown once, stored as a password hash, at most 25),
@@ -1202,7 +1202,7 @@ thread root), `RecordMapper` (reply, quote and card embeds, the postgate),
 - **Fixed on the way:** a streamed HLS video was handed to the player as
   the byte route, so its segments 404'd; it now gets the playlist route,
   and stored links of older posts are rebuilt the same way when read.
-- **`getSession` reports the Aloha account's e-mail address**, and as
+- **`getSession` reports the account's e-mail address**, and as
   confirmed when it is set: the Bluesky app offers video only to an account
   with a confirmed address, and the account is one an administrator or the
   person manages.
@@ -1268,7 +1268,7 @@ Fed twins (§13.3), **4e** the moved posts in the timeline (§13.1, step 6).
   record (`_atproto.<domain>` = `did=<DID>`) and the file
   (`https://<domain>/.well-known/atproto-did` = the DID) that make it the
   account's, and checks them: either is enough, as for the AppView. Setting
-  it asks for the Aloha password.
+  it asks for the account password.
 - **Then** the DID document names the domain (a PLC update with the same
   keys and endpoint) and the firehose sends `#identity`, so relays and
   AppViews resolve the handle again. The assigned `alice.<host>` keeps
@@ -1359,7 +1359,7 @@ direction `inbound` in `social_atproto_move`:
 - **Invited first.** Settings → Migration → *Bring your bridged Bluesky
   account here* finds the twin (the handle Bridgy gives the Fediverse
   address, resolving to a DID whose PDS is `atproto.brid.gy`); a person can
-  also name any other account. Inviting, after the Aloha password, makes
+  also name any other account. Inviting, after the account password, makes
   a one-time code, kept only as a hash, good for a day. A twin's move is
   then asked for by a direct message from the account to Bridgy's bot with
   the command; for anything else the page shows the server, the handle,
@@ -1410,7 +1410,7 @@ For the owner, not blocking phase 1:
 
 1. **Per-user opt-out.** D3 says every account, automatically. Should a
    person be able to switch *their* Bluesky identity off (deactivate the
-   repository; the DID stays theirs) — an Aloha user who wants no
+   repository; the DID stays theirs) — a local user who wants no
    presence on Bluesky at all? Recommended: yes, in phase 2, as
    `deactivateAccount` on their own identity with a plain explanation.
 2. **Bluesky-only replies.** A Bluesky user replies to alice's post; alice

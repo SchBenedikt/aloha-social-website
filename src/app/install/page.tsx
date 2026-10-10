@@ -180,8 +180,8 @@ export default function InstallPage() {
         <p className="mt-5 text-[17px] leading-relaxed text-muted">
           Aloha Social installs on Aloha 34 to 36 with PHP 8.3 to 8.5, from
           the App Store or built from source. Set the public URL, run the
-          federation checks and it is ready — your Aloha becomes a social
-          network server.
+          federation checks and it is ready — your server becomes a social
+          network.
         </p>
       </header>
 
@@ -190,7 +190,7 @@ export default function InstallPage() {
           id="installation"
           title="Your installation progress"
           steps={[
-            { label: "Check requirements and versions", href: "#requirements", description: "Confirm Aloha, PHP and server compatibility, and verify HTTPS." },
+            { label: "Check requirements and versions", href: "#requirements", description: "Confirm platform, PHP and server compatibility, and verify HTTPS." },
             { label: "Choose an installation method and install the app", href: "#app-store", description: "Install from the App Store or prepare a build from source." },
             { label: "Enable the app and verify the installation", href: "#enable", description: "Verify the setup with occ social:check:install." },
             { label: "Confirm the public address and WebFinger", href: "#webfinger", description: "Check that the server address matches the IDs and that WebFinger is reachable." },
@@ -222,13 +222,13 @@ export default function InstallPage() {
               release in the App Store matches those versions; check your server
               before installing.
             </p>
-            <a href={SITE.appStore} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1.5 font-semibold text-coral underline underline-offset-4">Open the Aloha App Store listing <ArrowUpRight className="size-4" /></a>
+            <a href={SITE.appStore} target="_blank" rel="noopener noreferrer" className="mt-3 inline-flex items-center gap-1.5 font-semibold text-coral underline underline-offset-4">Open the app store listing <ArrowUpRight className="size-4" /></a>
           </div>
           <ul className="mt-5 space-y-3 text-[15.5px] leading-relaxed">
             {[
               "Aloha 34 to 36 with PHP 8.3 to 8.5, reachable over HTTPS.",
               "Permission to install apps — the App Store route, or a shell on the server for the source route.",
-              "The PHP extensions required by Aloha, plus Composer when building from source.",
+              "The PHP extensions required by the server, plus Composer when building from source.",
               "A configured memory cache and scheduled background jobs.",
               "Optionally ffmpeg, for transcoding some uploaded videos; effective upload limits also depend on PHP and the web server.",
             ].map((item) => (
@@ -243,7 +243,7 @@ export default function InstallPage() {
 
           <H2 id="app-store">Install from the App Store</H2>
           <p className="mt-5 text-[15.5px] leading-relaxed text-muted">
-            Open your Aloha’s Apps section, search for Aloha Social and
+            Open the Apps section, search for Aloha Social and
             install it. It appears in the app grid as soon as it is enabled, and
             every existing account — including SSO and two-factor logins — gains
             a social identity with no new password.
@@ -260,12 +260,12 @@ export default function InstallPage() {
 
           <H2 id="source">Build from source</H2>
           <p className="mt-5 text-[15.5px] leading-relaxed text-muted">
-            For maintainers familiar with deploying apps for Aloha. Building Aloha Social from source does not by itself provide a signed production release or compatibility guarantee. Use the exact branch or tag you intend to deploy and review its migration requirements.
+            For maintainers who are familiar with deploying apps themselves. Building Aloha Social from source does not by itself provide a signed production release or compatibility guarantee. Use the exact branch or tag you intend to deploy and review its migration requirements.
           </p>
           <div className="mt-5 space-y-4">
             <Code
               lines={[
-                "cd /path/to/nextcloud/apps/social",
+                "cd /path/to/aloha/apps/social",
                 "composer install     # PHP dependencies",
                 "npm ci",
                 "npm run build        # production bundle into js/",
@@ -352,7 +352,7 @@ export default function InstallPage() {
               apart.
             </p>
             <Callout title="One: the server does not answer /.well-known/webfinger">
-              Follow the documented redirects in the Aloha’s
+              Follow the documented redirects in the
               administration manual for setting up well-known URLs.
             </Callout>
             <Callout tone="warn" title="Two: the address has changed since first use">

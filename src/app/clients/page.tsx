@@ -25,14 +25,14 @@ const PLATFORMS = [
     icon: Store,
     eyebrow: "Available today",
     title: "Use Aloha Social in your browser.",
-    body: "The web app ships with the app on your Aloha and is the reference client. Sign in with the account you already have — no new password, no separate sign-up.",
+    body: "The web app ships on the server and is the reference client. Sign in with the account you already have — no new password, no separate sign-up.",
     bullets: [
       "Works in every modern browser, on desktop and on the phone.",
       "Mastodon and Pixelfed mobile apps can connect today.",
       "Newcomers create an account right where they already are.",
       "Ships with the app — nothing extra to install.",
     ],
-    cta:      { label: "Get Aloha Social from the Aloha App Store", href: SITE.appStore },
+    cta:      { label: "Get Aloha Social from the app store", href: SITE.appStore },
     screenshot: {
       src: "/img/readme/home.png",
       alt: "Aloha Social running in a web browser",
@@ -91,7 +91,7 @@ const COMPARE = [
   {
     row: "Project page",
     values: [
-      "Aloha App Store listing",
+      "App store listing",
       "GitHub repository",
       "GitHub repository",
     ],

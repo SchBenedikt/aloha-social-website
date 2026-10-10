@@ -1,6 +1,6 @@
 # Aloha Social — OCC Commands Reference
 
-All commands are invoked via `php occ <command>` from the Aloha root directory.
+All commands are invoked via `php occ <command>` from the server root directory.
 
 This page documents the commands the app registers in
 `appinfo/info.xml`. Every command extends `OCA\Social\Command\SocialCommand`,
@@ -15,7 +15,7 @@ but only `social:timeline` reads it (see below).
 
 ### `social:account:create`
 
-Create the Aloha Social actor for an existing Aloha user.
+Create the Aloha Social actor for an existing user.
 
 ```
 php occ social:account:create [--handle HANDLE] <userId>
@@ -867,7 +867,7 @@ instance with a large media library should choose when that happens.
 
 ### `social:team`
 
-Give an Aloha group an account to post from.
+Give a group an account to post from.
 
 ```
 php occ social:team <group> <username>
@@ -889,7 +889,7 @@ php occ social:team --remove <username>
 `Group*` family: twenty models, still in beta, and a second social graph beside
 the one it already has. Aloha's answer is the one it has had all along — a
 group of people who already work together — and this gives that group an
-account. It is the one thing in this comparison Aloha can do and Pixelfed
+account. It is the one thing in this comparison the server can do and Pixelfed
 cannot, because Pixelfed has no idea who works with whom.
 
 A team account is **an actor like any other**: a key pair, a followers

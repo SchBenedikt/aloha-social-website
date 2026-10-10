@@ -36,23 +36,23 @@ const BORROWED = [
   },
   {
     term: "Groups",
-    note: "Host-platform groups can be used to manage shared feeds. Group membership stays in the Aloha, so operators do not need to maintain a second member list.",
+    note: "Host-platform groups can be used to manage shared feeds. Group membership stays on the server, so operators do not need to maintain a second member list.",
   },
   {
     term: "Permissions",
-    note: "The Aloha’s account and group permissions determine who may post, moderate and change service-wide settings.",
+    note: "The platform’s account and group permissions determine who may post, moderate and change service-wide settings.",
   },
   {
     term: "Storage and quota",
-    note: "Attachments use the Aloha’s file storage and configured quotas. Preview generation and effective upload size depend on its storage, PHP and web-server configuration.",
+    note: "Attachments use the server’s file storage and configured quotas. Preview generation and effective upload size depend on its storage, PHP and web-server configuration.",
   },
   {
     term: "Notifications",
-    note: "Mentions, follows and replies use the Aloha’s notification system and any desktop or mobile clients configured to receive those notifications.",
+    note: "Mentions, follows and replies use the server’s notification system and any desktop or mobile clients configured to receive those notifications.",
   },
   {
     term: "Cron",
-    note: "Delivery and housekeeping run as background jobs registered with the Aloha. A scheduled job determines how often they run; an optional worker can process the delivery queue continuously.",
+    note: "Delivery and housekeeping run as background jobs registered with the server. A scheduled job determines how often they run; an optional worker can process the delivery queue continuously.",
   },
   {
     term: "Theming and login",
@@ -60,7 +60,7 @@ const BORROWED = [
   },
   {
     term: "Search",
-    note: "Where the Aloha’s unified search is enabled, people, hashtags and posts can appear alongside other indexed results.",
+    note: "Where unified search is enabled, people, hashtags and posts can appear alongside other indexed results.",
   },
 ] as const;
 
@@ -105,12 +105,12 @@ const CAPABILITIES = [
   {
     icon: FileText,
     title: "Files behave like files",
-    body: "Upload limits, storage quotas, preview generation and file permissions are inherited from the Aloha. The effective limit is determined by the app and the server configuration together.",
+    body: "Upload limits, storage quotas, preview generation and file permissions are inherited from the server. The effective limit is determined by the app and the server configuration together.",
   },
   {
     icon: Bell,
     title: "Notifications take one path",
-    body: "Federated activity can create a notification through the Aloha, where it follows the notification settings and delivery clients already configured there.",
+    body: "Federated activity can create a notification on the server, where it follows the notification settings and delivery clients already configured there.",
   },
   {
     icon: Clock,
@@ -161,12 +161,12 @@ export default function NativePage() {
       <section className="py-16 sm:py-20">
         <Container className="grid gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-16">
           <div data-reveal="">
-            <span className="eyebrow">Provided by the Aloha</span>
+            <span className="eyebrow">Provided by the platform</span>
             <h2 className="mt-5 text-[2.05rem] leading-[1.12] tracking-[-0.035em] text-ink-strong sm:text-[2.4rem]">
               Accounts, storage and scheduled jobs.
             </h2>
             <p className="mt-5 text-[16.5px] leading-relaxed text-muted">
-              Aloha Social uses the Aloha’s existing services rather
+              Aloha Social uses the platform’s existing services rather
               than maintaining separate copies of accounts, permissions or
               files. This keeps administration in one place.
             </p>
@@ -261,7 +261,7 @@ export default function NativePage() {
               actor documents, the inbox and outbox, the signing keys and the
               moderation state. Everything else it reads or asks for. That
               boundary keeps federation data separate from your files. Changes
-              to the Aloha can still affect compatibility, so check the
+              to the platform can still affect compatibility, so check the
               app release notes before an upgrade.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -279,7 +279,7 @@ export default function NativePage() {
 
       <CtaBand
         title="Prepare the service before inviting people."
-        body="Confirm that your Aloha and PHP versions match the Aloha Social release, then run the installation and federation checks."
+        body="Confirm that your server and PHP versions match the Aloha Social release, then run the installation and federation checks."
         primary={{ label: "Install Aloha Social", href: "/install" }}
         secondary={{ label: "Federation", href: "/activitypub/federation" }}
       />

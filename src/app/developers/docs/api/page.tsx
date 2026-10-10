@@ -183,7 +183,7 @@ export default function ApiDocPage() {
                 "Signed fetch with a per-actor key pair, verified on arrival",
                 "Pagination and error shapes that Mastodon clients already handle",
                 "Every response is from your own server — no third party in the path",
-                "Tokens and sessions managed through the Aloha",
+                "Tokens and sessions managed by the server",
               ]}
             />
           </div>

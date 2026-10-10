@@ -15,7 +15,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "ActivityPub",
   description:
-    "How ActivityPub works in your Nextcloud: actors, WebFinger, signed inbox and outbox delivery, eight steps from pressing Post to a reply arriving back.",
+    "How ActivityPub works on your server: actors, WebFinger, signed inbox and outbox delivery, eight steps from pressing Post to a reply arriving back.",
   alternates: { canonical: "/activitypub" },
 };
 
@@ -337,7 +337,7 @@ export default function ActivityPubPage() {
               ],
               [
                 "Server-to-server WebSockets",
-                "Live updates depend on Aloha's push configuration; otherwise clients poll for new activity.",
+                "Live updates depend on the server's push configuration; otherwise clients poll for new activity.",
               ],
               [
                 "Automatic bridges to closed networks",

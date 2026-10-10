@@ -143,7 +143,7 @@ One squash candidate is left and is deliberately not taken.
 both shipped in 0.16.0 — but an instance on 0.15 running Aloha 35 has run
 neither, so folding the width into the creating step would leave it with a
 column too narrow for its own client secrets. The argument that retired the 2023
-steps does not transfer: the Aloha floor says which server an instance is
+steps does not transfer: the platform floor says which server an instance is
 on, not which version of this app.
 
 The drop of fourteen `social_3_*` tables that **no other file in the tree ever
