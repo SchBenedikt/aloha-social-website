@@ -34,14 +34,12 @@ Aloha Social is built by a small core team together with contributors from acros
 
 ### Core team
 
-| | |
-|---|---|
-| **Andy Scherzinger** | Core developer |
-| **Anna** | Core developer |
-| **Benedikt Schächner** | Maintainer & lead developer |
-| **Frank Karlitschek** | Founder, project initiator |
-| **Hamza** | Core developer |
-| **Jan C. Borchardt** | Design & UX lead |
+- Andy Scherzinger
+- Anna
+- Benedikt Schächner
+- Frank Karlitschek
+- Hamza
+- Jan C. Borchardt
 
 [![All contributors](https://contrib.rocks/image?repo=AlohaSocial/social&max=100&columns=20)](https://github.com/AlohaSocial/social/graphs/contributors)
 

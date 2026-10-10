@@ -12,14 +12,14 @@ Aloha Social is an **app inside your workspace** — not a separate service. Tha
 
 ## One account, already yours
 
-Your Aloha account **is** your Aloha Social account.
+Your Nextcloud account **is** your Aloha Social account.
 
 - **No new signup** — open the app from your app menu, you're in
 - **No new password** — your existing login (including SSO and 2FA) works
 - **Your profile** — display name, avatar come from Aloha automatically
 - **Groups = teams** — your Aloha groups become team accounts and lists
 
-### For people without an Aloha account
+### For people without a Nextcloud account
 Admins can enable **social-only accounts** — people sign up for Aloha Social only, with **no access** to files, chat, calendar, or anything else. Signup can be open, approval-required, or invite-only.
 
 ---
