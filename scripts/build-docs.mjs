@@ -1249,6 +1249,42 @@ export const SITE_PAGE_BY_PATH: Record<string, SitePage> = Object.fromEntries(
 
 fs.writeFileSync(path.join(OUT_DIR, "pages.ts"), staticSource);
 
+/* Slim search index: titles, descriptions and headings only — no HTML, so the
+   client bundle never carries the documentation itself. */
+const searchEntries = [
+  ...docPages.map((page) => ({
+    path: page.path,
+    title: page.title,
+    description: page.description,
+    kind: "docs",
+    section: groupMeta.get(page.group)?.title ?? "Documentation",
+    headings: page.toc.slice(0, 12).map((item) => item.text),
+  })),
+  ...staticPages.map((page) => ({
+    path: page.path,
+    title: page.title,
+    description: page.description,
+    kind: "page",
+    section: "Pages",
+    headings: page.toc.slice(0, 12).map((item) => item.text),
+  })),
+].filter((entry) => entry.title);
+
+const searchSource = `${header}
+export type SearchEntry = {
+  path: string;
+  title: string;
+  description: string;
+  kind: "docs" | "page";
+  section: string;
+  headings: string[];
+};
+
+export const SEARCH_INDEX: SearchEntry[] = ${JSON.stringify(searchEntries)};
+`;
+
+fs.writeFileSync(path.join(OUT_DIR, "search.ts"), searchSource);
+
 console.log(`docs: ${docPages.length} documentation pages in ${groups.length} groups`);
 console.log(
   `pages: ${staticPages.length} hand-written page(s): ${staticPages.map((page) => page.path).join(", ")}`,
