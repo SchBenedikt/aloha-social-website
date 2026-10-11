@@ -21,7 +21,7 @@ const PATHS = [
     steps: [
       "Ask your organisation or community whether it operates an Aloha Social server and accepts accounts.",
       "Before signing up, check the server’s registration rules and community policies.",
-      "Open the web app in any browser; the native apps for iPhone, Android, Windows, macOS and Linux follow.",
+      "Open the web app in any browser; the native Android and Apple clients follow when they are released.",
     ],
     links: [
       { label: "Find a server", href: "/servers", primary: true },

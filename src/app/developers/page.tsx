@@ -29,13 +29,13 @@ const REPOS = [
   {
     name: "Apple",
     role: "Apple-platform client",
-    note: "The Apple client for iPhone, iPad and Mac — part of the new Aloha apps for every platform.",
+    note: "The Apple client for iPhone, iPad, Mac, Vision Pro, Watch and TV — implemented and pre-release.",
     href: SITE.apple,
   },
   {
     name: "Android",
     role: "Android client",
-    note: "The Android client, one of the new native apps shipping for mobile and desktop.",
+    note: "The Android client for phones, tablets and foldables — in development, not released.",
     href: SITE.android,
   },
   {

@@ -14,7 +14,7 @@ import { SITE } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Apps and downloads",
   description:
-    "Use Aloha Social in the browser today, and get the new native Aloha apps for iPhone, Android, Windows, macOS and Linux as they ship.",
+    "Use Aloha Social in the browser today. The native Android and Apple clients are written in the open and not released yet — here is what each one covers.",
   alternates: { canonical: "/clients" },
 };
 
@@ -24,15 +24,15 @@ const PLATFORMS = [
     nav: "Web app",
     icon: Store,
     eyebrow: "Available today",
-    title: "Use Aloha Social in your browser.",
-    body: "The web app ships on the server and is the reference client. Sign in with the account you already have — no new password, no separate sign-up.",
+    title: "The web app ships with the app.",
+    body: "It is the reference client and it is already on your server — sign in with the account you have, including SSO and two-factor. Nothing to install, nothing to update separately.",
     bullets: [
-      "Works in every modern browser, on desktop and on the phone.",
-      "Mastodon and Pixelfed mobile apps can connect today.",
+      "Works in every modern browser, on the phone as well as the desktop.",
+      "Mastodon and Pixelfed apps connect today over the same open API.",
+      "The layout is designed first for the phone; dark mode is the same design.",
       "Newcomers create an account right where they already are.",
-      "Ships with the app — nothing extra to install.",
     ],
-    cta:      { label: "Get Aloha Social from the app store", href: SITE.appStore },
+    cta: { label: "Install Aloha Social", href: "/install", internal: true },
     screenshot: {
       src: "/img/readme/home.png",
       alt: "Aloha Social running in a web browser",
@@ -45,16 +45,17 @@ const PLATFORMS = [
     id: "platform-android",
     nav: "Android",
     icon: Smartphone,
-    eyebrow: "Native app",
-    title: "Aloha for Android is on the way.",
-    body: "New native apps for mobile and desktop are coming to iPhone, Android, Windows, macOS and Linux. They connect to your server over the same open API the web app uses, and newcomers will be able to create an account right in the app.",
+    eyebrow: "In development",
+    title: "Aloha for Android is built in the open.",
+    body: "A client for Android phones, tablets and foldables, written to Material Design. It speaks the Mastodon client API — so it works with GoToSocial, Akkoma and the rest — and Aloha Social is its primary target, where it uses the photo, video, Shorts, news and story extensions the server publishes. Not released yet.",
     bullets: [
-      "Full timeline, composer, media and notifications.",
-      "Sign up or sign in from inside the app.",
-      "Source is published under the repository's MIT licence.",
-      "Follow the project for builds and release dates.",
+      "As many accounts as you want, and a local cache that reads offline.",
+      "Home, Photos, Video and Shorts, with stories, picture-in-picture and background playback.",
+      "Push through UnifiedPush or through your workspace — your choice.",
+      "Widgets, launcher shortcuts, Direct Share and the foldable tabletop posture.",
+      "Two builds from one source: Google Play, and a F-Droid flavour with no Google libraries.",
     ],
-    cta: { label: "Android project on GitHub", href: SITE.android },
+    cta: { label: "Android project on GitHub", href: SITE.android, internal: false },
     screenshot: {
       src: "/img/readme/phone.png",
       alt: "Aloha Social timeline on a phone",
@@ -65,18 +66,19 @@ const PLATFORMS = [
   },
   {
     id: "platform-ios",
-    nav: "iOS",
+    nav: "Apple",
     icon: Smartphone,
-    eyebrow: "Native app",
-    title: "Aloha for iPhone and iPad is on the way.",
-    body: "The Apple client covers iPhone, iPad, Mac, Vision Pro, Apple Watch and Apple TV — part of the same wave of native apps, written in Swift and published openly.",
+    eyebrow: "Pre-release",
+    title: "Aloha for Apple platforms is finished, waiting on a server.",
+    body: "One app for iPhone, iPad, Mac, Apple Vision Pro, Apple Watch and Apple TV, written in Swift with no third-party code in it. Every phase of the implementation plan is built — what it has not had yet is a real server to sign in to.",
     bullets: [
-      "One codebase across the Apple platforms.",
-      "Built on the same open client API as the web app.",
-      "Published under the repository's MIT licence.",
-      "Sign up for a new account right in the app.",
+      "iPhone, iPad, Mac and Vision Pro get the full feature set.",
+      "The Watch is a companion: timeline, notifications, quick replies — it never signs in on its own.",
+      "Apple TV is video only: the Video and Shorts modes, and no composer.",
+      "294 package tests and 62 UI tests, with every platform target building in Release.",
+      "Built on the same open client API as the web app, under an MIT licence.",
     ],
-    cta: { label: "Apple client on GitHub", href: SITE.apple },
+    cta: { label: "Apple client on GitHub", href: SITE.apple, internal: false },
     screenshot: {
       src: "/img/readme/phone.png",
       alt: "Aloha Social on an iPhone",
@@ -89,34 +91,42 @@ const PLATFORMS = [
 
 const COMPARE = [
   {
-    row: "Project page",
+    row: "Platforms",
     values: [
-      "App store listing",
-      "GitHub repository",
-      "GitHub repository",
+      "Every modern browser — phone, desktop, tablet",
+      "Android phones, tablets and foldables",
+      "iPhone, iPad, Mac, Vision Pro, Watch and TV",
     ],
   },
   {
-    row: "Current status",
-    values: ["Available now", "In progress — iPhone, Android, Windows, macOS and Linux", "In progress — iPhone, iPad and Mac"],
-  },
-  {
-    row: "Target server",
+    row: "Status",
     values: [
-      "Aloha running Aloha Social",
-      "Mastodon client API; Aloha Social is a target",
-      "Mastodon client API; Aloha Social is a target",
+      "Available now, ships with the app",
+      "In development, not released",
+      "Implemented, pre-release",
     ],
   },
-];
+  {
+    row: "Speaks",
+    values: [
+      "The Mastodon client API served by your own server",
+      "The Mastodon client API; Aloha Social is the primary target",
+      "The Mastodon client API; Aloha Social is the primary target",
+    ],
+  },
+  {
+    row: "Licence",
+    values: ["AGPL-3.0-or-later, with the server", "MIT", "MIT"],
+  },
+] as const;
 
 export default function ClientsPage() {
   return (
     <>
       <PageHeader
         eyebrow="Apps and downloads"
-        title="Choose an Aloha Social client."
-        lede="The web app is ready today and ships with the app. New native apps for iPhone, Android, Windows, macOS and Linux are on the way — the same account, the same timeline, on every device."
+        title="One account, on every device."
+        lede="The web app is ready today and ships with the app. The native clients for Android and Apple platforms are written in the open and not released yet — the same account, the same timeline, whenever they arrive."
       />
 
       {/* --------------------------------------------------- platform picker */}
@@ -156,15 +166,21 @@ export default function ClientsPage() {
                           {platform.body}
                         </p>
                         <CheckList className="mt-7" items={[...platform.bullets]} />
-                        <a
-                          href={platform.cta.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="btn btn-primary mt-8"
-                        >
-                          {platform.cta.label}
-                          <ArrowUpRight className="size-4" />
-                        </a>
+                        {platform.cta.internal ? (
+                          <Link href={platform.cta.href} className="btn btn-primary mt-8">
+                            {platform.cta.label}
+                          </Link>
+                        ) : (
+                          <a
+                            href={platform.cta.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="btn btn-primary mt-8"
+                          >
+                            {platform.cta.label}
+                            <ArrowUpRight className="size-4" />
+                          </a>
+                        )}
                       </div>
 
                       <div className="flex justify-center lg:justify-end">
@@ -191,13 +207,13 @@ export default function ClientsPage() {
         <Container>
           <SectionHeading
             eyebrow="Release status"
-            title="Where to get each client."
-            lede="The web app ships with the app today. The native apps for Android and Apple arrive with the release train — follow each project for build and download links."
+            title="Where each client stands."
+            lede="Both native clients are public repositories you can read and build today. Neither has been released, and neither claims a date — follow each project for its own news."
           />
 
           <div className="mt-10 overflow-x-auto" data-reveal="">
             <table className="w-full min-w-[46rem] border-collapse text-left">
-              <caption className="sr-only">Comparison of web, Android and Apple clients by project, status and target server</caption>
+              <caption className="sr-only">Comparison of the web, Android and Apple clients by platforms, status, protocol and licence</caption>
               <thead>
                 <tr>
                   <th scope="col" className="w-56 border-b border-line pb-4 text-[12px] font-semibold tracking-[0.14em] text-muted uppercase">
@@ -232,27 +248,40 @@ export default function ClientsPage() {
                 ))}
                 <tr>
                   <th scope="row" className="py-4 pr-4 align-top text-[13.5px] font-medium text-muted">
-                    Get it
+                    Source
                   </th>
                   {PLATFORMS.map((platform) => (
                     <td key={platform.id} className="py-4 pr-4 align-top">
-                      <a
-                        href={platform.cta.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 text-[15px] font-semibold text-coral hover:underline"
-                      >
-                        {platform.nav === "Web app"
-                          ? "Open the App Store listing"
-                          : "Follow the project on GitHub"}
-                        <ArrowUpRight className="size-3.5" />
-                      </a>
+                      {platform.cta.internal ? (
+                        <Link
+                          href={platform.cta.href}
+                          className="inline-flex items-center gap-1 text-[15px] font-semibold text-coral hover:underline"
+                        >
+                          Installation guide
+                        </Link>
+                      ) : (
+                        <a
+                          href={platform.cta.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 text-[15px] font-semibold text-coral hover:underline"
+                        >
+                          Repository on GitHub
+                          <ArrowUpRight className="size-3.5" />
+                        </a>
+                      )}
                     </td>
                   ))}
                 </tr>
               </tbody>
             </table>
           </div>
+
+          <p className="mt-8 max-w-3xl text-[15px] leading-relaxed text-muted">
+            There is no native client for Windows or Linux yet — the web app covers both, and
+            it is the same account the phone apps will sign in to. Any app that speaks the
+            Mastodon client API can be pointed at your domain in the meantime.
+          </p>
         </Container>
       </section>
 
@@ -295,8 +324,8 @@ export default function ClientsPage() {
               },
               {
                 icon: Smartphone,
-                heading: "Apps on the way",
-                note: "iPhone, Android, Windows, macOS and Linux.",
+                heading: "Native apps in the open",
+                note: "Android and Apple, both public, neither released yet.",
               },
               {
                 icon: Store,
@@ -324,7 +353,7 @@ export default function ClientsPage() {
 
       <CtaBand
         title="Install Aloha Social and open it in any browser."
-        body="The web app is ready today, and the native apps for iPhone, Android, Windows, macOS and Linux follow. Set up the server first, then point every device at it."
+        body="The web app is ready today. The native clients for Android and Apple platforms are written in the open and follow when they are ready. Set up the server first, then point every device at it."
         primary={{ label: "Install Aloha Social", href: "/install" }}
         secondary={{ label: "Read compatibility notes", href: "/docs/mastodon" }}
       />

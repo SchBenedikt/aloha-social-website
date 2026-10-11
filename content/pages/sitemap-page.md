@@ -16,7 +16,7 @@ All public pages on this site, organised by section.
 - [Get started](/get-started) — Find a server, create an account, first post
 - [Find a server](/servers) — Browse public Aloha Social servers
 - [Server list](/servers/list) — Full directory with filters
-- [Apps & downloads](/clients) — Web, mobile, desktop apps
+- [Apps & downloads](/clients) — The web app today; Android and Apple clients in the open
 
 ---
 
@@ -91,4 +91,4 @@ All public pages on this site, organised by section.
 
 ---
 
-*Last updated: {{ new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }) }}*
+*This page lists every public page at the time of the last build.*
