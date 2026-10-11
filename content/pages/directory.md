@@ -41,7 +41,7 @@ Every list is **signed with Ed25519** — clients verify the signature, not the 
 
 ## How it works for you
 
-### In the mobile/desktop app (coming soon)
+### In the Android and Apple apps
 
 1. **Welcome** — Tap "Create account" or "I already have an account"
 2. **About you (optional)** — Language and interests, stays on your device
@@ -56,7 +56,7 @@ Every list is **signed with Ed25519** — clients verify the signature, not the 
 
 The app **chooses the server on your device** — no data about you is sent anywhere. It filters for featured servers with open signup in your language, scores by region and capacity, and picks randomly among the top five so users spread across servers naturally.
 
-### In the web app (today)
+### In the web app
 
 - Browse servers at **[/servers](/servers)** or **[/servers/list](/servers/list)**
 - Search for people from your account — your server queries curated providers

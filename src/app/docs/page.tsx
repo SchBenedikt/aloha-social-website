@@ -30,7 +30,7 @@ const OUTSIDE = [
   { href: "/activitypub", title: "ActivityPub federation", description: "How servers talk to each other, and what federates." },
   { href: "/activitypub/federation", title: "Federation guide", description: "Relays, directories, discovery and what breaks federation." },
   { href: "/servers", title: "Find a server", description: "Browse public servers and choose one to join." },
-  { href: "/clients", title: "Apps and downloads", description: "The web app today, and the native apps." },
+  { href: "/clients", title: "Apps and downloads", description: "The web, Android and Apple apps." },
   { href: "/admins", title: "Administration overview", description: "A short tour for the person running a server." },
   { href: "/developers", title: "Developer hub", description: "Repositories, endpoints and the source." },
   { href: "/why", title: "Why Aloha Social", description: "Thirty reasons, grouped and linked." },

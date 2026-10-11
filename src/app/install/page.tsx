@@ -206,9 +206,9 @@ export default function InstallPage() {
           Other clients
         </span>
         <div className="segmented">
-          <Link href="/clients#platform-web">Web app listing</Link>
+          <Link href="/clients#platform-web">Web app</Link>
           <Link href="/clients#platform-android">Android</Link>
-          <Link href="/clients#platform-ios">iOS</Link>
+          <Link href="/clients#platform-ios">Apple</Link>
         </div>
       </div>
 

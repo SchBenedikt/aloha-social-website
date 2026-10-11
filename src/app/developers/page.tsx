@@ -29,13 +29,13 @@ const REPOS = [
   {
     name: "Apple",
     role: "Apple-platform client",
-    note: "The Apple client for iPhone, iPad, Mac, Vision Pro, Watch and TV — implemented and pre-release.",
+    note: "The Apple client for iPhone, iPad, Mac, Vision Pro, Watch and TV — one app across all six.",
     href: SITE.apple,
   },
   {
     name: "Android",
     role: "Android client",
-    note: "The Android client for phones, tablets and foldables — in development, not released.",
+    note: "The Android client for phones, tablets and foldables — Material Design, offline cache, UnifiedPush.",
     href: SITE.android,
   },
   {

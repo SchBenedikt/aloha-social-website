@@ -65,7 +65,7 @@ Being inside Aloha doesn't make it a walled garden:
 - **One account reaches everywhere** — Mastodon, Bluesky, Pixelfed, PeerTube, GoToSocial, Akkoma — follow, reply, quote, boost both ways
 - **Bluesky native** — every account is also a Bluesky account (`you.your.cloud`), no bridge, no app password
 - **Portable** — import from Mastodon, GoToSocial, Pixelfed, Instagram; export full archive; move account both ways
-- **Works today** — the web app in any browser; native Android and Apple clients are written in the open and not released yet
+- **Works everywhere** — the web app in any browser, plus the native apps for Android and every Apple platform
 
 ---
 
