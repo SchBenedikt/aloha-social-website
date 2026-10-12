@@ -53,6 +53,8 @@ function collectRoutes(dir) {
       continue;
     }
     if (!entry.name.endsWith(".html") || entry.name === "404.html") continue;
+    // Redirect stubs (meta refresh) are no real pages — never list them.
+    if (fs.readFileSync(entryPath, "utf8").includes('http-equiv="refresh"')) continue;
     const relative = path.relative(OUT_DIR, entryPath).replace(/\\/g, "/");
     routes.push(relative === "index.html" ? "/" : `/${relative.replace(/\.html$/, "")}`);
   }

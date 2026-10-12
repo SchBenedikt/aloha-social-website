@@ -82,21 +82,21 @@ function InThisSection({ sections }: { sections: SectionLink[] }) {
                   {group.description}
                 </p>
               ) : null}
-              {group.children.length > 0 ? (
-                <ul className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
-                  {group.children.map((child) => (
-                    <li key={child.path}>
-                      <Link
-                        href={child.path}
-                        className="text-[13px] text-muted transition hover:text-coral underline-offset-2 hover:underline"
-                      >
-                        {child.title}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              ) : null}
             </Link>
+            {group.children.length > 0 ? (
+              <ul className="mt-1 flex flex-wrap gap-x-4 gap-y-1">
+                {group.children.map((child) => (
+                  <li key={child.path}>
+                    <Link
+                      href={child.path}
+                      className="text-[13px] text-muted transition hover:text-coral underline-offset-2 hover:underline"
+                    >
+                      {child.title}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            ) : null}
           </li>
         ))}
       </ul>

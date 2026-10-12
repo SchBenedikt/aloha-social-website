@@ -5,21 +5,7 @@ import { createPortal } from "react-dom";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { CornerDownLeft, Search, X } from "lucide-react";
-import { groupOf, search, type SearchResult } from "@/lib/search";
-
-type Grouped = { id: string; label: string; items: { result: SearchResult; index: number }[] };
-
-/** Keep the ranked order, but collect consecutive results of one kind. */
-const group = (results: SearchResult[]): Grouped[] => {
-  const groups: Grouped[] = [];
-  results.forEach((result, index) => {
-    const { id, label } = groupOf(result);
-    const last = groups[groups.length - 1];
-    if (last && last.id === id) last.items.push({ result, index });
-    else groups.push({ id, label, items: [{ result, index }] });
-  });
-  return groups;
-};
+import { groupResults, search } from "@/lib/search";
 
 /** Marks the part of the label that matched the query. */
 function highlight(label: string, query: string) {
@@ -48,7 +34,7 @@ export default function SearchPopup() {
   const listId = useId();
 
   const results = useMemo(() => search(query), [query]);
-  const groups = useMemo(() => group(results), [results]);
+  const groups = useMemo(() => groupResults(results), [results]);
   const starters = useMemo(() => search(""), []);
 
   const close = useCallback(() => {
@@ -228,7 +214,7 @@ export default function SearchPopup() {
                 >
                   {results.length ? (
                     groups.map((section) => (
-                      <div key={section.id} role="group" aria-label={section.label}>
+                      <div key={section.key} role="group" aria-label={section.label}>
                         <p className="px-4 pt-3 pb-1.5 font-mono text-[11px] tracking-[0.12em] text-muted uppercase">
                           {section.label}
                         </p>

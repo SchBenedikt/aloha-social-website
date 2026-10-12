@@ -212,4 +212,32 @@ export function groupOf(result: SearchResult): { id: Group; label: string } {
   return { id: "site", label: "On this site" };
 }
 
+export type SearchGroup = {
+  /** Unique render key — the same id can occur several times in ranked order. */
+  key: string;
+  id: Group;
+  label: string;
+  items: { result: SearchResult; index: number }[];
+};
+
+/** Keep the ranked order, but collect consecutive results of one kind. */
+export function groupResults(results: SearchResult[]): SearchGroup[] {
+  const groups: SearchGroup[] = [];
+  results.forEach((result, index) => {
+    const { id, label } = groupOf(result);
+    const last = groups[groups.length - 1];
+    if (last && last.id === id) last.items.push({ result, index });
+    else groups.push({ key: `${id}-${groups.length}`, id, label, items: [{ result, index }] });
+  });
+  return groups;
+}
+
+/** True when the path has an entry in the search index. */
+export function hasPage(path: string): boolean {
+  return byPath.has(path);
+}
+
+/** Every path the search index knows — used by the coverage test. */
+export const SEARCH_PATHS: ReadonlySet<string> = new Set(byPath.keys());
+
 export const SEARCH_INDEX_SIZE = ENTRIES.length;
