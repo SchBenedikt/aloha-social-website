@@ -142,4 +142,5 @@ If you do nothing else, do these:
 - [Administration guide](/docs/admin) — moderation, config, scale
 - [Configuration reference](/docs/configuration) — every setting explained
 - [How Aloha protects you](/protect) — the user-facing safety features
-- [Privacy at a glance](/privacy) — what is stored, what leaves, what is stripped
+- [Privacy policy](/privacy) — what is stored, what leaves, what is stripped
+- [GDPR / DSGVO compliance](/gdpr) — legal bases, rights, and what a controller owes

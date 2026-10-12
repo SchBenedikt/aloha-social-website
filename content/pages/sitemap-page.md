@@ -33,7 +33,9 @@ All public pages on this site, organised by section.
 ## Safety, Privacy & Well-being
 
 - [How Aloha protects you](/protect) — Calm defaults, filters, moderation tools
-- [Privacy at a glance](/privacy) — What is stored, what leaves, what is stripped
+- [Privacy policy](/privacy) — What is stored, what leaves, your rights
+- [GDPR / DSGVO compliance](/gdpr) — Legal bases, rights, controller duties
+- [Cookie policy](/cookies) — Everything stored on your device (spoiler: one flag)
 - [Rules for using Aloha](/rules) — Community guidelines, moderation
 - [Well-being in Aloha](/wellbeing) — Research behind the design
 
@@ -86,6 +88,8 @@ All public pages on this site, organised by section.
 
 ## Legal & Technical
 
+- [Imprint](/imprint) — Operator, contact, dispute resolution
+- [Terms of Service](/terms) — Acceptable use, liability, governing law
 - [Sitemap (XML)](/sitemap.xml) — Machine-readable sitemap
 - [Robots.txt](/robots.txt) — Crawler instructions
 

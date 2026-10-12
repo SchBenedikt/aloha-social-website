@@ -73,6 +73,6 @@ Aloha Social runs on your organisation's Aloha. There's no ad server to feed, so
 ## Further reading
 
 - [How Aloha Social protects you](/protect) — the full list of safety and privacy features
-- [Privacy in Aloha Social](/privacy) — what is stored, what leaves your server, and why
+- [Privacy policy](/privacy) — what is stored, what leaves your server, and why
 - [Rules for using Aloha Social](/rules) — community guidelines and moderation
 - [Why Aloha Social](/why) — 30 reasons it's different

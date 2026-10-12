@@ -91,6 +91,7 @@ A page of detail for the technically curious — the [security section of the ar
 
 - [The safety feature page](/features/safety) — the same controls as you meet them in the app
 - [Who may reach you](/docs/notify-behaviour) — the notification policy in detail
-- [Privacy in Aloha Social](/privacy) — what is stored, what leaves the server, and why
+- [Privacy policy](/privacy) — what is stored, what leaves the server, and why
+- [GDPR / DSGVO compliance](/gdpr) — your rights and the software's data minimisation
 - [Rules for using Aloha Social](/rules) — what is expected of people here
 - [Well-being in Aloha](/wellbeing) — the research and design behind these choices
