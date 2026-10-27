@@ -6,7 +6,7 @@ description: What this website logs, what it never collects, how long anything i
 
 # Privacy Policy
 
-**No ads. No tracking. No profiling.** This page is the full policy for aloha.social: what is processed, on what legal basis, for how long, and how to reach us. The short version is in the [privacy at a glance](/docs/feature-safety-and-privacy-that-is-the-default) summary inside the documentation.
+**No ads. No analytics. No profiling.** This page is the full policy for aloha.social: what is processed, on what legal basis, for how long, and how to reach us. The app's data handling is described in [How Aloha protects you](/protect).
 
 *Effective 12 October 2026.*
 
@@ -83,7 +83,7 @@ Because this website processes so little, most of these requests concern your br
 
 On a server running Aloha Social, **you are the controller** and this website has no access to that data at all. The software is built so that your deployment can meet the same requirements:
 
-- **Data minimisation by design** — no trackers, no advertising, no third-party services; photos lose their EXIF, GPS and camera metadata before they are stored.
+- **Data minimisation by design** — the app includes no advertising or third-party analytics code; federation and configured integrations send protocol data to remote services. Photos lose their EXIF, GPS and camera metadata before they are stored.
 - **Security** — account keys are encrypted at rest with the instance secret, delivery is signed, tokens are stored hashed (see the [architecture document](https://github.com/AlohaSocial/social/blob/master/docs/Architecture.md#security)).
 - **Erasure and portability** — full export, account moves, deletion that federates.
 - **Records of moderation** — every moderator action is written to the audit log.

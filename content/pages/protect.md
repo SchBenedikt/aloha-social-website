@@ -6,13 +6,13 @@ description: The defaults, filters, queues and moderation tools that keep your t
 
 # How Aloha Social protects you
 
-Aloha Social is designed differently. While most social networks optimize for engagement at any cost, Aloha puts your well-being first. Every default is a deliberate choice to reduce stress, addiction, and negative emotions — and to amplify genuine connection.
+Aloha Social gives people controls over feeds, notifications and unwanted content. These are design goals, not guarantees about mental-health outcomes or how other people behave.
 
-Research backs this up: a 2023 study in *Computers in Human Behavior* found that hiding like counts significantly reduced social anxiety and improved well-being. A University of Pennsylvania study showed that limiting social media use to 30 minutes daily reduced loneliness and depression. A 2022 *Nature Human Behaviour* study found that batching notifications (instead of instant delivery) reduced stress and improved attention span.
+The product choices described below are controls available in the app. Their effects depend on how people and server operators use them.
 
 ## The defaults that are already on
 
-**No scoreboard.** Like, boost and follower counts are hidden unless you turn them on. The timeline has no engagement-ranked feed — posts arrive newest first, in full.
+**No scoreboard by default.** Like, boost and follower counts are hidden unless you turn them on. My Feed is chronological; the optional For You feed is ranked and explains why recommendations appear.
 
 **Calm notifications.** Every new account starts with the calm policy:
 
@@ -30,9 +30,9 @@ A held notification is stored and never raised: no bell, no push, no mail, and i
 
 **Photos lose their location.** Exif, XMP, IPTC and GPS data are stripped from every image before it is stored or sent, without re-encoding it.
 
-**No third parties.** No map service, no GIF service, no tracker, no advertising. The 881 built-in emoji are served from your server.
+**No ad or map service.** The app includes no advertising or third-party analytics code and does not need an external map or GIF service. Federation and configured integrations still communicate with remote servers. The 881 built-in emoji are served from your server.
 
-**AI content.** One switch in Settings hides every post that says it was made with AI.
+**AI labels.** A setting can hide posts that identify themselves as AI-generated; it cannot identify unlabeled content.
 
 ## Filtering, before anything reaches you
 
@@ -90,7 +90,7 @@ A page of detail for the technically curious — the [security section of the ar
 ## Where to go next
 
 - [The safety feature page](/features/safety) — the same controls as you meet them in the app
-- [Who may reach you](/docs/notify-behaviour) — the notification policy in detail
+- [Who may reach you](/docs/notify-reader-controls) — the notification policy in detail
 - [Privacy policy](/privacy) — what is stored, what leaves the server, and why
 - [GDPR / DSGVO compliance](/gdpr) — your rights and the software's data minimisation
 - [Rules for using Aloha Social](/rules) — what is expected of people here

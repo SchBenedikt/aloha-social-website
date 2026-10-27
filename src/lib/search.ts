@@ -11,7 +11,7 @@ const SITE_PAGES: SearchEntry[] = [
     path: "/",
     title: "Home",
     description:
-      "Aloha Social — the social network for your server. No advertising, no tracking, counts hidden by default.",
+      "Aloha Social — the social network for your server. No advertising code, optional native AT Protocol hosting, and counts hidden by default.",
     kind: "page",
     section: "Pages",
     headings: ["One app for every kind of post", "Why Aloha Social is special", "How it works"],
@@ -98,8 +98,8 @@ const SITE_PAGES: SearchEntry[] = [
   },
   {
     path: "/activitypub/native",
-    title: "Native, without a bridge",
-    description: "Every account is a real fediverse account — and a Bluesky account too.",
+    title: "Hosting model",
+    description: "How Aloha Social uses the host platform for accounts and services while adding ActivityPub federation and optional AT Protocol hosting.",
     kind: "page",
     section: "Pages",
     headings: [],

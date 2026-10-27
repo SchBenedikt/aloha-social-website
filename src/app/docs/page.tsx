@@ -22,6 +22,15 @@ const GROUP_ICONS: Record<string, typeof Rocket> = {
   mastodon: ArrowUpRight,
   performance: Sparkles,
   atproto: ArrowUpRight,
+  "atproto-live": ArrowUpRight,
+  api: ArrowUpRight,
+  architecture: Wrench,
+  federation: ArrowUpRight,
+  integrations: ArrowUpRight,
+  events: Users,
+  frontend: Sparkles,
+  evaluation: Sparkles,
+  releasing: Wrench,
 };
 
 const OUTSIDE = [

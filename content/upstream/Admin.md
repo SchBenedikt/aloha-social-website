@@ -9,7 +9,7 @@ how the pieces fit together [Architecture.md](Architecture.md).
 
 ## Before it federates
 
-Aloha Social is a fediverse server that happens to live inside Aloha, so the
+Aloha Social is a fediverse server that happens to live inside Nextcloud, so the
 things it needs are the things any fediverse server needs: a stable public
 address, a `.well-known` answer, and a cron that runs.
 
@@ -23,9 +23,9 @@ available here, because the old address is inside every id already federated.
 See [*the address Aloha Social is set up for*](#the-address-aloha-social-is-set-up-for).
 
 **`.well-known` redirects.** Another server looking for `@alice@example.com`
-asks `https://example.com/.well-known/webfinger`. Aloha serves that from
+asks `https://example.com/.well-known/webfinger`. Nextcloud serves that from
 `/index.php/.well-known/webfinger`, and the redirect from the domain root is
-something the web server has to do; Aloha's
+something the web server has to do; Nextcloud's
 [documented redirects](https://docs.nextcloud.com/server/latest/go.php?to=admin-setup-well-known-URL)
 are exactly the ones needed. Without them nobody outside can find an account
 here, however well everything inside works.
@@ -37,10 +37,10 @@ rewriting is available, turn it on before the first account is created rather
 than after.
 
 **Behind a reverse proxy**, set `trusted_proxies` and `overwritehost`,
-`overwriteprotocol` and `overwrite.cli.url` as the documentation
+`overwriteprotocol` and `overwrite.cli.url` as the Nextcloud documentation
 describes. Aloha Social signs its outbound requests over the `Host` and `Date`
 headers and verifies the signatures on what arrives, so a proxy that rewrites
-the host without Aloha knowing produces signature failures on both sides
+the host without Nextcloud knowing produces signature failures on both sides
 that look like nothing else.
 
 **Cron.** Background jobs must be set to *Cron* (system cron), not *AJAX* and
@@ -51,15 +51,17 @@ See [*the delivery job has not run*](#the-delivery-job-has-not-run).
 
 **Outbound HTTP.** The server must be able to reach the rest of the fediverse
 over HTTPS. Requests to local and private addresses are refused unless
-Aloha's `allow_local_remote_servers` is on, which is a development setting
-and not one to carry into production.
+Nextcloud's `allow_local_remote_servers` is on, which is a development setting
+and not one to carry into production. A host is resolved once, every address
+it answers with is checked, and the request — and each redirect it follows —
+is sent to exactly those addresses.
 
 ---
 
 ## The setup checks
 
 Aloha Social registers its own checks in **Administration → Overview**, beside
-Aloha's own. They are the things that break federation, or stop clients
+Nextcloud's own. They are the things that break federation, or stop clients
 connecting, without anything else saying so, and each links back to this page.
 
 `occ social:check:install` runs the same classes (`lib/SetupChecks/`),
@@ -74,7 +76,7 @@ reaches this app's code, so `/api/v1/instance` and `/api/v2/instance` advertise
 (`max_size`, `max_video_size`) and PHP's. When PHP's is the smaller, every
 client is held to it: an upload over it is refused with a 422 naming the limit
 (`the file is larger than this server accepts (2 MB)`), and a warning in the
-log names the setting it went over. To let the app's own ceiling
+Nextcloud log names the setting it went over. To let the app's own ceiling
 apply, raise both PHP values; see
 [Raising the upload limit](#raising-the-upload-limit).
 
@@ -101,6 +103,18 @@ See below — this is the one check that is about apps rather than about
 federation, and it is a warning rather than an error, because everything else
 works without it.
 
+**Aloha Social: index repairs.** Whether the two repair jobs that walk the
+posts stored by an older version got past every one of them. `Cron\Index`
+gives each post its timeline and hashtag rows and `Cron\SearchIndex` puts its
+words into the content search; a post that keeps failing is passed over rather
+than holding every post after it back, and this check counts what was passed
+over. See [Posts the index repairs skipped](#posts-the-index-repairs-skipped).
+
+**Aloha Social: table growth.** A warning when retention is off and the post
+tables have grown past the size where that starts to cost: more than a million
+posts, or about thirty million words in the search index. See
+[The post tables keep growing](#the-post-tables-keep-growing).
+
 ### Mastodon apps cannot connect
 
 A Mastodon app is given a domain and builds `https://<domain>/api/v1/...` from
@@ -114,10 +128,10 @@ Apache rules to paste, until the web server answers; it is the same check as
 in **Administration → Overview**, and it goes quiet within five minutes of the
 rules being in place.
 
-Aloha only lets a short list of apps claim URLs at the root of the domain,
+Nextcloud only lets a short list of apps claim URLs at the root of the domain,
 and Aloha Social is not on it, so this has to be done in the web server. Ready-made
 rules are in [`contrib/webserver/`](../contrib/webserver): include
-`apache-social-root.conf` from the `<VirtualHost>` that serves Aloha, or
+`apache-social-root.conf` from the `<VirtualHost>` that serves Nextcloud, or
 `nginx-social-root.conf` from its `server` block, and reload. For Apache that
 is:
 
@@ -140,7 +154,7 @@ untrusted domain.
 
 **Check what `127.0.0.1:80` actually serves.** These rules proxy to plain HTTP
 on the loopback address, which only works if something there serves *this*
-Aloha. A server whose virtual hosts are all on `:443` — what a
+Nextcloud. A server whose virtual hosts are all on `:443` — what a
 certbot-managed config looks like once the HTTP ones have been commented out —
 has no `:80` virtual host for the domain at all, so the request falls through
 to the main server and its `DocumentRoot`, and every proxied request answers
@@ -166,8 +180,8 @@ Listen 127.0.0.1:8081
 
 <VirtualHost 127.0.0.1:8081>
     ServerName example.com
-    DocumentRoot /path/to/aloha
-    <Directory /path/to/aloha>
+    DocumentRoot /path/to/nextcloud
+    <Directory /path/to/nextcloud>
         Options FollowSymLinks
         AllowOverride All
         Require ip 127.0.0.1
@@ -176,7 +190,7 @@ Listen 127.0.0.1:8081
 ```
 
 then point the three rules at `http://127.0.0.1:8081` instead. `AllowOverride
-All` is not optional here: Aloha's own `.htaccess` is what hands the
+All` is not optional here: Nextcloud's own `.htaccess` is what hands the
 `Authorization` header to PHP, so without it the client API answers *the
 access_token was revoked* for every signed-in request — see below.
 
@@ -188,9 +202,9 @@ They map three things onto the app:
 | `/oauth/…` | registering the app, the consent screen, the token |
 | `/.well-known/host-meta` | some clients ask for it before anything else |
 | `/.well-known/oauth-authorization-server` | RFC 8414 discovery; a Mastodon 4.3 client asks for it before it registers anything, and reads a 404 as "not a server I can sign in to" |
-| `/.well-known/oauth-protected-resource` | Bluesky apps signing in with Bluesky sign-in (OAuth) ask it which authorization server the accounts here use; with Bluesky on, `/.well-known/oauth-authorization-server` then describes both kinds of sign-in |
+| `/.well-known/oauth-protected-resource` | OAuth-capable Bluesky clients ask which authorization server accounts here use; the authorization-server document describes AT Protocol OAuth alongside the separate Mastodon OAuth API |
 
-**Use an internal rewrite, not a redirect.** Aloha routes on the address
+**Use an internal rewrite, not a redirect.** Nextcloud routes on the address
 the request arrived at, so a plain internal rewrite to `/index.php/apps/social`
 reaches PHP but not the route, and answers 404. Sending a redirect instead does
 reach the route, but many HTTP clients drop the `Authorization` header when
@@ -198,7 +212,7 @@ they follow one, so every signed-in request then answers 401. The Apache rules
 therefore proxy internally (`mod_proxy`, `mod_proxy_http` and `ProxyPreserveHost
 On`), which keeps both the address and the header.
 
-Apache also has to hand the `Authorization` header to PHP. Aloha's own
+Apache also has to hand the `Authorization` header to PHP. Nextcloud's own
 `.htaccess` does that, but only where `AllowOverride` lets it be read; with
 `AllowOverride None` the rule never runs and every request from a signed-in app
 answers `the access_token was revoked`. The shipped rules set it themselves for
@@ -217,7 +231,7 @@ path either way, so the request itself cannot say.
 
 **`X-Forwarded-Proto` is not optional.** `mod_proxy` sends `X-Forwarded-For` and
 `X-Forwarded-Host` by itself and stops there, and the rules above proxy to plain
-HTTP — so without that header Aloha believes every proxied request arrived
+HTTP — so without that header Nextcloud believes every proxied request arrived
 over `http` and builds every absolute URL it answers with accordingly. A client
 is then handed `http://` addresses for avatars, posts and the instance
 thumbnail, on a site that is `https`. An **iOS client refuses them outright**
@@ -320,10 +334,58 @@ The **Deliveries** section of the Aloha Social settings names the instances
 the failures are stacked against, with the highest attempt count so far and
 when each was last tried.
 
+### Posts the index repairs skipped
+
+Two background jobs walk the posts an older version stored, oldest first, from
+a cursor kept in the app settings: `Cron\Index` writes the timeline and hashtag
+side rows of posts that lack them, and `Cron\SearchIndex` (queued once by the
+upgrade that added the word index) adds the words of every older post to the
+content search. A post that one of them cannot read — a malformed row, a type
+this version does not know — would otherwise fail on every run and hold the
+cursor, and with it every post after it, for good. So a post that has failed
+five passes of the timeline repair is skipped, and a chunk the search backfill
+fails twice is indexed one post at a time until the one that fails is found and
+skipped. Each skip is a warning in the Nextcloud log — `skipping stream` with
+the post's primary key and type, `skipping post` with its nid — carrying the
+error that stopped it, and this check counts them (`index_skipped`,
+`search_index_skipped`).
+
+A skipped post is still in the database and still served where it is read by
+its own id; what it lost is its place in the timelines or in the search. Fix or
+delete the row the log names, then `occ social:check:install --index --force`
+rebuilds the side rows of everything, and `occ config:app:delete social
+search_index_ready` followed by `occ config:app:delete social
+search_index_cursor` has the search backfill start again from the first post
+on the next cron run. Reset the counters with `occ config:app:delete social
+index_skipped` and `occ config:app:delete social search_index_skipped` once
+the posts are dealt with.
+
+### The post tables keep growing
+
+Retention is off unless an administrator turns it on (`retention_days`, `0` by
+default), and that default is deliberate: deleting what other servers sent is a
+decision about the instance, not a tuning knob. Without it, `social_stream`,
+its recipient rows (`social_stream_dest`, one per recipient), its hashtag rows,
+its words (`social_search_term`) and the cached attachments grow with
+everything the instance has ever received. The check counts the posts up to a
+million (it stops counting there) and reads the word index's highest id, and
+warns past either.
+
+```bash
+occ config:app:set social retention_days --value 180   # remote posts nobody here touched, after 180 days
+occ social:stream:prune --dry-run                      # what the next pass would remove
+```
+
+Retention never touches a local post, a direct message, a post somebody here
+liked, boosted, bookmarked or replied to, a post a local post boosts or replies
+to, or anything by an account somebody here follows. The cron pass removes up to
+5,000 posts a run; `occ social:stream:prune` removes all of them at once. Their
+cached media goes with them, and the orphaned-media sweep takes what is left.
+
 ### No memory cache
 
 Without `memcache.local` or `memcache.distributed` in `config.php`, every cache
-Aloha Social asks the platform for is one that forgets each write. Aloha's own check
+Aloha Social asks Nextcloud for is one that forgets each write. Nextcloud's own check
 already says a memcache would be faster; this one is there because, for this
 app, some of what is lost is protection:
 
@@ -351,7 +413,14 @@ Chrome and Firefox do not play HEVC. Aloha Social converts such videos to H.264 
 MP4 (`video_transcode`, on by default) — **but only where ffmpeg is installed**.
 Install it from the distribution's packages (`apt install ffmpeg`,
 `dnf install ffmpeg`, …); ffprobe comes with it, and is what tells an H.264
-MP4, which is never touched, from an HEVC one. Aloha looks for both on the
+MP4, which is never re-encoded, from an HEVC one. ffmpeg is also what takes
+the container metadata — where and with what a video or a recording was made,
+its title, its chapters — off every video and sound file as it is stored, by
+copying its streams into a fresh container (whatever `video_transcode` says);
+without ffmpeg such a file is stored as it was uploaded. Files stored before
+that are rewritten the same way by `occ social:media:strip-metadata` (except
+those published on Bluesky, whose bytes a CID names). Pictures have their
+metadata taken off by PHP alone. Nextcloud looks for both on the
 `PATH` of the PHP process and in the directories `binary_search_paths` in
 `config.php` names, only where PHP's `exec` is not disabled, and remembers the
 answer for five minutes.
@@ -359,22 +428,25 @@ answer for five minutes.
 Nothing needs restarting. Videos uploaded before ffmpeg was there are picked up
 by the background sweep, one every quarter of an hour, or all at once with
 `occ social:media:transcode`. Posts that already went out with the old file are
-not sent again.
+not sent again. Their poster frames — the still the Videos page and the player
+show before anything is played — are made by another background job
+(`Cron\VideoPosters`), five videos every quarter of an hour, or all at once
+with `occ social:media:posters`.
 
 ### Raising the upload limit
 
 A client is told, and held to, the smaller of Aloha Social's own ceilings and
 PHP's. PHP's is the smaller of `upload_max_filesize` and `post_max_size`; its
 own default is 2 MB and 8 MB. A refused upload leaves a warning in the
-log saying which of the two it went over (`file upload refused:
+Nextcloud log saying which of the two it went over (`file upload refused:
 larger than this server accepts, over upload_max_filesize`, or `… the request
 body is over post_max_size`).
 
 Raise both, with `post_max_size` a little above `upload_max_filesize` so the
 rest of the form fits beside the file, wherever this PHP reads its settings:
 the `php.ini` of the PHP-FPM pool or Apache module, a `.user.ini` in
-Aloha's directory (PHP-FPM, picked up within five minutes), or
-`php_value` lines in Aloha's `.htaccess` (Apache with `mod_php`). For
+Nextcloud's directory (PHP-FPM, picked up within five minutes), or
+`php_value` lines in Nextcloud's `.htaccess` (Apache with `mod_php`). For
 videos up to 2 GB:
 
 ```ini
@@ -385,18 +457,21 @@ post_max_size = 2050M
 Restart PHP-FPM or Apache after editing `php.ini`. A reverse proxy or web
 server in front has a body limit of its own (`client_max_body_size` in nginx,
 `LimitRequestBody` in Apache) that refuses a larger request before PHP sees
-it. A refusal there never reaches Aloha's log.
+it. A refusal there never reaches Nextcloud's log.
 
 ---
 
 ## Bluesky
 
-Every account on this instance can be a Bluesky account as well: this Aloha
+Every account on this instance can be a Bluesky account as well: this Nextcloud
 is its personal data server (PDS), `alice.<host>` its handle, and a Bluesky
 relay reads what it publishes. Nothing is asked of the person; the
 administrator switches it on once, on the administration page, after the
 requirements below are met. The design and what each phase delivers is in
-[docs/Atproto-Compatibility.md](Atproto-Compatibility.md).
+[docs/Atproto-Compatibility.md](Atproto-Compatibility.md). Once it is on,
+`contrib/atproto-live-probe.sh <host> <handle>` checks from outside that the
+network can reach everything it needs, and
+[docs/Atproto-Live-Test.md](Atproto-Live-Test.md) goes through the rest by hand.
 
 **Requirements**, each a check on the Bluesky card and in the Overview's setup
 checks, and the card refuses to switch Bluesky on while one fails:
@@ -410,7 +485,7 @@ checks, and the card refuses to switch Bluesky on while one fails:
   cover it (a Let's Encrypt wildcard needs the DNS-01 challenge). The
   web-server rules for that host are in `contrib/webserver` (the handles block
   at the end of each file).
-- **`*.<host>` in `trusted_domains`.** Aloha answers a request for a host it
+- **`*.<host>` in `trusted_domains`.** Nextcloud answers a request for a host it
   does not trust with an error page, before the app sees it:
 
   ```
@@ -429,7 +504,8 @@ checks, and the card refuses to switch Bluesky on while one fails:
   Apache needs `mod_proxy_wstunnel` for the first of them; nginx the
   `Upgrade`/`Connection` headers the shipped block sets.
 - **The firehose daemon.** `occ social:atproto:serve` is a long-running process
-  that serves the event stream relays subscribe to. Under systemd:
+  that serves the event stream relays subscribe to. It holds at most 256
+  connections, 8 from one address, and answers 503 past that. Under systemd:
 
   ```
   [Unit]
@@ -438,7 +514,7 @@ checks, and the card refuses to switch Bluesky on while one fails:
 
   [Service]
   User=www-data
-  WorkingDirectory=/var/www/aloha
+  WorkingDirectory=/var/www/nextcloud
   ExecStart=/usr/bin/php occ social:atproto:serve --bind 127.0.0.1:8787
   Restart=always
   RestartSec=5
@@ -450,6 +526,24 @@ checks, and the card refuses to switch Bluesky on while one fails:
   In a container, the same command under the container's supervisor. The daemon
   reports to the card every fifteen seconds; a report older than a minute shows
   as "not running".
+- **The Jetstream listener (optional).** With a Jetstream endpoint set on the
+  card (`wss://jetstream2.us-east.bsky.network`, Bluesky's own, or one you run),
+  `occ social:atproto:listen` brings the posts of the Bluesky accounts people
+  here follow within seconds rather than on the poller's next pass. It is a
+  second unit like the one above, with
+  `ExecStart=/usr/bin/php occ social:atproto:listen`. It reports to the card's
+  "Reading Bluesky" part every fifteen seconds; without it, the poller does all
+  the reading, as before. Where it got to and its reports are kept in the
+  database rather than in the app's settings, so they cost the rest of the
+  server nothing; a value an older version kept in the settings is moved over
+  once.
+- **The relays.** The card's "Relays carry this server" check asks each
+  configured relay how it sees this server: crawled or not, how many of its
+  accounts it carries, and whether it throttles or bans it. A relay limits
+  how many accounts and events a new server may have; when it throttles,
+  the posts of the accounts over the limit do not reach Bluesky, and only
+  the relay's operator can raise the limit. It is a warning, never a reason
+  the switch refuses.
 - **Cron.** The maintenance job (every five minutes) brings Bluesky up to
   date with the last day's public posts — a post the listener missed is
   published, an edit within the grace period is replaced, a deleted post's
@@ -457,12 +551,24 @@ checks, and the card refuses to switch Bluesky on while one fails:
   past its window, drops retired keys, and removes Bluesky posts read here
   that their authors deleted there. The ordinary cron requirement
   covers it.
+- **Direct messages (on by default).** The card's chat service
+  (`https://api.bsky.chat`, Bluesky's own) is where people's direct messages
+  with Bluesky accounts are kept. With it set, a message from somebody on
+  Bluesky arrives in the person's Messages here, and one written here to
+  somebody on Bluesky is sent there; the sync cron reads each account's
+  messages every two minutes while it has any and at least every half hour.
+  A Bluesky app signed in here with an app password that allows direct
+  messages reaches the same conversations. Empty turns direct messages with
+  Bluesky off, both here and in the apps.
 
 **Switching on.** The Bluesky card checks the requirements and flips the switch.
 Then `php occ social:atproto:identities` gives every existing account its
 identity (new accounts, and any account the command missed, get one on their
 first public post), and `php occ social:atproto:crawl` tells the relays to
-subscribe. From then on every public post of every account goes to Bluesky as
+subscribe. An identity is `pending` until the PLC directory has taken it —
+at once when the directory answers, else when the maintenance job gets the
+operation through; nothing goes to Bluesky for it before, and the posts
+written meanwhile follow within a day of the directory taking it. From then on every public post of every account goes to Bluesky as
 it is made, edits within five minutes replace the Bluesky copy and later ones
 leave it standing with its link to the current post here, and a deleted post is
 deleted there. Direct, followers-only and unlisted posts never leave. The other
@@ -471,7 +577,14 @@ way, people here follow Bluesky accounts by their bare handle
 followed authors' feeds from Bluesky's public AppView, and asks the AppView,
 as each local account, what Bluesky did to it — follows, likes, reposts,
 replies, mentions — which arrive in Activities like anything else. Each
-person can pause their own Bluesky presence in Settings → Apps and account → Bluesky.
+person can switch their own presence on Bluesky off in Settings → Apps and
+account → Bluesky ("Be on Bluesky"): their account is then deactivated there,
+as Bluesky deactivates one — not shown, nothing published, Bluesky apps signed
+out — and comes back as it was when they switch it on again; what they wrote
+in between stays off Bluesky. Nothing an administrator runs switches it back
+on or makes the identity again: `occ social:atproto:identities` leaves it as
+it is and shows `(deactivated)` beside it, and `--list` shows each identity's
+state.
 
 **What the card shows.** The handle host, the PDS endpoint and the instance's
 `did:web`; the relays (`https://bsky.network` by default; "Tell the relays now"
@@ -479,12 +592,39 @@ sends the crawl request again); the PLC directory and the AppView the instance
 talks to (the defaults are Bluesky's; the interop job points them at its own —
 `atproto_appview` for public reads, `atproto_appview_auth` and
 `atproto_appview_did` for the reads made as a user, which the public AppView
-refuses); how many identities and repositories there are, how many events the
+refuses); how many identities and repositories there are — and how many of
+those identities their owners switched off — how many events the
 replay window holds and the head sequence number; the daemon's last report;
 the age of the instance rotation key; and the reading side — how many Bluesky
 authors are followed, how many accounts' notifications are asked for, and how
 far behind the slowest of each is. `atproto_sync_ceiling` (default 200) caps
 the AppView requests one sync pass makes.
+
+The readiness checks also fetch the public OAuth protected-resource and
+authorization-server documents from the configured PDS origin. They require
+HTTP 200 JSON responses without redirects, one matching authorization server,
+and the AT Protocol OAuth requirements: PAR, DPoP with ES256, authorization
+code and refresh grants, S256, the `atproto` scope, public and confidential
+client authentication, and the shared authorization and token endpoints. A
+failed check means the public root rewrite is incomplete or the OAuth metadata
+is not suitable for Bluesky sign-in.
+
+The relay checks distinguish host discovery from repository visibility: each
+configured relay is asked both whether it has crawled the PDS host and whether
+it has synchronized one active local DID. The latter catches a relay that
+knows the host but has not yet indexed the sampled account.
+
+**Bluesky figures.** Beside the card, under Federation, a read-only section
+shows how Bluesky is doing here: the accounts with a Bluesky identity and how
+many of their owners switched it off; the posts written to Bluesky from here
+in the last day and week; the repositories with their records and the size of
+the media in them; how many Bluesky accounts are read and, with a Jetstream
+endpoint set, how far behind its stored cursor is; and the firehose — the
+subscribers the daemon last reported, the newest event and how many events
+are kept for replay. Everything is counted from this server's own tables, at
+most a minute ago; while Bluesky is off the section says so. The number of
+blocks in the repositories is not shown, because only a count of the whole
+block table could give it.
 
 **Blocking on Bluesky.** The card's *Blocked on Bluesky* list (or `occ
 social:atproto:block`) blocks a Bluesky account by its DID, or a whole PDS
@@ -507,7 +647,12 @@ account's daily limit — goes out as a link to the post here. Set
 service keys are stored sealed with the instance secret, like actor keys. They
 are the identities: a DID whose keys are lost can no longer be updated, and the
 person's recovery phrase (Settings → Apps and account → Bluesky) is their own way back. Back
-up the database *and* `config.php`'s `secret` together. After a restore from an
+up the database *and* `config.php`'s `secret` together. If the secret changes,
+no key opens any more and nothing can be signed; the Bluesky card and the
+setup check then say how many keys cannot be opened, and
+`OC_OLD_SECRET=<previous secret> php occ social:atproto:keys:reseal
+--old-secret-from-env` seals every key again under the new secret while the
+old one is still known. Without the old secret, the keys are lost. After a restore from an
 older backup the firehose sequence goes backwards; run `php occ
 social:atproto:crawl` and the relays re-read every repository.
 `php occ social:atproto:rotate-key` replaces the instance rotation key; the old
@@ -525,7 +670,7 @@ administrator came to do, and one group is shown at a time:
 | Group | Sections |
 | --- | --- |
 | **Overview** | Needs attention, Activity here |
-| **Moderation** | Reports, Posts waiting for review, Accounts, Refused pictures, Server rules |
+| **Moderation** | Reports, Posts waiting for review, Accounts, Verified accounts, Refused pictures, Server rules |
 | **Sign-ups** | Who may sign up, Waiting and invited, External accounts (only when the server sends them, see [External users](#external-users)) |
 | **Explore and features** | About this server, What may trend, Custom emoji, Announcements, Features, For you |
 | **Federation** | Allowed and blocked servers, Block lists, Relays, Deliveries |
@@ -571,7 +716,7 @@ Federation health widget to `#federation`.
   timelines. Turning one off takes it out of the sidebar and stops it being
   offered; nothing already posted is touched, so a video posted while Videos
   was off is still a video and appears again the moment it is turned back on.
-  The fourth setting is the groups that become Aloha Social lists, and it is
+  The fourth setting is the Nextcloud groups that become Aloha Social lists, and it is
   **empty by default**: everybody in a chosen group gets a list for it holding
   the members who have an Aloha Social account, nobody is followed by it and nothing
   federates, but a group list does tell everybody in the group who else is in
@@ -637,11 +782,11 @@ Federation health widget to `#federation`.
   videos are transcoded, the storage figures are taken. When cron stops, the
   symptom is a post that never arrives and a disk that never shrinks, and
   nothing in the app said so. A job is called late after **three** of its own
-  intervals, because Aloha's cron is itself periodic and a five-minute job
+  intervals, because Nextcloud's cron is itself periodic and a five-minute job
   on a fifteen-minute timer is always two intervals behind with nothing wrong
   with it. A job missing from the list altogether is what an upgrade whose
   migrations have not run looks like; the page says so rather than showing a
-  zero. Read from Aloha's own job list, so it cannot drift from what
+  zero. Read from Nextcloud's own job list, so it cannot drift from what
   actually happened.
 - **Allowed and blocked servers** — the block list or the allow list, the same
   one `occ social:fediverse` manages.
@@ -676,7 +821,7 @@ the server. Server settings and Relays are the exception — neither is rendered
 delegate and their endpoints refuse them, because what they hold is a decision
 about the server rather than about a report: a relay changes what every
 federated timeline here holds and where every public post written here is
-sent. A delegate cannot act on an administrator's account, and
+sent. A delegate cannot act on a Nextcloud administrator's account, and
 nobody — administrator or delegate — can silence, suspend, lift or purge their
 own.
 
@@ -717,7 +862,16 @@ for local policies and any consent required.
 `support`, `social`, `postmaster` and similar). Email domains on the access
 block list are refused here as they are for every account.
 
-*Require two-factor authentication* is Aloha's own mandatory two-factor
+The form does not tell whoever fills it in whether an email address is
+already registered here, or whether a username is the login of a Nextcloud
+user without an Aloha Social account. Either is answered like a new
+registration, with "check your email", and the email goes to that address
+instead: *You already have an account*, or *Choose another username*. Such a
+registration counts towards the limit of registrations per address like any
+other. With *Confirm the email address* off a new registration is answered
+differently, so there the answers can be told apart.
+
+*Require two-factor authentication* is Nextcloud's own mandatory two-factor
 setting for the `social-external` group, the same one as in Administration →
 Security; changing it asks for your password. With it on, external users set
 up a second factor when they first log in.
@@ -743,11 +897,11 @@ date, newest or oldest. Filters cover account status, registration source and
 date, login activity, minimum media usage and notice acceptance. The list is paged and scans at most a
 bounded number of candidates per request.
 *Disable* and
-*Enable* are Aloha's own. *Promote* makes one an ordinary account of this
+*Enable* are Nextcloud's own. *Promote* makes one an ordinary account of this
 server with the same username, password, two-factor setup and Aloha Social
 account; from then on the groups and apps you give them apply, and there is
 no way back. *Delete* removes the account and its Aloha Social account, the way
-deleting any Aloha user does. Both ask for your password. External users
+deleting any Nextcloud user does. Both ask for your password. External users
 also appear on the Users page, with *Aloha Social* as their backend and in the
 `social-external` group.
 
@@ -757,16 +911,16 @@ created by the [Guests app](https://github.com/nextcloud/guests), which uses
 the `Guests` backend and `guest_app` group. Aloha Social's account restrictions and
 collaborator filtering target only its own backend, so they do not classify a
 Guests-app account as an Aloha Social external account. The two apps can be installed
-together, but the Guests app controls which apps its accounts may
+together, but the Guests app controls which Nextcloud apps its accounts may
 open: add `social` to its app whitelist if those accounts should use Aloha Social.
 This setting does not grant a Guests account the Aloha Social-only restrictions;
-Guests accounts remain governed by the Guests app and Aloha group policy.
+Guests accounts remain governed by the Guests app and Nextcloud group policy.
 
 What an external user reaches: Aloha Social, logging in and out, their personal
 settings for their details, language, security, appearance and
 notifications, and their notifications. Everything else is refused before it
 runs, including every app installed later, and WebDAV, CalDAV and CardDAV are
-refused altogether, so Aloha's desktop and mobile clients and Talk do not
+refused altogether, so Nextcloud's desktop and mobile clients and Talk do not
 work for them; Mastodon apps do. Nobody outside Aloha Social finds them in the
 share dialog, the contacts menu, the user status list or the system address
 book. See [Architecture.md](Architecture.md#external-users) for how.
@@ -802,6 +956,31 @@ except the account itself going. The strike count in the account browser counts
 what stands against the account, so a lift is in the history and not in the
 count.
 
+**Verified accounts.** This server can vouch for accounts — a company verifying
+its own people, a community the accounts it knows — and a verified account
+carries a check beside its name everywhere here, labelled *Verified by* and a
+name. Moderators verify an account under **Moderation → Verified accounts**
+(by its handle, which lists every verified account, who verified it and when)
+or from the account's profile menu (*Verify account*, *Remove verification*).
+Any account can be verified: one here, one on another Fediverse server, one on
+Bluesky.
+
+The name after *Verified by* is the **verifying account**'s, which an
+administrator (not a delegate) chooses in the same section: a local account
+that stands for the server or the organisation. Without one, the checks are
+given in the server's own name (Theming). With Bluesky switched on, the
+verifying account is given a Bluesky identity, and each verification of an
+account that has one — every local account, every Bluesky account — is also
+published from it as a Bluesky verification, written again by itself when the
+verified account changes its handle or display name. **Bluesky apps show those
+checks only once Bluesky trusts the verifying account as a verifier**, which is
+Bluesky's decision and not one this server can make (Bluesky's announcement:
+https://bsky.social/about/blog/04-21-2025-verification); until then they are
+shown here only. A Fediverse account without a Bluesky identity is verified
+here only, and the list says so. Choosing another verifying account moves every
+verification to it in the background; choosing none takes the published ones
+back.
+
 **The audit log.** Suspending, silencing, lifting, taking a post down and
 blocking or unblocking an instance each emit
 `OCP\Log\Audit\CriticalActionPerformedEvent`, so with core's `admin_audit` app
@@ -814,7 +993,7 @@ it. The spam rules are on by default; first-post review is off until an
 administrator turns it on:
 
 - **first-post review** (`review_first_post`) holds the first post of an
-  account that has published nothing here yet. Accounts here are Aloha
+  account that has published nothing here yet. Accounts here are Nextcloud
   users, so a spammer has to be given an account by this server before they can
   post at all — and on an instance that hands accounts to strangers, the
   cheapest thing that can be done about it is that the first thing they write
@@ -903,7 +1082,7 @@ the moderation routes accept.
 |-----|---------|---------|
 | `cloud_url` | *(empty)* | The base address every id is built from, copied from `overwrite.cli.url` the first time the app is opened. Changing it by hand does not rewrite the ids already issued. |
 | `social_url` | *(empty)* | The app's own base URL (`…/apps/social/`), which every id is minted from and which profile links, WebFinger and NodeInfo use. Derived from `cloud_url` — never from the request — the first time the app is opened with `cloud_url` set, and again by `occ social:reset`. |
-| `social_address` | *(empty)* | The hostname accounts are federated under, when it is not the host of `cloud_url`. Only set this if the fediverse address genuinely differs from the Aloha host, and only before the first account exists. |
+| `social_address` | *(empty)* | The hostname accounts are federated under, when it is not the host of `cloud_url`. Only set this if the fediverse address genuinely differs from the Nextcloud host, and only before the first account exists. |
 | `service` | `1` | Unused; a leftover of the original installer. |
 | `installed_version` | | Written by the upgrade machinery. |
 | `media_usage` | *(written by the job)* | The last measurement of what is on disk, as JSON with the moment it was taken. Bookkeeping, not a setting: the walk is a `stat` per stored file and belongs in the cron, so the administration page reads this rather than counting on page load. |
@@ -911,6 +1090,24 @@ the moderation routes accept.
 | `polls_swept` | `0` | How far the closed-poll sweep has got, as a timestamp. |
 | `stream_author_hosts_filled` | `0` | Set to `1` by `Cron\StreamAuthorHosts` once every post carries the host of its author in `social_stream.author_host`. Until then the domain-block and silenced-instance filters also match a post by its actor id, which is slower. Bookkeeping, not a setting. |
 | `story_secret` | *(generated)* | The secret a 24-hour short's fetch capability (the bearcap Pixelfed fetches it with) is derived from, made the first time one is published. Changing it invalidates every outstanding capability at once, which is the only revocation it needs: a 24-hour short lives a day. Never set this by hand. |
+| `cache_cron_start` | `0` | Which of `Cron\Cache`'s steps the next pass begins with. Written by the job when it runs out of its five-minute budget, so the steps at the end of its list are not the ones that never run on a busy instance; a pass that finishes starts from the top again. Bookkeeping, not a setting. |
+| `poster_backfill_cursor` | `0` | The nid of the last stored video `Cron\VideoPosters` looked at for a poster frame. Written by the job, five videos every fifteen minutes; a video it could not take a frame from is behind it and is not tried again by the job — `occ social:media:posters` tries every video that still has none. Bookkeeping, not a setting: delete it to have the job go through every video again. |
+| `client_api_root` | *(unset)* | Whether the client API answered at the domain root the last time the *Mastodon apps cannot connect* setup check probed it: `1`, `0`, or unset where nothing has asked yet. Written down rather than only cached because the OAuth discovery document is built from it, and that is a route any client may call. |
+| `client_api_scheme` | *(unset)* | Whether that probe's answer carried addresses in the scheme it was asked over: `0` once a proxy that drops the scheme has been seen (every absolute URL says `http` on an `https` site), which the same setup check reports. |
+| `dest_nid_filled` | `0` | Set to `1` by `Version1000Date20260917000001` once every recipient row carries the post's numeric id, which is what lets the home timeline use its fast page query; a flag, because asking the table for a row with a zero nid is a full scan of the largest table the app has. Bookkeeping, not a setting. |
+| `atproto_firehose_status` | *(empty)* | The firehose daemon's last report (`occ social:atproto:serve`), as JSON: whether it runs, its pid, when it started and last reported, the head sequence number and how many relays are subscribed. The Bluesky card and the setup check read it; a daemon that has not reported for a minute is shown as stopped. |
+| `atproto_crawl_accepted` | `0` | Unix time of the latest relay crawl request accepted for this PDS. Bookkeeping used by the automatic retry schedule; do not edit it by hand. |
+| `atproto_crawl_attempted` | `0` | Unix time of the latest automatic relay crawl attempt, including attempts no relay accepted. Bookkeeping used to avoid requesting crawls too often; do not edit it by hand. |
+| `atproto_crawl_results` | `[]` | JSON result of the latest automatic relay crawl request, keyed by relay, or an error when the request failed. Shown in the Bluesky status diagnostics; do not edit it by hand. |
+| `atproto_delete_cursor` | `0` | Where the Bluesky deletion sweep got to in its bounded pass over stored Bluesky posts, 25 at a time. The pass restarts at the end so posts with temporarily unavailable PDSes are retried. Bookkeeping, not a setting. |
+| `atproto_delete_max_nid` | `0` | Highest post id captured at the start of the current deletion-sweep pass. New posts wait for the next pass, so a growing timeline cannot keep the sweep's end moving forward. Bookkeeping, not a setting. |
+| `atproto_detach_cursor` | `0` | The same for the sweep over the last month's local quotes of Bluesky posts, which marks a quote the quoted author detached as revoked here too. |
+| `stream_archived_filled` | `0` | Set to `1` by `Version1000Date20261013100500` once every post carries a value in `social_stream.archived`. Until then every list of posts also admits a post whose column is still empty, an `OR` the database plans badly. |
+| `stream_media_kind_filled` | `0` | Set to `1` by `Version1000Date20261013100500` once no post is left without a `media_kind`. Until then the Photos, Videos and media filters also judge a post by its attachments, and the narrowed timelines use the slower joined query. |
+| `retention_checked` | *(written by the prune)* | How far today's retention walk has judged the old remote posts, as `day\|creation\|id_prim`. Each run carries on from it, so a post retention keeps is looked at once a day; the first run of a new day starts again from the oldest post. Deleting it restarts the walk. |
+| `index_skipped` | *(unset)* | How many posts the timeline index repair (`Cron\Index`) gave up on; shown by the *index repairs* setup check. See [Posts the index repairs skipped](#posts-the-index-repairs-skipped). |
+| `search_index_skipped` | *(unset)* | How many posts the search backfill (`Cron\SearchIndex`) left out of the word index; shown by the same check. |
+| `search_index_failing` | *(unset)* | `cursor:count` of the chunk the search backfill keeps failing on; after two failures it indexes one post at a time until it finds the post to skip. |
 
 ### Server settings
 
@@ -921,7 +1118,7 @@ settings page, which validates the ranges given here; every one can be set with
 | Key | Default | Meaning |
 |-----|---------|---------|
 | `contact_email` | *(empty)* | Who to write to about this instance. Mastodon's `instance.email`: every client reads it on its first request and shows it on the server's about page. Empty until somebody fills it in, which until now most instances never did, because nothing said it existed. |
-| `contact_account` | *(empty)* | The local Aloha Social account responsible for this instance. Choose a local account by username under Server settings; remote accounts and team accounts without an Aloha user are refused. Aloha Social stores the owning Aloha user id and resolves the current account when it builds `/api/v1/instance` and `/api/v2/instance`, so profile changes are reflected without rewriting the setting. Clearing the field omits the contact account. |
+| `contact_account` | *(empty)* | The local Aloha Social account responsible for this instance. Choose a local account by username under Server settings; remote accounts and team accounts without a Nextcloud user are refused. Aloha Social stores the owning Nextcloud user id and resolves the current account when it builds `/api/v1/instance` and `/api/v2/instance`, so profile changes are reflected without rewriting the setting. Clearing the field omits the contact account. |
 | `extended_description` | *(empty)* | The long form of what this instance is, for `/api/v1/instance/extended_description`. Up to 10000 characters. |
 | `max_size` | `10` | The largest picture or file an upload may be, in MB. 1–10240. |
 | `max_video_size` | `2048` | The largest video, in MB. 1–102400. A peer will refuse a great deal less than the ceiling. |
@@ -931,14 +1128,18 @@ settings page, which validates the ranges given here; every one can be set with
 | `video_max_height` | `1080` | The tallest a converted video is written, 240–2160. Only smaller, never larger: a 480p video is left at 480p. Only consulted when `video_transcode` is on. |
 | `video_ladder` | `0` | Whether each stored MP4 is **also** written at a ladder of smaller sizes, as HLS, so a player can pick the one that fits the connection. A different question from `video_transcode`, which is about a video being playable at all elsewhere; this is about it being watchable on a phone on a train. Off by default, because it is several ffmpeg encodes per video on this server. Each rung is one file — `-hls_flags single_file` writes the rendition as a fragmented MP4 and the playlist addresses its segments as byte ranges — so a forty-minute video is three files rather than a thousand, which is also the shape PeerTube publishes. The original is kept and is what a player without HLS falls back to. Needs ffmpeg **and** ffprobe. One video every half-hour, or `occ social:media:ladder` to work through a backlog now. Built from `video/mp4` only: a `.mov` goes through the transcoder first. |
 | `video_ladder_heights` | `360,720,1080` | Which heights, comma-separated, 144–2160. Heights at or above a video's own are skipped rather than upscaled, and the video's own height is always a rung, so the best rung is never worse than the file beside it. A list with nothing usable in it is refused by the admin card rather than silently replaced with the default. Only consulted when `video_ladder` is on. |
-| `search_window_days` | `365` | How far back a content search scans while it cannot use its word index: before `Cron\SearchIndex` has indexed the posts stored before the upgrade (until `search_index_ready` is `1`), and for a query that is only the beginning of a word. Such a search is a range rather than one indexed word, and unbounded it reads every post the instance has ever stored; a year covers what anybody is looking for. `0` searches everything, which an instance small enough can afford to say. A search for whole words reads the index and is not bounded by this. |
+| `search_window_days` | `365` | How far back a content search scans while it cannot use its word index: before `Cron\SearchIndex` has indexed the posts stored before the upgrade (until `search_index_ready` is `1`), for a query that is only the beginning of a word, and for one made only of the English and German function words the index leaves out (`the`, `and`, `der`, `und` …). Such a search is a range rather than one indexed word, and unbounded it reads every post the instance has ever stored; a year covers what anybody is looking for. `0` searches everything, which an instance small enough can afford to say. A search for whole words reads the index and is not bounded by this. |
+| `rec_v4_enabled` | `0` | Whether the automatically ranked For You timeline and its separate activity-learning controls are available. Off by default; the administrator can change it in Social settings. Changing this switch invalidates pending learning events from open pages. |
+| `rec_remote_discovery_paused` | `0` | Stops recommendation-driven remote Fediverse and Bluesky discovery requests while preserving already cached candidates. |
+| `rec_learning_paused` | `0` | Stops instance-wide recommendation behavior learning, including signals from accounts that opted in. |
+| `rec_force_legacy_feed` | `0` | Temporarily serves the established hashtag-interest feed instead of the ranked For You feed. |
 | `local_actor_cursor` | `''` | Bookkeeping, not a setting: where the cron's local-account refresh walk got to. It used to read every local account into memory on every pass; it pages now, and this is what makes the next pass carry on rather than start again. |
 | `profile_link_cursor` | `''` | Bookkeeping, not a setting: where the cron's walk over the local accounts whose profile fields carry a link got to, so the next pass checks the next ones. |
 | `video_quota` | `0` | How many megabytes of video **one account** may keep here; `0` is no quota, which is what every instance has in effect today. A different question from `max_video_size`, which is a ceiling on one file: that is about a single request, this about a year of them. Off by default because an instance that has been running without a quota and acquires one on upgrade would start refusing uploads from exactly the accounts that use it most. Checked once, where an upload is written, against the size recorded on each stored file — so a video uploaded before this app recorded sizes counts as nothing until the daily usage job has been past it, which fills the column in as it walks. The **ladders this server builds do not count against it**: they are made because an administrator asked for them, are several times the size of the upload, and would turn a quota somebody was told about into one several times smaller. They are counted in what an administrator is shown, because they are real disk. Who is holding what is under **Administration → Aloha Social → Storage**. |
 | `nsfw_policy` | `default` | What happens to media somebody marked sensitive, for readers who have not chosen for themselves. PeerTube's three NSFW policies under Mastodon's names for the same three states: `show_all` (PeerTube's *display*), `default` (its *blur* — covered, the blurhash showing, one press away, and what this app has always done) and `hide_all` (its *hide* — not drawn, and no button to draw it). Anybody can override it for themselves under **Settings** in the app, and "follow the instance" stays a state of its own, so changing this moves everybody who is following it and nobody who has chosen. A **content warning is a different thing** and always covers its post, whatever this says. |
 | `review_videos` | `0` | Whether every post with a video on it waits for a moderator. The third rule of the review queue, beside a new account's first post and the spam rules, and the one an instance that hosts video wants: a video is minutes of somebody's attention and a great deal of somebody else's disk. **Unlike the other two it is not about the account** — a trusted account with a thousand posts behind it is held by it too, every time, because what it is about is the video. A moderator's own video is not held, and neither is a direct message. Under **Administration → Aloha Social → Posts waiting to be looked at**. |
 | `inbox_throttle` | `300` | Incoming inbox requests allowed per origin host per minute. `0` accepts everything, which is what an instance behind its own rate limiter wants. |
-| `rate_limit_user` | `900` | How many client API requests one **signed-in account** may make per window. The routes that fan out — search, the directories, the follow graph — carry limits of their own and Aloha enforces those; this is the budget for everything else, which was some three hundred routes with no limit at all. Generous on purpose: it exists to stop a scraper reading the whole instance at machine speed, not to pace an app. One budget for the whole API, not one per route. `0` switches it off, which is what an instance behind its own limiter wants. Federation, the internal queue and the routes that serve bytes (attachments, avatars, emoji, GIFs) are never counted — one public page is forty requests for pictures, and deliveries arrive in bursts from a handful of addresses. |
+| `rate_limit_user` | `900` | How many client API requests one **signed-in account** may make per window. The routes that fan out — search, the directories, the follow graph — carry limits of their own and Nextcloud enforces those; this is the budget for everything else, which was some three hundred routes with no limit at all. Generous on purpose: it exists to stop a scraper reading the whole instance at machine speed, not to pace an app. One budget for the whole API, not one per route. `0` switches it off, which is what an instance behind its own limiter wants. Federation, the internal queue and the routes that serve bytes (attachments, avatars, emoji, GIFs) are never counted — one public page is forty requests for pictures, and deliveries arrive in bursts from a handful of addresses. |
 | `rate_limit_anon` | `300` | The same budget for a caller with **no account**, counted per address. |
 | `rate_limit_window` | `300` | How long that window is, in seconds. |
 | `token_max_days` | `365` | How many days an OAuth token works from the moment it was granted, **however much it is used**. A token idle for a year stops working anyway; this is about one in use, which used to live for ever — every request kept it alive, so a token copied off a phone lived as long as whoever held the copy kept using it. Past it the app is signed out and the person signs in again; there are no refresh tokens. Each person sees when under **Settings → Authorized apps**. `0` lets a token in use live for ever. |
@@ -947,6 +1148,19 @@ settings page, which validates the ranges given here; every one can be set with
 | `secure_mode` | `0` | Refuse ActivityPub fetches that are not signed. Mastodon's secure mode. Turning it on makes this instance invisible to every peer that does not sign what it asks for, and to every anonymous reader; it is a decision about who to federate with, not a hardening step to apply by default. |
 | `publish_blocks` | `0` | Publish the deny list on `/api/v1/instance/domain_blocks`, the way Mastodon does, so somebody choosing a server can see who it will not talk to. Whether *this* server wants that read by anybody is a disclosure decision. |
 | `allow_self_signed` | `0` | Accept peers whose certificates do not check out. **Development only**: on a server anybody else uses, this hands every federated request to whoever can answer for the address. |
+| `stories` | `1` | Whether this instance offers Shorts — a picture or a video that is gone in a day. Off, the bar goes from the timeline and nothing new is taken; what was posted expires as it would have. Set from the Sections card. |
+| `gif_pack` | `1` | Whether the composer offers the animated emoji pack. What ships is the list, not the pictures: `Cron\GifPack` fetches the first screenful into appdata ahead of time and the rest are fetched as somebody picks them. `0` fetches nothing and leaves the picker with what `occ social:gif add` added. |
+| `section_photos` | `1` | Whether the Photos section is offered in the sidebar: the same posts read through one filter. Turning it off hides the section and stops it being offered; the posts are not touched, and turning it back on shows them again. Set from the Sections card. |
+| `section_videos` | `1` | The same for the Videos section. |
+| `group_lists` | `[]` | Which Nextcloud groups become lists for their members, as a JSON array of group ids; at most 100. Empty is no groups, which is the default: every group a person was in used to become a list, which tells everybody in a group who else is in it. A group that no longer exists is dropped when the setting is read, not written back. Set from the Sections card. |
+| `interests` | `1` | Legacy hashtag-interest timeline switch and fallback configuration. The ranked web For You feed is controlled separately by `rec_v4_enabled`; see [For-You.md](For-You.md). |
+| `interests_default` | `1` | Legacy learning default used by the compatibility interest endpoints. It does not grant consent to the separate ranked-feed behavioral learning system. |
+| `interests_half_life` | `30` | Legacy hashtag score decay, in days. Used only by the compatibility interest system. |
+| `interests_threshold` | `3` | Legacy threshold for listing learned hashtag interests. |
+| `interests_cap` | `30` | Legacy limit for the number of listed hashtag interests. |
+| `interests_window` | `7` | Legacy compatibility timeline lookback window, in days. |
+| `cache_actor_days` | `180` | Days to keep a cached remote account nobody here refers to any more — not followed, not following, no post stored, no relation pending — before `Cron\Cache` evicts it with its avatar. `0` disables the sweep. |
+| `atproto_oauth_trusted` | `[]` | The Bluesky apps an administrator vouches for, by OAuth client id, as a JSON array: the Bluesky sign-in consent page shows those apps' own name and logo, which it never takes from an app on its own word. Set from the Bluesky card. |
 
 ### Moderation and federation
 
@@ -960,12 +1174,15 @@ settings page, which validates the ranges given here; every one can be set with
 | `notification_policy_defaults` | *(calm)* | What the notification policy of a **new** local account starts as, as JSON with the five keys of Mastodon's policy, each `accept` or `filter`. Unset, it is the calm policy: people the account does not follow, accounts younger than 30 days, private mentions it did not ask for and accounts this server limited are **held for review** (no bell, push or mail; they wait in the account's requests), everyone else gets through. Read once, when the account is created — the first-run screen, `occ social:account:create`, an external user's sign-up and every other path go through the same `AccountService::createActor()` — so changing it **never touches an existing account**; accounts from before this setting existed keep receiving everything until their owner chooses. Written through `GET`/`POST /apps/social/admin/notification-policy` (administrators only, not delegates; any value but `accept` or `filter` is refused with a 422, because an administrator decides what waits for review, never what is thrown away), whose current value the settings page receives as `notificationPolicyDefaults`. |
 | `federate_blocks` | `1` | Whether a user's own blocks are federated to the blocked account's instance. `0` keeps them local. |
 | `publish_video_objects` | `0` | Whether a post that is a video is federated as an ActivityPub `Video` (PeerTube's shape) rather than a `Note` with an attachment. Off by default: Pixelfed's inbox handles only `Note`s and silently drops a `Video`, so with this on no video posted here reaches a Pixelfed follower. Mastodon draws both shapes; PeerTube draws only the `Video`. Turn it on for an instance whose audience is on PeerTube. |
-| `network_stats` | `1` | Whether the statistics page may ask [FediDB](https://fedidb.org) how big the fediverse is — servers, accounts, accounts that posted in the last month — to show beside the number of servers this one federates with. One request every six hours for the whole instance, carrying no account, no query and nothing about this instance; a survey that does not answer is left alone for half an hour. Set it to `0` and the section is absent rather than zeroed: an instance that makes no outbound request to draw a page is a legitimate thing to want. The same value governs the **growth** section below it, which asks [Fediverse Observer](https://fediverse.observer) for the last two years month by month — FediDB publishes a snapshot and no history, so the shape over time comes from a second survey, once a day. The two do not agree about the totals, because they crawl different servers and count dormant accounts differently, so the page keeps them apart and names each: a page that averaged them would produce a number neither survey would stand behind. |
+| `starter_pack_sources` | unset | Where starter packs are read in from, as a JSON array: a handle (`"user@host"`) reads every public collection of that account, an `https://` address reads that one collection, and `"bluesky:suggested"` reads Bluesky's suggested starter packs while Bluesky is on. Unset reads the collections @Gargron curates on mastodon.social (`Gargron@mastodon.social`) and Bluesky's suggestions; `[]` reads none and removes what was read. Read once a day, or now with `occ social:starter-packs:refresh`. Only collections marked discoverable and not sensitive are offered, and only the members whose own server authorized their inclusion (FEP-7aa9), at most 50 a pack. An account you silenced or suspended, one on a server you block or silence, and a Bluesky account you block is left out of every pack, and a pack by such a curator is not offered. A server that does not answer on the day keeps what was read from it last time. The `starter_packs` value set to `[]` hides these packs too. |
+| `network_stats` | `1` | Whether the statistics page may ask [FediDB](https://fedidb.com) how big the fediverse is — servers, accounts, accounts that posted in the last month — to show beside the number of servers this one federates with. One request every six hours for the whole instance, carrying no account, no query and nothing about this instance; a survey that does not answer is left alone for half an hour. Set it to `0` and the section is absent rather than zeroed: an instance that makes no outbound request to draw a page is a legitimate thing to want. The same value governs the **growth** section below it, which asks [Fediverse Observer](https://fediverse.observer) for the last two years month by month — FediDB publishes a snapshot and no history, so the shape over time comes from a second survey, once a day. The two do not agree about the totals, because they crawl different servers and count dormant accounts differently, so the page keeps them apart and names each: a page that averaged them would produce a number neither survey would stand behind. |
 | `rules` | *(empty)* | The instance rules shown by `/api/v1/instance/rules`, one per line. |
+| `verification_account` | *(empty)* | The local account this server verifies accounts in the name of, by actor id; set under Moderation → Verified accounts (administrators only). See [Moderating](#moderating). |
 | `review_first_post` | `0` | Hold the first post of an account that has published nothing here yet, for a moderator to see before it goes out. Off by default; turn it on where accounts are handed to strangers. An administrator's own posts are never held — a moderator waiting on themselves is a circle, and on a new instance the first post is theirs. |
 | `review_posts` | `1` | How many posts an account must have had published before its posts stop being held. `1` is first-post review as it has always meant. An account graduates by having that many posts approved — a person having looked at it that many times, which is the only measure of trust here that is not a guess. Capped at 20. |
 | `autospam` | `1` | Hold a post that trips one of the spam rules — more than five links in a short post, or more than five mentions from an account nobody follows and that follows nobody. Nothing is ever refused by the rules, only shown to a person. |
-| `ai_tags` | *(empty)* | Hashtags that label a post as **made with AI**, comma-separated, added to the built-in list (`#ai`, `#aiart`, `#aigenerated`, `#aigeneratedart`, `#aiimage`, `#aiphoto`, `#aivideo`, `#genai`, `#generativeai`, `#madewithai`, `#midjourney`, `#stablediffusion`, `#dalle`, `#dalle3`, `#sora`, `#fluxai`, `#comfyui`). Compared without the `#` and without regard to case; a built-in tag cannot be removed. A reader who turns on **Hide posts made with AI** under Settings → Blocking is shown no post carrying one of these tags, and no post whose picture states machine-generation provenance in its metadata (IPTC `DigitalSourceType` of `trainedAlgorithmicMedia` or `compositeWithTrainedAlgorithmicMedia`, in XMP or inside a C2PA manifest — read when the picture is stored, before the metadata is stripped). **What this can and cannot do:** it recognises *labels* — a hashtag the author or their tool added, a provenance mark a generator wrote into the file — and nothing else. A generated post that carries neither is not recognised; a real photograph tagged `#ai` by its author is. There is no classifier here and there should not be one. |
+| `ai_tags` | *(empty)* | Hashtags that label a post as **made with AI**, comma-separated, added to the built-in list (`#aigenerated`, `#aigeneratedart`, `#generatedbyai`, `#genai`, `#generativeai`, `#madewithai`, `#midjourney`, `#stablediffusion`, `#dalle`, `#dalle3`, `#sora`, `#fluxai`, `#comfyui`). Compared without the `#` and without regard to case; a built-in tag cannot be removed. The generic topic tag `#AI` is always ignored, even if listed here; tags such as `#aiart`, `#aiimage`, `#aiphoto` and `#aivideo` are not built in but an administrator can add them. A reader who turns on **Hide posts made with AI** under Settings → Blocking is shown no post carrying one of these tags, and no post whose picture states machine-generation provenance in its metadata (IPTC `DigitalSourceType` of `trainedAlgorithmicMedia` or `compositeWithTrainedAlgorithmicMedia`, in XMP or inside a C2PA manifest — read when the picture is stored, before the metadata is stripped). **What this can and cannot do:** it recognises *labels* — a hashtag the author or their tool added, a provenance mark a generator wrote into the file — and nothing else. A generated post that carries neither is not recognised; a real photograph tagged `#ai` by its author is not mistaken for generated. There is no classifier here and there should not be one. |
+| `blocklist_sources` | `[]` | The published block lists this instance follows, as JSON: one object per source with its id, where it is fetched from, which format it is in, whether it is on, and what the last run did. Empty until an administrator turns one on under **Block lists**; `Cron\BlocklistSync` re-reads the sources that are on daily. See [following a published list](#commands-by-task). |
 
 ### External users
 
@@ -981,6 +1198,24 @@ Set from the External users cards; these are the keys they write.
 | `external_min_age` | `16` | The age a person confirms at registration. `0` asks nothing. |
 | `external_reserved` | `[]` | Usernames nobody may register, as a JSON array, on top of the built-in ones. |
 | `external_user_invites` | `0` | Whether every user may send invitation links. |
+| `external_signup_notice` | *(empty)* | The additional registration and privacy information shown on the introduction page and beside the form, as plain text. Empty shows the translated template text. |
+| `external_signup_notice_required` | `0` | Whether registering requires ticking that the notice was read. With it on, the notice's version, the time and the text as accepted are recorded with the account (the per-account keys below). |
+
+### Per account
+
+User values under the app `social`, written by the app for one account and
+read back by it; `occ user:setting <user> social <key>` shows them. The For
+you learning switches a reader sets for themselves are listed in
+[For-You.md](For-You.md).
+
+| Key | Default | Meaning |
+|-----|---------|---------|
+| `app_settings` | *(unset)* | The Pixelfed app's own switches for this account, as JSON (`updated_at` and the `common` groups), stored for `/api/v1.1/compose/settings` the way Pixelfed stores them so that a reinstalled app finds itself as it was left. Only Pixelfed's own switches are kept; the server interprets none of them. |
+| `external_signup_notice_version` | *(unset)* | The version of the signup notice an external user accepted, when `external_signup_notice_required` was on at registration. Removed with the account. |
+| `external_signup_notice_accepted` | *(unset)* | When they accepted it, as a Unix timestamp. |
+| `external_signup_notice_snapshot` | *(unset)* | The notice's text as it was when they accepted it. |
+| `handle_publish_failed` | *(unset)* | When Nextcloud last refused the account's fediverse handle on its profile, as a Unix timestamp. Publishing the handle is not tried again for a day after that, and the value is cleared once a publish succeeds. |
+| `keyboard_shortcuts` | *(unset)* | `0` once the account turned the web app's one-key shortcuts off in Settings → Help → Keyboard shortcuts; anything else leaves them on. |
 
 ### System configuration
 
@@ -991,7 +1226,7 @@ Two `config.php` values, neither documented anywhere else:
 | `social.checkssl` | `true` | Whether the WebFinger setup check verifies the certificate it is offered. Set it to `false` on an instance using a certificate the server itself does not trust. It affects the probe only — federation still verifies. |
 | `social.tests` | *(unset)* | Enables `GET /apps/social/test/{account}/`, a WebFinger self-test. Leave it unset outside development. |
 
-And one of Aloha's own that matters here: `allow_local_remote_servers`,
+And one of Nextcloud's own that matters here: `allow_local_remote_servers`,
 which must be on for an instance to federate with anything on a private
 address. That is a development arrangement.
 
@@ -1017,7 +1252,7 @@ its last fully indexed NID, and resumes from there; a failed row is retried on
 the next passes, and after five failures it is logged as skipped and the walk
 moves on. Once the walk reaches the newest post the repair is complete
 (app config `index_done` = `1`) and the job does nothing more; deleting that
-key runs it again from the stored cursor. Keep Aloha background jobs
+key runs it again from the stored cursor. Keep Nextcloud background jobs
 working as `Cron\Index` relies on them. The manual `occ social:check:install --index --force` remains a full
 rebuild for administrators; it clears and repopulates both indexes and should
 not be scheduled as a cron command.
@@ -1131,7 +1366,10 @@ home timeline and the unread count **every thirty seconds**; with it the server
 tells the client instead and the poll drops to once every five minutes — a
 tenfold cut in the request volume, for one app install. The polls also answer
 `304` now when nothing has changed, so even without it most of them cost an
-index probe and an empty response rather than a rendered page.
+index probe and an empty response rather than a rendered page, and a tab
+nobody is looking at does not poll at all: it catches up once when it is
+returned to, and while the server keeps failing it backs off to one attempt
+in five minutes.
 
 **Run delivery workers.** `Cron\Queue` delivers twenty servers at a time and
 takes batch after batch for its 240 seconds: with peers that answer within a
@@ -1148,7 +1386,7 @@ one row at a time, so it is more processes, not wider ones, that add capacity.
 
 **Watch the cron actually finish.** The steps are budgeted at 300 seconds a pass
 and resume where they stopped, so a pass that runs out of time is normal. A pass
-that *never* reaches the later steps is not: `social:check` and the server log
+that *never* reaches the later steps is not: `social:check` and the Nextcloud log
 are where that shows.
 
 **Cached remote accounts** are refreshed by `Cron\Cache` for up to 90 seconds
@@ -1184,6 +1422,19 @@ and news steps only touch rows that still carry no value, so an upgrade
 interrupted during them picks up where it stopped; the first starts again from
 the beginning.
 
+A fourth, `Version1000Date20261012500100`, records whether each video post is a
+short (for the `only_short` timeline filter). It reads only the posts whose
+media kind is `video`, through an index, 2,000 to a statement, so it costs time
+in proportion to the videos an instance holds rather than to all its posts; run
+again, it finds nothing left to do.
+
+**From a release before 0.23** (0.10.0 and earlier) the upgrade also removes a
+follow that is recorded twice — once pending and once accepted, which those
+releases allowed — keeping the accepted one, and gives `social_stream_dest` and
+`social_stream_tag` a primary key, which on MySQL/MariaDB rebuilds both tables.
+Those releases run on Nextcloud up to 34, and that is the path the upgrade is
+tested on: upgrade the app on Nextcloud 34 first, then Nextcloud.
+
 Two settings exist for size and are listed above: `search_window_days` bounds
 what a content search scans when it cannot use its word index, and `retention_days` bounds what cached remote
 media costs. Both trade completeness for a bounded cost, and the default of each
@@ -1199,7 +1450,7 @@ of this costs on the hardware in front of you.
   that an administrator who never opens Aloha Social still hears about it.
 - **The delivery queue.** A rising count of failing deliveries against one host
   is that instance's problem; a rising count against all of them is this one's.
-- **`social.log` / the server log.** Signature verification failures on
+- **`social.log` / the Nextcloud log.** Signature verification failures on
   inbound requests, and `could not federate` warnings on outbound ones.
 - **Disk.** Cached remote attachments are the largest thing this app stores.
   `retention_days` is what bounds them; on an instance that federates widely,
@@ -1207,3 +1458,38 @@ of this costs on the hardware in front of you.
   past.
 - **The audit log**, if `admin_audit` is enabled: every moderation decision,
   with the moderator who took it.
+# Ranked For You recommendations switch
+
+Administration → Social → For You includes an independent **Ranked For You
+recommendations** switch. It is off by default. Enabling it makes the ranked
+timeline available; it does not automatically opt readers into behavioral
+learning. The feed can draw on learned signals, post content, freshness, follows
+and discovery, so it does not require readers to choose topics. Readers cannot
+currently add topics manually or request a topic-specific feed. That is a
+separate product capability and should not be implied by the ranking switch.
+Turn the switch off to disable the ranked timeline. See
+[For-You.md](For-You.md) for the data and consent model.
+
+## Empty application after installing development dependencies
+
+A running Nextcloud should use Social's production Composer autoloader. Development
+packages such as Psalm pull in Amp versions that may collide with the Mail app's
+Amp functions during Nextcloud startup. A typical fatal error is
+`Cannot redeclare function Amp\delay()`. This can affect even `status.php`.
+
+From the Social app directory, regenerate the runtime autoloader without
+development packages:
+
+```sh
+composer dump-autoload --no-dev --no-scripts
+```
+
+For a production installation, install the production dependencies directly with
+`composer install --no-dev --prefer-dist --no-interaction`. The dump command repairs
+the local autoloader when the packages are already installed; it does not update
+the lock file or remove packages. Run development checks in a development checkout
+or restore the development autoloader there with `composer dump-autoload --dev`.
+Do not leave that development autoloader active in a shared running Nextcloud.
+
+Afterward verify `/status.php`, `occ status`, and the Social page in a browser.
+A successful Webpack build alone does not exercise Nextcloud bootstrap.

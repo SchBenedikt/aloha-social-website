@@ -33,11 +33,11 @@ export default function ContributingPage() {
               </div>
               <CheckList className="mt-6" items={[
                 "Fork the repository and create a feature branch",
-                "Follow the existing code style (ESLint + Prettier)",
+                "Read the repository AGENTS.md and follow its PHP, Vue, JavaScript and licensing conventions",
                 "Write tests for new functionality",
                 "Update documentation for user-facing changes",
-                "Ensure all CI checks pass before requesting review",
-                "Keep PRs focused — one logical change per PR",
+                "Run the checks required for the changed area and review CI results",
+                "Keep each pull request focused on one concern",
               ]} />
             </article>
 
@@ -53,12 +53,12 @@ export default function ContributingPage() {
               </div>
               <ul className="mt-6 space-y-3 border-t border-line pt-5">
                 {[
-                  "main branch: production-ready, protected",
-                  "Feature branches: feat/short-description",
-                  "Bug fixes: fix/short-description",
-                  "Documentation: docs/short-description",
-                  "Commits: Conventional Commits (feat:, fix:, docs:, chore:, refactor:)",
-                  "Squash merge to main after review",
+                  "Read AGENTS.md before changing code; it is the maintained project guide",
+                  "Use scoped Conventional Commit subjects, such as fix(federation): …",
+                  "Sign your own commits with git commit -s; an assistant must not add your DCO line",
+                  "For AI-assisted changes, follow the disclosure and Assisted-by rules in AGENTS.md",
+                  "Update docs/API.md and docs/Architecture.md with route or behavior changes",
+                  "Rebuild and commit js/ when frontend source changes",
                 ].map((item, i) => (
                   <li key={i} className="flex gap-3 text-[14.5px] leading-relaxed text-ink">
                     <span className="mt-0.5 grid size-5 shrink-0 place-items-center rounded-full border border-line-strong font-mono text-[10px] text-muted">{String(i + 1).padStart(2, "0")}</span>
@@ -80,13 +80,12 @@ export default function ContributingPage() {
               </div>
               <CheckList className="mt-6" items={[
                 "Clear title and description explaining the change",
-                "Linked issue (if applicable) with fixes #123 syntax",
-                "Tests pass (unit, integration, e2e as appropriate)",
-                "No new ESLint/TypeScript errors",
-                "Documentation updated for user-facing changes",
-                "Changelog entry added (under CHANGELOG.md)",
-                "Reviewed by at least one maintainer",
-                "CI pipeline passes (lint, typecheck, build, tests)",
+                "Discuss changes that span subsystems or need design decisions before implementation",
+                "Include a regression test for fixes and tests appropriate to the changed subsystem",
+                "Keep API and architecture documentation synchronized with code",
+                "Run the relevant PHP and frontend checks described in AGENTS.md",
+                "Review CI results and resolve failures before requesting merge",
+                "Follow the release guide for version and changelog updates",
               ]} />
             </article>
 
@@ -103,8 +102,7 @@ export default function ContributingPage() {
               <div className="mt-6 p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800">
                 <p className="font-semibold text-red-800 dark:text-red-200">Do not open public issues for security vulnerabilities.</p>
                 <p className="mt-2 text-[14.5px] text-red-700 dark:text-red-300">
-                  Email security findings to <strong>security@alohasocial.org</strong> or use GitHub&apos;s private vulnerability reporting.
-                  We&apos;ll acknowledge within 48 hours and coordinate a fix and disclosure timeline.
+                  Report vulnerabilities through <a className="underline" href="https://hackerone.com/nextcloud">Nextcloud&apos;s HackerOne programme</a> or <a className="underline" href="mailto:security@nextcloud.com">security@nextcloud.com</a>, following the current security policy.
                 </p>
               </div>
             </article>
@@ -122,9 +120,9 @@ export default function ContributingPage() {
               <CheckList className="mt-6" items={[
                 "Fix typos, clarify confusing sections",
                 "Add missing examples or screenshots",
-                "Translate docs via Crowdin (link in repo)",
+                "Translations are managed through Transifex; do not edit l10n files by hand",
                 "Follow the documentation style guide",
-                "Preview changes with npm run dev before submitting",
+                "Read docs/Releasing.md for the current release workflow",
               ]} />
             </article>
           </div>

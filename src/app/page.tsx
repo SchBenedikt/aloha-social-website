@@ -22,45 +22,42 @@ const JSON_LD = {
 
 const INSIDE = [
   ["One account", "@you@your.cloud — the login people already have, including SSO and two-factor, with no new password."],
-  ["The whole open social web", "Follow, reply to, quote and boost people on Mastodon, Bluesky, Pixelfed, PeerTube, GoToSocial and Akkoma."],
+  ["The open social web", "Use ActivityPub to follow and exchange supported posts across the Fediverse. An administrator can also enable native AT Protocol hosting for supported Bluesky clients."],
   ["Private by default", "Photo location and camera data are removed before an image is stored or sent, and nothing is re-encoded."],
   ["Your community, your rules", "Registration, moderation and retention are set by the organisation that runs the server."],
 ] as const;
 
 // Compatible services and networks that work with Aloha Social
 const COMPATIBLE_SERVICES = [
-  { name: "Bluesky", version: "AT Proto", status: "full", description: "Native, without a bridge" },
-  { name: "Mastodon", version: "4.2+", status: "full", description: "Full federation support" },
-  { name: "Pixelfed", version: "0.12+", status: "full", description: "Photo federation and stories" },
-  { name: "PeerTube", version: "6.2+", status: "full", description: "Video channels in both directions" },
-  { name: "GoToSocial", version: "0.16+", status: "full", description: "Lightweight federation" },
-  { name: "Akkoma", version: "3.8+", status: "full", description: "Full federation" },
-  { name: "Pleroma", version: "2.6+", status: "full", description: "Full federation" },
-  { name: "Misskey", version: "2024+", status: "partial", description: "Microblog federation" },
-  { name: "Firefish", version: "1.0+", status: "partial", description: "Microblog federation" },
-  { name: "Friendica", version: "2024+", status: "partial", description: "Full federation" },
-  { name: "Lemmy", version: "0.19+", status: "partial", description: "Thread federation" },
-  { name: "WriteFreely", version: "0.14+", status: "partial", description: "Blog federation" },
-  { name: "Funkwhale", version: "1.2+", status: "partial", description: "Audio federation" },
+  { name: "ActivityPub", status: "core", description: "Fediverse identities and supported federated content" },
+  { name: "Mastodon", status: "broad", description: "Broad client API compatibility, not complete parity" },
+  { name: "Pixelfed", status: "partial", description: "Supported photo and story interoperability" },
+  { name: "PeerTube", status: "partial", description: "Federated video and channel support" },
+  { name: "GoToSocial", status: "partial", description: "ActivityPub interoperability" },
+  { name: "Akkoma", status: "partial", description: "ActivityPub interoperability" },
+  { name: "Bluesky", status: "optional", description: "Optional native AT Protocol hosting; setup and external services required" },
 ] as const;
 
 function ServiceBadge({ service }: { service: typeof COMPATIBLE_SERVICES[number] }) {
   const statusColors = {
-    full: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400",
+    core: "bg-emerald-100 text-emerald-800 dark:bg-emerald-900/30 dark:text-emerald-400",
+    broad: "bg-sky-100 text-sky-800 dark:bg-sky-900/30 dark:text-sky-400",
     partial: "bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400",
+    optional: "bg-violet-100 text-violet-800 dark:bg-violet-900/30 dark:text-violet-400",
   };
   const statusLabels = {
-    full: "Full",
+    core: "Core",
+    broad: "Broad",
     partial: "Partial",
+    optional: "Optional",
   };
 
   return (
     <div
       className="flex shrink-0 items-center gap-3 rounded-xl border border-line bg-surface/50 px-4 py-2.5 shadow-sm backdrop-blur-sm transition-shadow hover:shadow-md"
-      title={`${service.name} ${service.version} — ${service.description}`}
+      title={`${service.name} — ${service.description}`}
     >
       <span className="font-semibold whitespace-nowrap text-ink-strong">{service.name}</span>
-      <span className="font-mono text-[11px] whitespace-nowrap text-muted">{service.version}</span>
       <span
         className={`rounded-full px-2 py-0.5 font-mono text-[10px] font-medium ${statusColors[service.status]}`}
       >
@@ -70,7 +67,7 @@ function ServiceBadge({ service }: { service: typeof COMPATIBLE_SERVICES[number]
   );
 }
 
-/** Why-Aloha highlights, taken from the thirty release key points. */
+/** Why-Aloha highlights, checked against the current repository docs. */
 const HIGHLIGHTS = [
   {
     href: "/why#big-picture",
@@ -82,19 +79,19 @@ const HIGHLIGHTS = [
     href: "/why#calm-social-media",
     icon: ShieldCheck,
     title: "Calm, healthy social media",
-    body: "No scoreboard, calm notifications, a “For you” feed that says why every post is there — and one switch for AI content.",
+    body: "No scoreboard, calm notifications, recommendations with explanations, and controls for AI-labeled posts.",
   },
   {
     href: "/why#privacy-by-default",
     icon: ShieldCheck,
     title: "Privacy by default",
-    body: "No trackers, no advertising, no map or GIF service. Photos lose their hidden data, and your data stays on your servers.",
+    body: "No advertising code or third-party tracking in the software, no map or GIF service. Photos lose their hidden metadata, and your data stays on your servers.",
   },
   {
     href: "/why#organisations",
     icon: Users,
     title: "Made for organisations",
-    body: "Team accounts, group lists, social-only sign-ups, serious moderation with an audit log — and a home timeline of 400,000 posts in 50 ms.",
+    body: "Team accounts, group lists, social-only sign-ups, moderation with an audit log, and documented performance benchmarks with their test conditions.",
   },
 ] as const;
 
@@ -169,9 +166,10 @@ export default function Home() {
           <p className="mt-8 max-w-2xl text-[17.5px] leading-relaxed text-muted sm:text-[18.5px]">
             A new and better social network, focused on digital wellbeing: it
             amplifies good and fun content instead of negative emotions. One
-            account reaches the whole open social web — Mastodon, Bluesky,
-            Pixelfed, PeerTube and others — with no advertising, no tracking and
-            counts hidden by default.
+            account reaches the Fediverse through ActivityPub. Administrators
+            can also enable native AT Protocol hosting for supported Bluesky
+            clients. The software has no advertising code, and counts are
+            hidden by default.
           </p>
 
           <div className="mt-8 flex flex-wrap gap-3">

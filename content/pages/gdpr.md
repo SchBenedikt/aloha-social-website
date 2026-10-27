@@ -62,7 +62,7 @@ Requests about **this website** go through the contact channels in the [imprint]
 
 The software implements data minimisation instead of relying on policy promises:
 
-- **No tracking.** No analytics, no advertising, no third-party services anywhere in the stack.
+- **No advertising or third-party analytics code in the app.** Federation and configured integrations exchange data with remote servers; operators should document those flows.
 - **Metadata stripped.** Uploads lose EXIF, GPS and camera data before they are stored; visible timestamps are rounded and photo maps are opt-in.
 - **Minimal accounts.** No phone number, no address book upload, birthday or gender fields.
 - **Encryption at rest.** Private/public account keys are encrypted with the instance secret; delivery tokens are stored hashed.

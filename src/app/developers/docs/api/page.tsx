@@ -182,7 +182,7 @@ export default function ApiDocPage() {
               items={[
                 "Signed fetch with a per-actor key pair, verified on arrival",
                 "Pagination and error shapes that Mastodon clients already handle",
-                "Every response is from your own server — no third party in the path",
+                "Local routes are served here; selected AT Protocol AppView and Chat methods may use configured remote services",
                 "Tokens and sessions managed by the server",
               ]}
             />

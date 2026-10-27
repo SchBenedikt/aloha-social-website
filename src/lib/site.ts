@@ -2,7 +2,7 @@ export const SITE = {
   name: "Aloha Social",
   tagline: "The social network for your server.",
   description:
-    "Aloha Social is a fully open-source social network you run on your own server. One account reaches Mastodon, Bluesky, Pixelfed, PeerTube and the rest of the open social web — with no advertising, no tracking and counts hidden by default.",
+    "Aloha Social is an open-source social network you run on your own server. One ActivityPub account reaches the Fediverse; optional native AT Protocol hosting connects to Bluesky when configured. No advertising, and engagement counts are hidden by default.",
   github: "https://github.com/AlohaSocial",
   server: "https://github.com/AlohaSocial/social",
   logos: "https://github.com/AlohaSocial/Logos",

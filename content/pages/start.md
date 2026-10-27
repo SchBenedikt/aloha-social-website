@@ -64,7 +64,7 @@ Everything works with the defaults, but these four are worth two minutes:
 1. **Settings → Appearance** — light, dark, or follow your device. The dark design is the same design, not an afterthought.
 2. **Settings → Notifications → Who may reach you** — five questions, each answered *Allow* or *Hold for review*. New accounts start with the calm policy: strangers and brand-new accounts wait quietly instead of ringing the bell.
 3. **Settings → Filters** — add the words you would rather not see. Filters fold matching posts behind the filter's name or take them out altogether.
-4. **Settings → For you** — the optional second feed, built only from the hashtags you actually read. It explains why every post is there, and it never leaves this server.
+4. **Settings → For you** — the optional ranked feed. Recommendations explain why they appear; behavioral learning has its own consent control, and learned data is account-scoped and not federated.
 
 ## Where to go next
 

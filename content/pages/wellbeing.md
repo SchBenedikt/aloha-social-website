@@ -6,13 +6,13 @@ description: How Aloha Social is designed to protect your mental health and ampl
 
 # Well-being in Aloha
 
-Aloha Social is built differently. While most social networks are designed to maximize engagement at any cost, Aloha Social puts your well-being first. Every feature is a deliberate choice to reduce stress, addiction, and negative emotions — and to amplify genuine connection and joy.
+Aloha Social is designed to give people more control over what they see and when they are interrupted. These choices express the project's priorities; they are not a promise of a particular mental-health outcome.
 
 ## No engagement scoreboard
 
 By default, you don't see like counts, boost counts, or follower numbers — on your posts or anyone else's. This simple change removes the constant pressure to perform for strangers. You post because you want to share, not because you're chasing a number.
 
-Research shows that visible engagement metrics drive social comparison, anxiety, and compulsive checking. A 2023 study in *Computers in Human Behavior* found that hiding like counts significantly reduced social anxiety and improved well-being among young adults. Another study from the University of Pennsylvania showed that limiting social media use to 30 minutes daily — made easier when you're not chasing metrics — reduced loneliness and depression.
+The setting changes how the interface presents activity; it does not remove engagement data from remote services or guarantee how other people respond.
 
 ## Calm notifications by default
 
@@ -25,7 +25,7 @@ New accounts start with a calm notification policy:
 
 Held notifications don't ring, don't push, don't email — they simply wait in an "Activities" section until you choose to look. This means your phone doesn't interrupt your dinner, your sleep, or your focus.
 
-A 2022 study in *Nature Human Behaviour* found that batching notifications (delivering them at set times rather than instantly) reduced stress and improved attention span. Aloha Social goes further: you decide *when* to check, and the default policy filters out the noise before it ever reaches you.
+You decide which notifications to hold, digest or receive. A held notification waits in Activities instead of raising a bell, push or email alert.
 
 ## Quiet hours and digests
 
@@ -33,9 +33,9 @@ Notifications are collected and delivered at the times you choose. No 3 AM wake-
 
 ## Your timeline, your pace
 
-There is no algorithmic "For You" feed that reorders posts to keep you scrolling. Posts appear in chronological order, newest first — the way a conversation works. You see what you followed, when it happened, without a black box deciding what you "should" see.
+**My Feed** is chronological. It shows posts from accounts you follow without applying the For You ranking.
 
-If you *want* a personalized feed, there's an optional "For You" feed — but it explains *why* every post is there, and you can edit the interests behind it or turn it off with one click. Transparency and control, not manipulation.
+The optional **For You** feed ranks eligible posts from the data available to the server and provides explanations and feedback controls. Behavioral learning has a separate consent setting; learned data belongs to the account, is not federated, and can be paused, reset or exported. The administrator controls whether ranked recommendations are available. It is a recommendation system, and its quality depends on local data, remote synchronization and the candidate posts available.
 
 ## End-of-timeline marker
 
@@ -43,13 +43,13 @@ A subtle marker shows where you've already read. This prevents doomscrolling —
 
 ## AI content labeling
 
-One switch in Settings hides every post that declares itself AI-generated. No more wondering if that thoughtful comment or stunning image is synthetic. You decide whether you want to see it.
+Settings includes a control for hiding posts that identify themselves as AI-generated. It depends on posts carrying the relevant label and cannot identify unlabeled AI content.
 
 ## Private by default
 
 - Your account can be private — new followers need your approval
 - Photos lose their location data (EXIF, GPS) before they're stored or sent
-- No third-party services: no map tiles, no GIF libraries, no trackers, no ad servers
+- The app does not need a third-party map or GIF service and includes no advertising code. Federation and enabled integrations still exchange data with remote servers.
 - The 881 built-in emoji are served from your own server
 
 ## You can leave anytime
@@ -57,7 +57,7 @@ One switch in Settings hides every post that declares itself AI-generated. No mo
 Your data is never locked in:
 - Full export in standard format (Mastodon-compatible)
 - Account move to another server, with automatic redirect for followers
-- Import from Mastodon, Pixelfed, GoToSocial, Instagram
+- Import supported posts, follows and account data from the sources listed in the current [migration guide](/docs/moving)
 
 ## Moderation that protects people
 

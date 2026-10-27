@@ -1,6 +1,6 @@
 # Aloha Social — OCC Commands Reference
 
-All commands are invoked via `php occ <command>` from the server root directory.
+All commands are invoked via `php occ <command>` from the Nextcloud root directory.
 
 This page documents the commands the app registers in
 `appinfo/info.xml`. Every command extends `OCA\Social\Command\SocialCommand`,
@@ -15,7 +15,7 @@ but only `social:timeline` reads it (see below).
 
 ### `social:account:create`
 
-Create the Aloha Social actor for an existing user.
+Create the Aloha Social actor for an existing Nextcloud user.
 
 ```
 php occ social:account:create [--handle HANDLE] <userId>
@@ -23,13 +23,13 @@ php occ social:account:create [--handle HANDLE] <userId>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Aloha username of the account |
+| `userId` | Yes | Nextcloud username of the account |
 
 | Option | Value | Description |
 |--------|-------|-------------|
 | `--handle` | required | Aloha Social handle. If omitted, the `userId` is used as the handle. |
 
-Fails with `Unknown user` if no such Aloha user exists. On success the command
+Fails with `Unknown user` if no such Nextcloud user exists. On success the command
 prints nothing.
 
 ---
@@ -60,7 +60,7 @@ php occ social:account:following [--local] [--unfollow] <userId> <account>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Aloha user performing the action |
+| `userId` | Yes | Nextcloud user performing the action |
 | `account` | Yes | Account to follow (e.g. `user@example.org`) |
 
 | Option | Value | Description |
@@ -76,7 +76,7 @@ failure; the rest let the exception surface.
 
 ### `social:account:alias`
 
-Since 0.20.6 an account's own aliases are also settable by its owner, in **Settings → Migration → Accounts you also answer to** (`/api/v1/migration/aliases`) — setting one federates nothing. This command stays for an administrator acting on somebody else's account, and for scripting a migration.
+Since 0.20.6 an account's own aliases are also settable by its owner, in **Migration → Accounts you also answer to** (`/api/v1/migration/aliases`) — setting one federates nothing. This command stays for an administrator acting on somebody else's account, and for scripting a migration.
 
 Manage the `alsoKnownAs` list of a local account: the actor ids it also answers
 to. Setting one is the first step of moving an account **to** this server — a
@@ -89,7 +89,7 @@ php occ social:account:alias [--add URL] [--remove URL] [--list] <userId>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Aloha user whose actor is aliased |
+| `userId` | Yes | Nextcloud user whose actor is aliased |
 
 | Option | Value | Description |
 |--------|-------|-------------|
@@ -112,24 +112,25 @@ Move a local account to one on another server, the way Mastodon's account
 migration works: the new account has to list this one in its `alsoKnownAs`, every
 follower is sent a `Move`, and the account here is marked as moved.
 
-Since 0.26.113 a person can do this themselves, in **Settings → Migration → Move
+Since 0.26.113 a person can do this themselves, in **Migration → Move
 your account away** (`POST /api/v1/migration/move`), behind their password, their
 own handle typed back and a thirty-day cooldown between moves. This command stays
 for an administrator acting on somebody else's account, and it **skips the
 cooldown**. Undoing a move (clearing `movedTo`) is on the same page.
 
 ```
-php occ social:account:move [-f|--force] <userId> <target>
+php occ social:account:move [-f|--force] [--bluesky=deactivate|keep|move] <userId> <target>
 ```
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Aloha user whose actor moves away |
+| `userId` | Yes | Nextcloud user whose actor moves away |
 | `target` | Yes | The new account, as `@you@new.example` or its `https://…` actor id |
 
 | Option | Value | Description |
 |--------|-------|-------------|
 | `-f`, `--force` | none | Do not ask for confirmation (required with `--no-interaction`) |
+| `--bluesky` | `deactivate` (default), `keep`, `move` | What becomes of the account's Bluesky identity: switched off, kept as it is, or moving on its own — `move` only once its Bluesky move away is done or under way |
 
 What happens, in order:
 
@@ -169,7 +170,7 @@ php occ social:account:import-posts [--no-media] [--limit LIMIT] <userId> <archi
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Aloha user whose account the posts are written as |
+| `userId` | Yes | Nextcloud user whose account the posts are written as |
 | `archive` | Yes | Path to the export: a zip with an `outbox.json` (this app's, under `social/`; Mastodon's and GoToSocial's, at the root), an **Instagram** archive (the JSON one — `content/posts_*.json` and the reels beside them, with the pictures under `media/`), or a JSON export on its own — an `outbox.json`, or Pixelfed's `pixelfed-statuses.json` |
 
 | Option | Value | Description |
@@ -208,7 +209,7 @@ php occ social:account:import-follows <userId> <csv>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Aloha user whose actor follows the accounts |
+| `userId` | Yes | Nextcloud user whose actor follows the accounts |
 | `csv` | Yes | Path to the export. The current Mastodon format with the header `Account address,Show boosts,Notify on new posts,Languages` is read by its `Account address` column wherever it is; the older format — one handle per line, no header — works too. A file that parses as JSON is read as Pixelfed's export: an array of actor URLs (or handles, or objects naming one), each URL fetched and followed as the actor it resolves to. |
 
 Each entry goes through the same path as `social:account:following`: the
@@ -238,7 +239,7 @@ php occ social:note:create [-r|--replyTo REPLYTO] [-t|--to TO] [-y|--type TYPE] 
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `user_id` | Yes | Aloha user ID of the author |
+| `user_id` | Yes | Nextcloud user ID of the author |
 | `content` | Yes | Content of the post |
 
 | Option | Value | Description |
@@ -267,7 +268,7 @@ php occ social:note:boost [--unboost] <user_id> <note_id>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `user_id` | Yes | Aloha user ID boosting the note |
+| `user_id` | Yes | Nextcloud user ID boosting the note |
 | `note_id` | Yes | Id of the note |
 
 | Option | Value | Description |
@@ -288,7 +289,7 @@ php occ social:note:like [--unlike] <user_id> <note_id>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `user_id` | Yes | Aloha user ID liking the note |
+| `user_id` | Yes | Nextcloud user ID liking the note |
 | `note_id` | Yes | Id of the note |
 
 | Option | Value | Description |
@@ -311,7 +312,7 @@ php occ social:timeline [--local] [--min_id MIN] [--max_id MAX] [--since SINCE] 
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `userId` | Yes | Aloha user whose view is used. Fails with `Unknown user` if unknown. |
+| `userId` | Yes | Nextcloud user whose view is used. Fails with `Unknown user` if unknown. |
 | `timeline` | Yes | See the table of supported values below |
 
 | Option | Value | Default | Description |
@@ -419,7 +420,7 @@ php occ social:worker [--once] [--max-seconds SECONDS] [--quiet-log]
 budget for deliveries (and 120 seconds of its own for the inbound queue). It
 delivers twenty servers at a time and takes batch after batch of 200 while time
 is left — up to 6,000 deliveries a run when peers answer within a second, and
-about 160 when every batch runs into a dead peer's 30-second timeout — and Aloha runs one `cron.php` at a time, so that is its ceiling.
+about 160 when every batch runs into a dead peer's 30-second timeout — and Nextcloud runs one `cron.php` at a time, so that is its ceiling.
 An instance whose accounts are followed across tens of thousands of servers
 reaches it with one popular post.
 
@@ -477,6 +478,51 @@ order and hands each to every connected relay, replaying from the cursor a relay
 reconnects with out of the 72-hour window the table keeps. Run it under systemd
 (see [Admin.md](Admin.md#bluesky)); the setup checks say when it is not running.
 
+### `social:atproto:listen`
+
+Read the Bluesky accounts somebody here follows from Jetstream, as they post.
+
+```
+php occ social:atproto:listen [--max-seconds SECONDS] [--once]
+```
+
+| Option | Value | Description |
+|--------|-------|-------------|
+| `--max-seconds` | int (0) | Stop after this long, so a supervisor can restart it; `0` runs until stopped |
+| `--once` | none | Read what is there now and return |
+
+**Why it matters:** without it, a followed Bluesky account's new post arrives
+when the poller next reads that account's feed — two minutes at best, hours for
+an account that posts rarely. With it, the post is here within seconds. It holds
+one WebSocket to the Jetstream set on the admin page (`atproto_jetstream`),
+naming the followed accounts (at most 10,000) and nothing else — a listener
+with nobody to listen for does not connect at all, since an empty list would be
+the whole network. A post or a repost makes it read that account's feed the way
+the poller does; a deleted post is deleted here at once; a changed profile or
+handle is read again. Where it got to is kept, and a restart picks up from a few
+seconds before. The poller keeps running beside it, so the listener being down
+costs latency and nothing else. Run it under systemd beside the firehose daemon
+(see [Admin.md](Admin.md#bluesky)).
+
+### `social:mastodon:stream`
+
+Serve Mastodon's authenticated user and public WebSocket and SSE streams.
+
+```
+php occ social:mastodon:stream [--bind ADDRESS:PORT] [--max-seconds SECONDS]
+```
+
+| Option | Value | Description |
+|--------|-------|-------------|
+| `--bind` | string (127.0.0.1:8788) | Where to listen; the shipped root proxy rules send `/api/v1/streaming`, `/api/v1/streaming/user`, `/api/v1/streaming/user/notification`, `/api/v1/streaming/direct`, `/api/v1/streaming/list`, `/api/v1/streaming/public`, `/api/v1/streaming/public/local`, `/api/v1/streaming/public/remote`, `/api/v1/streaming/hashtag`, `/api/v1/streaming/hashtag/local` and `/api/v1/streaming/health` here |
+| `--max-seconds` | int (0) | Stop after this long, so a supervisor can restart it; `0` runs until stopped |
+
+The daemon requires a user access token with `read` or both `read:statuses` and
+`read:notifications` for user streams. Direct and list streams require
+`read:statuses`; a list stream also requires a list owned by that account. It
+polls the same filtered timelines used by the REST API once per second. Run it under a process supervisor; the
+streaming health path returns `OK` while the process is accepting requests.
+
 ### `social:atproto:identities`
 
 Give every local account its Bluesky identity now, rather than on first need.
@@ -487,13 +533,14 @@ php occ social:atproto:identities [--user USER] [--list]
 
 | Option | Value | Description |
 |--------|-------|-------------|
-| `--user` | string | Only this Aloha user |
+| `--user` | string | Only this Nextcloud user |
 | `--list` | none | List the identities there are instead of making any |
 
 An identity is a `did:plc` registered with the PLC directory, a handle
 `alice.<host>` and a signing key, and the profile record is written with it. An
 account that already has one is left alone, so the command is safe to run
-again; a registration the directory refused is logged and resent by the
+again — one its owner switched off stays off, marked `(deactivated)`, and
+`--list` shows every identity's state; a registration the directory refused is logged and resent by the
 maintenance job and by `social:atproto:plc --repair`.
 
 ### `social:atproto:plc`
@@ -512,6 +559,17 @@ php occ social:atproto:plc [DID] [--repair]
 | Option | Value | Description |
 |--------|-------|-------------|
 | `--repair` | none | Send every operation the directory never confirmed again |
+
+Each row of the log says when the operation was sent and confirmed, or when it
+was given up on (`dead`) and what the directory said (`reason`). `--repair` is
+what the maintenance job does every five minutes: for each DID with a pending
+operation it compares the log with the directory's audit log — an operation
+the directory holds is confirmed, one it nullified is dead, one it holds that
+this log does not is taken into the log — then sends the pending operations in
+order, each built on the directory's latest confirmed operation and signed
+again when that moved. One the directory refuses is dead and never sent again;
+the next one follows the confirmed operation instead. One the directory could
+not be asked about (unreachable, a 5xx, a 429) waits, with everything behind it.
 
 ### `social:atproto:resolve`
 
@@ -539,7 +597,7 @@ php occ social:atproto:repo USER [--verify]
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `user` | Yes | The Aloha user id, the handle or the DID |
+| `user` | Yes | The Nextcloud user id, the handle or the DID |
 
 | Option | Value | Description |
 |--------|-------|-------------|
@@ -579,8 +637,13 @@ php occ social:atproto:crawl
 ```
 
 Sends `com.atproto.sync.requestCrawl` to every relay in `atproto_relays`. A relay
-keeps the subscription from then on; this is for the first time, and for after
-the daemon was down longer than the replay window.
+keeps the subscription from then on. Maintenance also requests the initial crawl
+after Bluesky is enabled and requests a new crawl after the firehose has been
+unreachable longer than its 72-hour replay window. If a relay accepted the
+request but an active repository or profile is still missing from relay/AppView
+checks after an hour, maintenance retries at most every six hours. Failed
+initial requests retry after 15 minutes. Use this command when an administrator
+wants to request a crawl immediately.
 
 ### `social:atproto:rotate-key`
 
@@ -596,9 +659,34 @@ php occ social:atproto:rotate-key [--force]
 | `--force` | none | Do it without asking |
 
 The old key is kept, retired, for the PLC's 72-hour recovery window and dropped
-by the maintenance job after it. Each identity gets one directory operation,
-paced so the directory's limits are respected; one the directory does not
-confirm is resent by the maintenance job.
+by the maintenance job after it. Each active or pending identity gets one
+directory operation, paced so the directory's limits are respected; one the
+directory does not confirm is resent by the maintenance job, a pending
+identity's behind its genesis.
+
+### `social:atproto:keys:reseal`
+
+Every Bluesky key — the instance rotation keys, the retired ones included, the
+service key and each account's signing key — sealed again under the instance
+secret in use, for after `config.php`'s `secret` changed.
+
+```
+php occ social:atproto:keys:reseal
+OC_OLD_SECRET=... php occ social:atproto:keys:reseal --old-secret-from-env
+```
+
+| Option | Value | Description |
+|--------|-------|-------------|
+| `--old-secret-from-env` | none | Read the previous instance secret from the `OC_OLD_SECRET` environment variable |
+
+Without the option it counts the keys that do not open with the current secret
+and exits 1 when there are any; the Bluesky card and the setup check report the
+same count. With it, each key that does not open is opened with the previous
+secret and stored sealed with the current one — the same key, so every DID stays
+as it is — and a key neither secret opens is counted as failed and left alone.
+The previous secret is read from the environment only, never from the command
+line, so it stays out of the shell history and the process list. Keys of
+tombstoned and moved-away identities sign nothing any more and are not touched.
 
 ### `social:queue:process`
 
@@ -696,20 +784,41 @@ and with what spread of attempt counts, and asks before it changes anything.
 Seeds a plausible amount of content and times the queries behind the timelines, because a query's cost cannot be judged on the couple of dozen rows a development instance holds. **For development instances only** — it writes thousands of rows.
 
 ```
-php occ social:benchmark [--actors=200] [--notes=5000] [--follows=150] [--viewer=USER]
-                         [--seed-only] [--time-only] [--clean] [-f|--force]
+php occ social:benchmark [--actors=200] [--notes=5000] [--follows=150] [--followers=0] [--viewer=USER]
+                         [--seed-only] [--time-only] [--runs=3] [--output=json|json_pretty]
+                         [--fail-over=MS] [--threshold=PROBE[@LIMIT]=MS ...]
+                         [--baseline=FILE] [--baseline-factor=3] [--clean] [-f|--force]
 ```
 
 | Option | Value | Description |
 |--------|-------|-------------|
 | `--actors` | int (200) | Remote actors to seed |
-| `--notes` | int (5000) | Public notes to seed, spread over the preceding weeks |
+| `--notes` | int (5000) | Public notes to seed, five seconds apart going back from now |
 | `--follows` | int (150) | How many of those actors the viewer follows, which is what the home timeline joins through |
 | `--followers` | int (0) | How many of those actors follow the viewer **back**, which is what delivery reads: one queue row per distinct inbox when the viewer posts. An instance seeded without it measures reads and says nothing about writes |
-| `--viewer` | username | The local account the timelines are read as; the first local actor by default |
+| `--viewer` | username | The local account the timelines are read as; the first local actor by default. It needs a Social account (`social:account:create`) |
 | `--seed-only` | none | Write the rows without timing anything |
 | `--time-only` | none | Time what is already seeded |
+| `--runs` | int (3) | Timed runs of each probe after one warm-up run; the median is reported |
+| `--fail-over` | ms | A ceiling for every probe that has no `--threshold` of its own |
+| `--threshold` | `PROBE=MS` or `PROBE@LIMIT=MS` | A ceiling for one probe, at every page size or at one (`home=150`, `home@20=120`). Repeatable |
+| `--baseline` | file | A JSON file of earlier timings, keyed by database (`pgsql`, `mysql`, `sqlite`) and then by `probe@limit`; other top-level keys are ignored, so the file can say how it was measured |
+| `--baseline-factor` | number (3) | How many times its baseline entry a probe may take |
 | `--clean` | none | Delete everything the command wrote and nothing else |
+| `-f`, `--force` | none | Seed without asking (required with `--no-interaction`) |
+
+**What is seeded.** Every note is public, by one of the seeded actors in turn,
+and says one of thirteen topic words. One note in ten carries a picture and one
+in twenty-five a video — the share of media a real timeline has, so that the
+Photos and Videos probes measure a page narrowed out of mostly text rather than
+an empty answer or the home timeline again. One note in twenty mentions the
+viewer and comes with the notification the inbox would have written; one in four
+carries one of twenty hashtags. The notes' recipient rows (public collection,
+author, the author's followers, and the viewer when mentioned) carry the note's
+nid, as the home timeline's page query reads it, and the hashtag rows and the
+words of the search index are written with them. The tables are then analysed
+(`ANALYZE`), so that the plans timed are the ones a live instance gets rather
+than ones made from the statistics of the tables before the seed.
 
 Seeding writes **multi-row `INSERT`s directly**, not through the model layer: a
 `Note` built and saved one at a time is three statements and a transaction per
@@ -720,14 +829,37 @@ collections), because a query plan is only worth measuring against rows the
 planner sees the way it sees real data. The cost is that a column added to
 `social_stream` later is one this command forgets to write; that is the right
 trade for a development-only command and would be the wrong one anywhere else.
-| `-f`, `--force` | none | Seed without asking (required with `--no-interaction`) |
+
+**What is timed.** Nine probes, each at a page of 20 and of 50 (the largest
+page a client may ask for): `home`, `public`, `direct`, `notifications`,
+`photos` and `videos` (the home timeline narrowed as the web client's Photos
+and Videos pages narrow it), `hashtag` (the probed tag, `benchtag0`), `account`
+(the first seeded actor's profile) and `search` (the word `harbour`). Each is
+read once to warm the caches and then `--runs` times; the median is the number.
+
+**Limits.** A probe's ceiling is its `--threshold`, else `--fail-over`; its
+baseline allowance is `--baseline-factor` times its `--baseline` entry. It is
+held to the larger of the two, so a two-millisecond baseline does not fail on a
+shared runner's noise and a probe that was always slower than its ceiling only
+fails when it gets that much slower again. A probe with neither has no limit.
+Any probe over its limit makes the command exit 1 and name it. Every option is
+checked before anything is seeded.
+
+`--output=json` (or `json_pretty`) prints one JSON document on stdout — each
+probe's median, rows, limit and verdict, the database, what was seeded, and the
+two switches that decide which query answers (`search_index_ready`,
+`dest_nid_filled`) — and sends the progress lines to stderr, so the output can
+be redirected into a file. `.github/workflows/perf-nightly.yml` runs it that way
+every night on MySQL and PostgreSQL with 100,000 notes, against the baseline in
+`tests/perf/benchmark-baseline.json`, and keeps each night's report as an
+artifact.
 
 Seeding says how many rows it is about to write and asks before writing any of
 them; under `--no-interaction` it refuses unless `--force` is given, rather than
 seeding a production database because nobody was there to say no. `--clean` and
 `--time-only` write nothing and do not ask.
 
-Every row it writes carries `benchmark.invalid` in its id, which is what `--clean` matches on. The reported time is the second run of each query, so it measures a served request rather than a cold cache.
+Every row it writes carries `benchmark.invalid` in its id, which is what `--clean` matches on.
 
 ---
 
@@ -757,8 +889,10 @@ does.
 
 ### `social:counts:refresh`
 
-Ask each remote server what the counts of the posts it owns are right now, and
-store what it says.
+Ask where each remote post lives — its own server, or the AppView for a post
+read from Bluesky — what its counts are right now, and store what it says. Local
+posts of the last seven days that went to Bluesky are asked about too, for the
+likes and reposts there whose notification never arrived.
 
 ```
 php occ social:counts:refresh [-f|--force] [-l|--limit LIMIT]
@@ -766,8 +900,8 @@ php occ social:counts:refresh [-f|--force] [-l|--limit LIMIT]
 
 | Option | Value | Description |
 |--------|-------|-------------|
-| `-f`, `--force` | none | Ask about every remote post rather than only those not asked about in the last `RemoteCountService::TTL` (7200) seconds |
-| `-l`, `--limit` | required | Stop after this many posts. `0`, the default, means all that are due, which is what a backfill wants |
+| `-f`, `--force` | none | Ask about every post, remote ones of any age, rather than only those of the last seven days not asked about in the last `RemoteCountService::TTL` (7200) seconds |
+| `-l`, `--limit` | required | Stop after this many remote posts, and as many local posts on Bluesky. `0`, the default, means all that are due, which is what a backfill wants |
 
 A post's counts were a snapshot of the moment it was imported and nothing ever
 looked again, so a status sitting at two likes an hour ago still reads as two.
@@ -779,18 +913,44 @@ the next window rather than every pass.
 
 The stated total is split as `stated - local` before it is stored, so what is
 displayed stays the origin's number while the likes, boosts and replies made
-here keep counting on top of it. Without `--force` only the posts past the
-window are asked about; with it the whole timeline is, which is the backfill
-after a version that never refreshed counts at all.
+here keep counting on top of it. Without `--force` only the remote posts of
+the last seven days not asked about within the window are, as in the cron's
+pass; with it every remote post is, however old, which is the backfill after a
+version that never refreshed counts at all. A post whose server answers that it
+is not there (404) or gone (410) is not asked about again for thirty days.
 
 Reply counts are the limit of this: ActivityPub documents publish
 `replies.totalItems` on almost no server, so the reply figure is what this
 instance holds and not a number the origin supplies.
 
 The cron (`OCA\Social\Cron\Cache`) runs the same work on its own schedule for
-at most a minute per pass, `RemoteCountService::BATCH` posts at a time, so this
-command is for the other moments. It prints `N post(s) asked, M answered with a
+at most a minute per pass, `RemoteCountService::BATCH` posts at a time, and the
+posts people look at are asked about again as they are seen (every quarter of
+an hour while a post is less than a day old, every six hours after that; see
+**Counts where a post lives** in Architecture.md), so this command is for the
+other moments. It prints `N post(s) asked, M answered with a
 count`.
+
+### `social:starter-packs:refresh`
+
+Read the starter packs other servers publish again — the fediverse's
+collections (Mastodon's Collections, FEP-7aa9 `FeaturedCollection`s) and
+Bluesky's suggested starter packs — now rather than at the next daily run of
+`Cron\StarterPackSources`, and store them.
+
+```
+php occ social:starter-packs:refresh
+```
+
+It reads every source the `starter_pack_sources` app value names (see
+Admin.md), checks each member's consent to be in a fediverse collection
+(`featureAuthorization`), reads Bluesky's suggestions while Bluesky is on,
+and prints the sources, then `N starter pack(s)
+with M account(s) read from S source(s)`, how many accounts were left out
+without a valid authorization and how many sources or collections could not
+be read. A source or collection that cannot be read keeps the packs read from
+it last time, and a member whose server does not answer stays in a pack it
+was in before. Unlike the daily job, the command has no time limit.
 
 ### `social:media:retry`
 
@@ -861,13 +1021,15 @@ Exits 1 without doing anything if ffmpeg is not on the server. A video ffmpeg
 cannot read is counted, reported and left alone, so the run finishes and the
 video can be tried again after whatever was wrong with it is fixed.
 
-It is a command rather than a background job on purpose: it is a one-off after
-an upgrade, it spends a subprocess and a temporary copy of each video, and an
-instance with a large media library should choose when that happens.
+The background job `Cron\VideoPosters` does the same on its own, five videos
+every fifteen minutes and each video once, so an instance gets its posters
+without anybody running this. The command is for doing all of them at once, and
+for trying again the videos the job could not take a frame from: it reads every
+video that still has no poster, however far the job has got.
 
 ### `social:team`
 
-Give a group an account to post from.
+Give a Nextcloud group an account to post from.
 
 ```
 php occ social:team <group> <username>
@@ -877,7 +1039,7 @@ php occ social:team --remove <username>
 
 | Argument | Required | Description |
 |----------|----------|-------------|
-| `group` | No | The Aloha group. Required unless `--list` or `--remove` is used |
+| `group` | No | The Nextcloud group. Required unless `--list` or `--remove` is used |
 | `username` | No | The handle the team posts under. Required unless `--list` or `--remove` is used |
 
 | Option | Value | Description |
@@ -887,9 +1049,9 @@ php occ social:team --remove <username>
 
 **What it is.** Pixelfed's answer to "several people, one voice" is its
 `Group*` family: twenty models, still in beta, and a second social graph beside
-the one it already has. Aloha's answer is the one it has had all along — a
+the one it already has. Nextcloud's answer is the one it has had all along — a
 group of people who already work together — and this gives that group an
-account. It is the one thing in this comparison the server can do and Pixelfed
+account. It is the one thing in this comparison Nextcloud can do and Pixelfed
 cannot, because Pixelfed has no idea who works with whom.
 
 A team account is **an actor like any other**: a key pair, a followers
@@ -991,6 +1153,44 @@ original goes. A video ffmpeg cannot read is recorded as tried and left alone
 rather than retried for ever, and one that is already an H.264 MP4 is passed
 over without being re-encoded into a second generation of loss.
 
+### `social:media:strip-metadata`
+
+Take the container metadata — where and with what it was recorded, its title,
+its chapters — off the video and sound files that were uploaded before uploads
+lost it on the way in, or while the server had no ffmpeg.
+
+```
+php occ social:media:strip-metadata [--dry-run] [--limit LIMIT]
+```
+
+| Option | Value | Description |
+|--------|-------|-------------|
+| `--dry-run` | none | Print the files that would be rewritten, and those left because they are on Bluesky, and change nothing |
+| `--limit` | required | Stop after this many files. `0`, the default, means all of them |
+
+Each local upload is read back and remuxed with ffmpeg (`-c copy -map_metadata -1
+-map_chapters -1`): the streams are copied into a fresh container of the same
+kind, nothing is re-encoded. The documents are walked fifty at a time, one line
+per file, and the run ends with how many were rewritten, already clean, left
+because they are published on Bluesky, had no stored file, or could not be
+rewritten.
+
+A rewritten file is stored under a new name and the old one deleted, with the
+document's size updated and the posts carrying it pointed at the new copy —
+a stored file is served as immutable by its name, so changing the bytes under
+the same one would leave the old ones in every cache that holds them. A video's
+ladder (`social:media:ladder`) is rebuilt from the new copy. A file ffmpeg
+cannot rewrite, or whose rewrite is the same bytes, is left exactly as it is,
+and the first is logged.
+
+**A file published on Bluesky is left as it is**: a blob in a Bluesky repository
+is named by the hash of its bytes (its CID), and so is a video handed to
+Bluesky's video service, so rewriting it would break the record that names it.
+The output counts these.
+
+Exits 1 without doing anything if ffmpeg is not on the server. A run over a
+file that is already clean changes nothing, so it can be repeated.
+
 ### `social:media:usage`
 
 Report what the app's media occupies on disk, split into what was uploaded here
@@ -1025,7 +1225,7 @@ Total on disk                 20506 files    10.8 GiB
 
 Three counts are printed after the total when they are not zero: copies that are
 *streamed* (a pointer at a file on the server that holds it, so no bytes here),
-copies served from Aloha's own avatar store rather than by this app, and
+copies served from Nextcloud's own avatar store rather than by this app, and
 copies a row names that are **not in appdata** — reported rather than counted as
 zero bytes, because a cached remote one is simply fetched again when it is next
 asked for.
@@ -1328,7 +1528,7 @@ php occ social:external promote <handle>
 `add` checks the handle, the email address and the room left under the
 maximum the same way the registration page does, and needs external users to
 be switched on. It skips email confirmation and approval. `promote` moves the
-user to Aloha's database backend with the same user id and password hash;
+user to Nextcloud's database backend with the same user id and password hash;
 from then on the normal app and group rules apply to them. A refusal prints
 the reason and exits with 1.
 
@@ -1353,7 +1553,7 @@ php occ social:check:install [--index] [--offline] [-f|--force]
 Without `--index`:
 
 - runs `CheckService::checkInstallationStatus()`,
-- prints how many invalid followers and invalid notes were removed,
+- removes the follows and the notes whose accounts are no longer cached, walking both tables 200 rows at a time, and prints how many it removed,
 - runs the four checks that Administration → Overview shows (`lib/SetupChecks/`) and prints each with its severity: whether `.well-known/webfinger` answers for an account of this instance, whether the address Aloha Social builds ids from still matches the one the server reports, whether the delivery job has run lately, and whether anything in the outbound queue is stuck. A check that fails links to [Admin.md](Admin.md),
 - prints a verdict line — `all N checks passed`, or `M of N checks reported an error` — and **exits 1** when any check reported an error, so the command can stand in a deployment script
 - prints the current app configuration as pretty JSON.
@@ -1401,7 +1601,7 @@ nobody is there, so without this the command would exit `0` having done nothing.
 
 It refuses with exit code `1`, before asking anything, while self-registered
 external users exist: their logins are rows of this app, and flushing them
-would leave Aloha users nobody can log in as. Delete them, or promote them
+would leave Nextcloud users nobody can log in as. Delete them, or promote them
 with `social:external promote`, first.
 
 Without `--uninstall`:
@@ -1429,14 +1629,14 @@ The app files themselves are not removed, and the app is not disabled.
 | Code | Meaning |
 |------|---------|
 | 0 | Success, and also a confirmation prompt answered with "no" |
-| 1 | A refusal to act non-interactively without `--force` (`social:reset`, `social:check:install --index`, `social:benchmark`, `social:queue:retry`), a failed flush or uninstall in `social:reset`, `social:reset` while external users exist, streams `social:check:install --index` could not parse, a setup check that `social:check:install` reports as an error, `social:account:following` handled failure, or an uncaught exception in any command |
+| 1 | A refusal to act non-interactively without `--force` (`social:reset`, `social:check:install --index`, `social:benchmark`, `social:queue:retry`), a `social:benchmark` probe over its limit or an invalid limit option, a failed flush or uninstall in `social:reset`, `social:reset` while external users exist, streams `social:check:install --index` could not parse, a setup check that `social:check:install` reports as an error, `social:account:following` handled failure, or an uncaught exception in any command |
 
 ---
 
 ## Background Jobs
 
 The `TimedJob`s below are among those registered in `<background-jobs>` in
-`appinfo/info.xml` (that list is the complete one), run by Aloha's cron;
+`appinfo/info.xml` (that list is the complete one), run by Nextcloud's cron;
 the last four are queued on demand instead:
 
 | Job | Class | Description |
@@ -1448,10 +1648,10 @@ the last four are queued on demand instead:
 | Block lists | `OCA\Social\Cron\BlocklistSync` | Daily. Re-reads the block lists an administrator follows and applies what they say; does nothing while no source is on. |
 | External registrations | `OCA\Social\Cron\ExternalSignups` | Hourly. Forgets registrations of external users whose email was not confirmed within a day, and invitations that expired or were used up. A registration waiting for an administrator is kept until somebody decides on it. |
 | Bluesky sync | `OCA\Social\Cron\AtprotoSync` | Every 2 minutes, only while Bluesky is on. Reads the feeds of the Bluesky authors somebody here follows — the newest page of each due watch from the public AppView, what is new stored, the next read soon after a page with posts and doubling up to six hours after empty ones — then the AppView's notifications of each due local account, asked for as that account; both passes stop at the instance's request ceiling (`atproto_sync_ceiling`). |
-| Bluesky maintenance | `OCA\Social\Cron\AtprotoMaintenance` | Every 5 minutes, only while Bluesky is on. Reconciles the last day's public posts with their Bluesky records — a post the listener missed is published, an edit within the grace period replaced, a deleted post's record removed — resends directory operations the PLC refused, prunes the firehose past its replay window, drops retired instance keys, and checks a page of 25 Bluesky posts read here in the last week against the AppView, deleting the ones it no longer has. |
+| Bluesky maintenance | `OCA\Social\Cron\AtprotoMaintenance` | Every 5 minutes, only while Bluesky is on. Requests the initial relay crawl and recrawls after a firehose outage exceeds the 72-hour replay window. It also retries every six hours when relay/AppView checks still cannot find an active repository after an hour; failed initial requests retry after 15 minutes. Reconciles the last day's public posts with their Bluesky records — a post the listener missed is published, an edit within the grace period replaced, a deleted post's record removed; each run looks at the newest 100 and the next 100 of the rest of the day, so a busy day is covered over a few runs — resends directory operations the PLC refused, prunes the firehose past its replay window, drops retired instance keys, checks a page of 25 Bluesky posts read here in the last week against the AppView, deleting the ones it no longer has, checks custom handles once a day (dropping one that failed a week in a row), and picks up account moves whose job stopped (queued again once after an hour without progress, then failed with `move-interrupted`). |
 | Bluesky video | `OCA\Social\Cron\AtprotoVideo` | Every minute, only while Bluesky is on and `atproto_video_service` is set. Sends up to three queued videos of posts published here to Bluesky's video service, asks after the jobs it is making, and publishes each post whose video has ended: with the video when the service stored it here, otherwise as text and a link to the post here. |
 | Domain purge | `OCA\Social\Cron\DomainPurge` | Queued with a domain when one is added to the deny list — not registered in `appinfo/info.xml`, because a job listed there is added once at install time with no argument. Does 10 batches of 50 accounts per run and re-queues itself while anything of the domain is left. |
 | External promotion | `OCA\Social\Cron\ExternalPromoted` | Queued with a user id when an external user is promoted to a local one — not in `appinfo/info.xml`, for the same reason as the domain purge. Writes the user's system address book card, which external users do not have, in a request that sees them on their new backend. |
-| Bluesky publish | `OCA\Social\Cron\AtprotoPublish` | Queued by the post listener with a post id and an action (publish, edit, delete) or by the account service for a profile — not in `appinfo/info.xml`, for the same reason. Does the work off the request that made the post; the maintenance job catches what a job that failed or was never queued left behind. |
+| Bluesky publish | `OCA\Social\Cron\AtprotoPublish` | Queued by the post listener with a post id and an action (publish, edit, delete) or by the account service for a profile — not in `appinfo/info.xml`, for the same reason. Does the work off the request that made the post. A failure that may pass is tried again later, up to eight attempts over about 80 minutes, and the last is logged as given up; the maintenance job catches the posts a job that failed or was never queued left behind. |
 | Bluesky move | `OCA\Social\Cron\AtprotoMove` | Queued when a person starts moving their Bluesky account away — not in `appinfo/info.xml`, for the same reason. Copies the repository, the blobs and the preferences to the other PDS, points the DID there, activates the account there and switches it off here; stops at a step that fails, which the person can start again. |
 | Actor cleanup | `OCA\Social\Cron\ActorCleanup` | Queued with an actor id when a deleted account is addressed by more posts than one inbox request should rewrite — not in `appinfo/info.xml`, for the same reason as the domain purge. Rewrites 2000 posts per run and re-queues itself while any remain. Without it, the rewrite ran inline in the request a peer was waiting on for its `Delete`, so the peer timed out, re-sent, and the work started over. |

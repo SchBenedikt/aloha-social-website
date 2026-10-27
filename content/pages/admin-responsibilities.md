@@ -14,9 +14,9 @@ Running an Aloha Social server means more than installing an app. You are operat
 
 Your server is **your users' home** on the fediverse. Treat it that way.
 
-- **No ads, no tracking, no profiling** — not even for "analytics"
+- **No advertising or third-party ad tracking.** If you enable personalized recommendations, explain the feature and keep its separate behavioral-learning consent available.
 - **No selling data** — ever, in any form
-- **No algorithmic manipulation** of what people see
+- **Keep the chronological feed available.** The optional ranked For You feed explains recommendations and has controls for feedback and learning.
 - **Users own their posts** — they can export, move, or delete them anytime
 
 If you would not want it done to your own conversations, do not do it to theirs.
@@ -63,9 +63,9 @@ Your server talks to thousands of others. That makes you part of a shared infras
 
 ## 4. Privacy Is a Default, Not a Feature
 
-Aloha Social strips metadata from photos, encrypts keys at rest, and sends nothing to third parties. Your job is to not break that.
+Aloha Social strips metadata from photos and encrypts keys at rest. Federation and enabled integrations exchange data with remote servers as part of their protocols. Your job is to explain those flows and configure the instance responsibly.
 
-- **No third-party services** — no Google Fonts, no CDN for avatars, no external analytics
+- **No advertising or analytics SDKs in the app.** Configured integrations may contact remote services; disclose them and their data flows.
 - **No logging of content** — access logs yes, post contents no
 - **Backups are your responsibility** — encrypted, access-controlled, tested
 - **Legal requests** — have a process, require a warrant, notify the user if legally permitted

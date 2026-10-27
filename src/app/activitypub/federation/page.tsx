@@ -54,7 +54,7 @@ const MATRIX = [
       ["Follows and comments", "full"],
       ["Video playback in the feed", "full"],
       ["Chapters and continue watching", "full"],
-      ["Publishing a video from here", "none"],
+      ["Publishing a video from here", "full"],
       ["Watch pages and RSS", "full"],
       ["Admin API", "none"],
     ] as const,
@@ -149,7 +149,7 @@ export default function FederationPage() {
           <SectionHeading
             eyebrow="Compatibility"
             title="What works with what."
-            lede="A compatibility matrix beats an adjective. Full means it works in both directions and is covered by the notes in the repository; partial means it works in one direction or degrades to a plain post; the dot means it is not implemented."
+            lede="These examples describe implemented ActivityPub paths, not complete compatibility with every server. Remote behavior depends on the peer, object type and server configuration; see the compatibility notes for tested boundaries."
           />
 
           <div className="mt-10 grid gap-5 sm:grid-cols-2" data-stagger>
@@ -184,7 +184,7 @@ export default function FederationPage() {
                       <span className="text-[14.5px]">{label}</span>
                       <span className="ml-auto font-mono text-[11px] tracking-wide text-muted">
                         {state === "full"
-                          ? "full"
+                          ? "implemented"
                           : state === "partial"
                             ? "partial"
                             : "not implemented"}

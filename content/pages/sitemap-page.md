@@ -6,7 +6,7 @@ description: Complete list of all pages on aloha.social for navigation and disco
 
 # Sitemap
 
-All public pages on this site, organised by section.
+Key public pages on this site, organised by section. The [documentation index](/docs) lists all generated chapters; the XML sitemap includes every built route.
 
 ---
 
@@ -22,7 +22,7 @@ All public pages on this site, organised by section.
 
 ## Why Aloha Social
 
-- [Why Aloha Social](/why) — 30 reasons, grouped and linked
+- [Why Aloha Social](/why) — 30 reasons, checked against current implementation docs
 - [Features](/features) — Complete feature tour
 - [How it works](/server) — Federation, identity, hosting model
 - [ActivityPub](/activitypub) — How federation works
@@ -48,15 +48,18 @@ All public pages on this site, organised by section.
 - [Getting an account](/docs/user-getting-an-account)
 - [Finding & following people](/docs/user-finding-and-following-people)
 - [Writing a post](/docs/user-writing-a-post)
-- [Reading timelines](/docs/user-reading-posts)
+- [Reading timelines](/docs/user-reading)
 - [For You feed](/docs/for-you)
 - [Shorts](/features/read)
 - [Who may reach you](/docs/notify)
-- [Filtering words](/docs/user-filtering-and-control)
-- [Managing your account](/docs/user-your-profile-and-settings)
+- [Filtering words](/docs/user-filtering-out-words)
+- [Managing your account](/docs/user-managing-your-account)
 - [Keyboard shortcuts](/docs/user-keyboard-shortcuts)
 - [Moving an account](/docs/moving)
 - [Mastodon compatibility](/docs/mastodon)
+- [Federation compatibility](/docs/federation)
+- [Integrations and compatibility](/docs/integrations)
+- [Federated events](/docs/events)
 
 ### For Administrators
 - [Admin overview](/admins) — Short tour for server operators
@@ -66,6 +69,7 @@ All public pages on this site, organised by section.
 - [Maintenance & updates](/docs/maintenance) — Upgrades, backups, monitoring
 - [Performance](/docs/performance) — What a page costs, what was fixed
 - [AT Protocol status](/docs/atproto) — Bluesky compatibility
+- [Bluesky live-host checks](/docs/atproto-live) — distinguish protocol responses from public indexing
 
 ### For Developers
 - [Developer hub](/developers) — Repositories, endpoints, source
@@ -73,6 +77,11 @@ All public pages on this site, organised by section.
 - [Federation](/developers/docs/federation) — Server-to-server delivery
 - [API reference](/developers/docs/api) — Endpoints, auth, responses
 - [Operations](/developers/docs/operations) — Deployment, scaling, monitoring
+- [API reference](/docs/api) — the current registered API surface
+- [Architecture](/docs/architecture) — data model, services and protocol flows
+- [Frontend interoperability](/docs/frontend)
+- [For You evaluation](/docs/evaluation)
+- [Release guide](/docs/releasing)
 
 ---
 

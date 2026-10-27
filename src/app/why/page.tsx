@@ -20,13 +20,13 @@ const JSON_LD = {
   author: { "@type": "Organization", name: SITE.name, url: SITE.url },
   publisher: { "@type": "Organization", name: SITE.name, url: SITE.url },
   mainEntityOfPage: `${SITE.url}/why`,
-  datePublished: "2026-10-08",
+  datePublished: "2026-10-27",
 } as const;
 
 export const metadata: Metadata = {
   title: "Why Aloha Social",
   description:
-    "Thirty reasons Aloha Social is special: a social network with full Bluesky compatibility, calm feeds, privacy by default and no advertising.",
+    "Thirty reasons Aloha Social is special: an open, federated social network with calm defaults, optional native Bluesky hosting and privacy controls.",
   alternates: { canonical: "/why" },
   openGraph: {
     title: "Why Aloha Social — 30 reasons it is special",
@@ -311,7 +311,7 @@ export default function WhyPage() {
               Designed to protect you.
             </h2>
             <p className="mt-4 max-w-xl text-[16px] leading-relaxed text-muted">
-              Every default is a choice for your wellbeing — not engagement metrics.
+              Defaults reduce unnecessary pressure; the optional ranked feed explains recommendations and keeps learning controls visible.
             </p>
           </div>
 

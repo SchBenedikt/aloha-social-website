@@ -114,15 +114,26 @@ const GROUPS = [
     category: "users",
     title: "Bluesky / AT Protocol",
     description:
-      "How every Aloha account is also a Bluesky account — identity, repositories, the firehose, moderation and operations.",
+      "Optional native AT Protocol hosting alongside ActivityPub, including supported records, setup and operational boundaries.",
     source: BLOB + "Atproto-Compatibility.md",
   },
+  { id: "federation", category: "developers", title: "Federation compatibility", description: "Implemented remote profile and content behavior across ActivityPub and AT Protocol.", source: BLOB + "Federation-Compatibility.md" },
+  { id: "integrations", category: "developers", title: "Integrations", description: "A practical map of supported protocols, clients, services and their boundaries.", source: BLOB + "Integrations.md" },
+  { id: "events", category: "developers", title: "Federated events", description: "Event cards, federated event data and optional Nextcloud Calendar copies.", source: BLOB + "Events.md" },
+  { id: "frontend", category: "developers", title: "Frontend interoperability", description: "Shipped web-client behavior and its practical compatibility limits.", source: BLOB + "Frontend-UX.md" },
+  { id: "atproto-live", category: "admins", title: "Bluesky live-host checks", description: "Distinguish local protocol support from public relay and AppView visibility.", source: BLOB + "Atproto-Live-Test.md" },
+  { id: "evaluation", category: "developers", title: "For You evaluation", description: "Reproducible offline evaluation of the recommendation ranker.", source: BLOB + "ForYouEvaluation.md" },
+  { id: "releasing", category: "developers", title: "Releasing", description: "Versioning, build, signing and App Store release workflow.", source: BLOB + "Releasing.md" },
+  { id: "api", category: "developers", title: "API reference", description: "The route-by-route reference for the app's registered API.", source: BLOB + "API.md" },
+  { id: "architecture", category: "developers", title: "Architecture", description: "The app's data model, routing, services, federation flows and frontend.", source: BLOB + "Architecture.md" },
 ];
 
 const groupMeta = new Map(GROUPS.map((group) => [group.id, group]));
 const groupTitle = (groupId) => groupMeta.get(groupId)?.title ?? "Documentation";
 
 const SOURCES = [
+  { file: "API.md", group: "api", prefix: "api", skip: [], threshold: 18000 },
+  { file: "Architecture.md", group: "architecture", prefix: "architecture", skip: ["Contents"], threshold: 20000 },
   {
     file: "User-Guide.md",
     group: "user",
@@ -136,21 +147,6 @@ const SOURCES = [
     prefix: "for-you",
     skip: ["Contents"],
     threshold: 1e9,
-    bundle: [
-      ["overview", "What For You is", ["1. Summary", "2. Goals and non-goals", "17. Decisions"]],
-      [
-        "experience",
-        "The experience and the signal behind it",
-        ["3. Decisions from the interview", "4. User experience", "5. Signal collection"],
-      ],
-      ["ranking", "Scoring and ranking", ["6. Scoring", "7. Feed ranking"]],
-      ["technical", "API, data model and administration", ["8. API", "9. Data model", "10. Administration"]],
-      [
-        "privacy",
-        "Privacy, performance and delivery",
-        ["11. Privacy and data lifecycle", "12. Performance", "13. Accessibility and i18n", "14. Testing", "15. Documentation", "16. Delivery"],
-      ],
-    ],
   },
   {
     file: "Notification-Policy.md",
@@ -158,15 +154,6 @@ const SOURCES = [
     prefix: "notify",
     skip: ["Contents"],
     threshold: 1e9,
-    bundle: [
-      ["why", "Why notifications are policed", ["1. Why", "2. Decisions", "3. What exists today", "4. Gaps this specification closes"]],
-      [
-        "behaviour",
-        "Behaviour, API and strings",
-        ["5. Behaviour", "6. API", "7. Strings (English; German in all four catalogues in the same commit)"],
-      ],
-      ["rollout", "Tests, scope and rollout", ["8. Tests", "9. Out of scope", "10. Implementation order"]],
-    ],
   },
   {
     file: "Moving.md",
@@ -193,6 +180,13 @@ const SOURCES = [
   },
   { file: "Performance.md", group: "performance", prefix: "performance", skip: ["Contents"], threshold: 1e9 },
   { file: "Technical-Debt.md", group: "project", prefix: "debt", skip: ["Contents"], threshold: 1e9 },
+  { file: "Federation-Compatibility.md", group: "federation", prefix: "federation", skip: ["Contents"], threshold: 1e9 },
+  { file: "Integrations.md", group: "integrations", prefix: "integrations", skip: ["Contents"], threshold: 1e9 },
+  { file: "Events.md", group: "events", prefix: "events", skip: ["Contents"], threshold: 1e9 },
+  { file: "Frontend-UX.md", group: "frontend", prefix: "frontend", skip: ["Contents"], threshold: 1e9 },
+  { file: "Atproto-Live-Test.md", group: "atproto-live", prefix: "atproto-live", skip: ["Contents"], threshold: 1e9 },
+  { file: "ForYouEvaluation.md", group: "evaluation", prefix: "evaluation", skip: ["Contents"], threshold: 1e9 },
+  { file: "Releasing.md", group: "releasing", prefix: "releasing", skip: ["Contents"], threshold: 1e9 },
   { file: "README.md", group: "features", prefix: "feature", skip: ["Contents"], threshold: 14000, root: true },
 ];
 
@@ -676,13 +670,15 @@ const rewriteLinks = (page) => {
       }
       const landing = pages.find((other) => other.sourceFile === file && other.landing);
       if (landing) return landing.path + (docLink[2] && targets?.get(docLink[2].slice(1)) ? docLink[2] : "");
-      return href;
+      return RAW_BLOB + docLink[1] + (docLink[2] ?? "");
     }
     if (href.startsWith("../")) return RAW_BLOB + href.replace(/^\.\.\//, "");
     if (href.startsWith("img/") && page.sourceFile)
       return page.sourceRoot
         ? RAW_MEDIA + href
         : `${RAW_MEDIA}docs/${page.sourceFile.replace(/\.md$/, "")}/${href}`;
+    if (page.sourceFile && /^[A-Za-z0-9_.-][A-Za-z0-9_./-]*\/?$/.test(href))
+      return RAW_BLOB + (page.sourceRoot ? "" : "docs/") + href;
     return href;
   };
   const rewriteHtml = (html) =>

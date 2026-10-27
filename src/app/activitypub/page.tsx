@@ -328,20 +328,20 @@ export default function ActivityPubPage() {
           <ul className="border-t border-line" data-reveal="">
             {[
               [
-                "Every ActivityPub extension",
-                "Unknown activity types are kept as they arrive rather than silently rewritten, and anything the app cannot render says so instead of vanishing.",
+                "Supported ActivityPub types",
+                "The app handles documented objects such as posts, polls, articles, audio, video and events. Remote servers may send extensions or fields that do not map to a local feature.",
               ],
               [
-                "A full Mastodon client API",
-                "Enough endpoints for the web client, the two native clients and third-party apps that speak the common dialect — with the gaps documented.",
+                "Broad Mastodon client API compatibility",
+                "The web client, native clients and many third-party apps use supported API routes; Aloha Social is not a drop-in Mastodon server and documents unsupported areas.",
               ],
               [
                 "Server-to-server WebSockets",
                 "Live updates depend on the server's push configuration; otherwise clients poll for new activity.",
               ],
               [
-                "Automatic bridges to closed networks",
-                "There is no bridge to networks that do not run ActivityPub. What you can reach is what speaks the protocol.",
+                "Separate protocol integrations",
+                "Bluesky uses optional native AT Protocol hosting, configured separately from ActivityPub. It is not an automatic bridge or a conversion of Fediverse identities.",
               ],
             ].map(([title, body]) => (
               <li key={title} className="border-b border-line py-5">
@@ -366,7 +366,7 @@ export default function ActivityPubPage() {
         title="Read it running on your own server."
         body="Every activity this page describes is visible in your server's logs and storage. Install the app and watch the first one go out."
         primary={{ label: "Installation guide", href: "/install" }}
-        secondary={{ label: "Native integration", href: "/activitypub/native" }}
+        secondary={{ label: "Hosting model", href: "/activitypub/native" }}
       />
     </>
   );

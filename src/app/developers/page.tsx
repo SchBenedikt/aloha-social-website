@@ -15,7 +15,7 @@ import { ProgressChecklist } from "@/components/progress-checklist";
 export const metadata: Metadata = {
   title: "For developers",
   description:
-    "Source code, APIs, architecture and release guidance for Aloha Social, the open-source ActivityPub server published under AGPL-3.0-or-later.",
+    "Source code, APIs, architecture and release guidance for Aloha Social, the open-source server app published under AGPL-3.0-or-later, with native clients under MIT.",
   alternates: { canonical: "/developers" },
 };
 
@@ -75,7 +75,7 @@ export default function DevelopersPage() {
       <PageHeader
         eyebrow="For developers"
         title="Read the guides. Check the source."
-        lede="Everything Aloha ships is open source under AGPL-3.0-or-later: the server app, the native clients and the brand assets. Read the guides here, then read the code."
+        lede="Aloha Social and its clients are open source under their respective licences: the server app uses AGPL-3.0-or-later, while the Android and Apple clients use MIT. Read the guides here, then read the code."
         actions={
           <>
             <a
@@ -170,7 +170,7 @@ export default function DevelopersPage() {
                 items={[
                   "Signed fetch with a per-actor key pair, verified on arrival",
                   "Pagination and error shapes that Mastodon clients already handle",
-                  "Every response is from your own server — no third party in the path",
+                "ActivityPub delivery goes to remote peers; optional AT Protocol reads may use configured AppView and Chat services",
                 ]}
               />
               <div className="mt-7 flex flex-wrap gap-3">

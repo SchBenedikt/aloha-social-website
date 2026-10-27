@@ -1,12 +1,12 @@
 ---
 path: /nextcloud
 title: Built into your workspace
-description: Why a social network that lives inside the workspace your organisation already runs beats another service to sign up for.
+description: How Aloha Social uses your existing workspace for accounts, files, notifications and administration.
 ---
 
 # Built into your workspace
 
-Aloha Social is an **app inside your workspace** — not a separate service. That changes everything.
+Aloha Social is an **app inside your workspace** — using its accounts and services rather than requiring a separate social server to operate.
 
 ---
 
@@ -28,7 +28,7 @@ Admins can enable **social-only accounts** — people sign up for Aloha Social o
 
 Posts live next to your files, calendar, and chat — on **your infrastructure**, in **your database**, backed up by **your rules**.
 
-- **No third parties** — no map service, no GIF service, no analytics, no ad server
+- **No advertising or third-party tracking code in the app** — no map or GIF service is needed; optional integrations such as Bluesky use their configured remote services
 - **Photos stripped** — EXIF, GPS, camera data removed before storing (no re-encoding, quality preserved)
 - **Keys encrypted** — account keys encrypted with your instance secret; a database dump alone can't impersonate anyone
 - **Your rules** — backups, retention, logging, access control follow what you already have
@@ -54,7 +54,7 @@ Posts live next to your files, calendar, and chat — on **your infrastructure**
 - **Team accounts** — an Aloha group posts as one identity; who wrote what stays internal (team + moderators only)
 - **Social-only accounts** — public, members, customers get Aloha Social only, nothing else
 - **Serious moderation** — silence, suspend, take down; all in audit log; review queue for spam & first posts; domain blocks clean up retroactively; delivery dashboard
-- **Built to scale** — 400,000 posts, home timeline loads in 50 ms; parallel delivery workers; per-account video quotas
+- **Performance is measured** — nightly synthetic benchmarks cover 100,000-post datasets on MySQL and PostgreSQL; results include test conditions and are not production latency guarantees
 
 ---
 
@@ -62,9 +62,9 @@ Posts live next to your files, calendar, and chat — on **your infrastructure**
 
 Being inside Aloha doesn't make it a walled garden:
 
-- **One account reaches everywhere** — Mastodon, Bluesky, Pixelfed, PeerTube, GoToSocial, Akkoma — follow, reply, quote, boost both ways
-- **Bluesky native** — every account is also a Bluesky account (`you.your.cloud`), no bridge, no app password
-- **Portable** — import from Mastodon, GoToSocial, Pixelfed, Instagram; export full archive; move account both ways
+- **One ActivityPub identity reaches the Fediverse** — exchange supported activity with Mastodon, Pixelfed, PeerTube, GoToSocial, Akkoma and other compatible servers; exact behavior depends on each peer
+- **Optional native AT Protocol hosting** — an administrator can enable Bluesky-compatible identities and services alongside ActivityPub; it requires public endpoints and external PLC, relay and AppView services
+- **Portable** — import supported follows and posts, export an archive and move accounts where both servers support migration; imported posts are copies
 - **Works everywhere** — the web app in any browser, plus the native apps for Android and every Apple platform
 
 ---

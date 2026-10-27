@@ -75,7 +75,7 @@ export const FEATURES: Feature[] = [
       },
     ],
     docs: [
-      { href: "/docs/feature-write", label: "Everything the composer carries" },
+      { href: "/docs/user-writing-a-post", label: "Everything the composer carries" },
       { href: "/docs/user-writing-a-post", label: "Writing a post, step by step" },
       { href: "/docs/start", label: "Getting started" },
     ],
@@ -97,12 +97,13 @@ export const FEATURES: Feature[] = [
     ],
     sections: [
       {
-        heading: "For you, built from what you read",
-        body: "The second feed in the switcher, made of the hashtags you actually read. It notices what you stay on, what you scroll past and what you like, boost, reply to, bookmark and open — then shows the last week's posts carrying them, the best matches first, no author allowed to fill it.",
+        heading: "For You, with reasons you can inspect",
+        body: "An optional ranked feed built from eligible posts already available to the server, followed accounts, content signals, freshness and feedback. It can also use bounded discovery and cached remote feeds when local candidates are sparse.",
         bullets: [
-          "Every post says why it is there, and Less like this in its menu takes it out.",
-          "Settings → For you draws the list as a cloud: drag, pin, remove and add tags, choose languages, pause or turn it off.",
-          "It never leaves this server and nobody else sees it. Administrators can switch it off or make it opt-in.",
+          "Recommendation explanations are limited to the For You context; ordinary timelines do not carry them.",
+          "Post menus offer reversible feedback such as hiding a post or seeing less of similar content.",
+          "Behavioral learning has a separate consent control; learned data is private to the account and is not federated.",
+          "Administrators control availability, and readers can pause or reset learning and export supported data.",
         ],
       },
       {
@@ -125,7 +126,7 @@ export const FEATURES: Feature[] = [
       },
       {
         heading: "Less of a scoreboard",
-        body: "Like, boost and follower counts are hidden by default; you can choose to show them. The timeline has no engagement-ranked feed. A separate For you feed uses followed hashtags, explains why a post appears and can be paused or turned off. Its interest data stays on the server.",
+        body: "Like, boost and follower counts are hidden by default; you can choose to show them. My Feed remains chronological. The optional For You feed ranks eligible candidates, explains recommendations and provides separate controls for feedback and consented learning.",
       },
       {
         heading: "Control what reaches you",
@@ -138,7 +139,7 @@ export const FEATURES: Feature[] = [
     ],
     docs: [
       { href: "/docs/for-you", label: "How the For You feed is built" },
-      { href: "/docs/user-reading-posts", label: "Reading: feeds, media and threads" },
+      { href: "/docs/user-reading", label: "Reading: feeds, media and threads" },
       { href: "/docs/user-keyboard-shortcuts", label: "Keyboard shortcuts" },
     ],
   },
@@ -182,8 +183,8 @@ export const FEATURES: Feature[] = [
       },
     ],
     docs: [
-      { href: "/docs/feature-converse", label: "Threads, edits and archives" },
-      { href: "/docs/user-reading-posts", label: "How a post reads" },
+      { href: "/docs/user-reading", label: "Threads and reading posts" },
+      { href: "/docs/user-writing-a-post", label: "Replying to a post" },
     ],
   },
   {
@@ -221,7 +222,7 @@ export const FEATURES: Feature[] = [
       },
     ],
     docs: [
-      { href: "/docs/feature-discover", label: "Directories, starter packs and trends" },
+      { href: "/docs/user-finding-and-following-people", label: "Directories, starter packs and trends" },
       { href: "/docs/user-finding-and-following-people", label: "Finding and following people" },
       { href: "/docs/atproto", label: "Bluesky, and what carries over" },
     ],
@@ -269,7 +270,7 @@ export const FEATURES: Feature[] = [
       },
     ],
     docs: [
-      { href: "/docs/user-your-profile-and-settings", label: "Managing your account" },
+      { href: "/docs/user-managing-your-account", label: "Managing your account" },
       { href: "/docs/user-writing-a-post", label: "Writing a post" },
       { href: "/docs/moving", label: "Moving an account" },
     ],
@@ -290,7 +291,7 @@ export const FEATURES: Feature[] = [
         body: "Aloha Social does not need a third-party GIF or map service for the features described here. Post locations are entered by people rather than looked up through a geocoder. Link previews are fetched by the server and are not federated.",
         bullets: [
           "Exif, XMP, IPTC and GPS metadata are removed from images before storage or delivery.",
-          "Your For you interests stay on the server and are not shown to other users.",
+          "Recommendation learning data is account-scoped, stays on the instance and is not federated.",
           "Private notes about accounts are visible only to the person who wrote them.",
           "The built-in emoji picker includes 881 Noto animated emoji without using Giphy or Tenor.",
         ],
@@ -370,7 +371,7 @@ export const FEATURES: Feature[] = [
     ],
     docs: [
       { href: "/docs/notify", label: "Notification policy, page by page" },
-      { href: "/docs/user-filtering-and-control", label: "Muting and filtering" },
+      { href: "/docs/user-filtering-out-words", label: "Muting and filtering" },
     ],
   },
   {
@@ -427,7 +428,7 @@ export const FEATURES: Feature[] = [
     ],
     docs: [
       { href: "/nextcloud", label: "Why it runs in your workspace" },
-      { href: "/docs/feature-safety-and-privacy-that-is-the-default", label: "Safety and privacy" },
+      { href: "/docs/user-filtering-out-words", label: "Safety and privacy" },
       { href: "/activitypub/native", label: "How the app talks to the fediverse" },
     ],
   },

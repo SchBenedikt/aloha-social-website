@@ -1,205 +1,1316 @@
-# User Guide
+# User guide
 
-Welcome to Aloha Social! This guide helps you get started and make the most of your account.
+**Reviewed against:** Aloha Social **0.26.279** on **2026-10-27**.
 
----
+How to use Aloha Social as a person with an account on this Nextcloud:
+getting onto the fediverse, following people, writing and reading posts, and
+looking after the account. It describes the web client that comes with the
+app; where something is only reachable through the Mastodon-compatible API or
+a Mastodon client, it says so.
 
-## 1. Getting an Account
+This guide describes the current web experience represented by this checkout.
+Menu and button names are the English strings of the web client. Federation,
+third-party client and deployment behavior can vary; see
+[Integrations.md](Integrations.md) and [Admin.md](Admin.md) for those limits.
 
-### If your organisation uses Aloha
-Your Aloha account **is** your Aloha Social account. Just open the app from your app menu — no new password, no new signup. Your handle (e.g. `@you@your-cloud.org`) is created automatically from your Aloha username.
+## Contents
 
-### If you're joining a public server
-Click "Create an account" on the login page or use an invitation link. Choose your handle carefully — **it cannot be changed later**. You'll get an address like `@username@server.org`.
-
-### First steps after logging in
-A short introduction shows you:
-1. Your address (with a copy button)
-2. People to follow
-3. How to bring follows from another server
-4. The composer to write your first post
-
-You can skip any step and reopen it later in **Settings → Help → Introduction**.
-
----
-
-## 2. Finding & Following People
-
-### Search
-Type a name, handle (e.g. `@user@example.org`), or topic in the search box. The app searches:
-- People on your server
-- People on servers your admin connected
-- Public directories across the fediverse
-
-### Discover
-The **Discover** page (in the sidebar) has tabs:
-- **People** — Suggestions, starting with people on your server
-- **Starter packs** — Curated groups to follow with one click
-- **Pictures** & **Videos** — Popular media right now
-- **Hashtags** — Trending topics
-
-### Your Fediverse Map
-**Your island and its neighbours** shows a visual map: your server in the center, connected servers as islands around it, joined by canoe routes. Larger islands = more connections.
-
-### Follow hashtags
-Click any hashtag (e.g. `#photography`) and hit **Follow** — public posts with that tag appear in your home feed.
-
-### Moving from another server?
-Export your follows from Mastodon (`following_accounts.csv`) or Pixelfed (`pixelfed-following.json`) and upload in **Settings → Migration**.
+- [Getting an account](#getting-an-account)
+- [Finding and following people](#finding-and-following-people)
+- [Writing a post](#writing-a-post)
+- [Reading](#reading)
+- [Filtering out words](#filtering-out-words)
+- [Managing your account](#managing-your-account)
+- [Keyboard shortcuts](#keyboard-shortcuts)
+- [What the web client does not do yet](#what-the-web-client-does-not-do-yet)
 
 ---
 
-## 3. Writing a Post
+## Getting an account
 
-### The Composer
-Click **New post** (top of sidebar) or press `n`. The composer also sits above most timelines.
+A Nextcloud account is the account: the first time you
+open **Aloha** from the app menu, a short screen asks whether you want a
+fediverse identity here, or would rather name the one you already have
+somewhere else. Nothing is created until you choose. You pick your handle on
+that screen — it starts out as a suggestion made from your Nextcloud user id,
+may use letters, digits and underscore with dot and dash inside, and **cannot
+be changed later** — and your address is `@handle@your-nextcloud-host`. Anyone
+on Mastodon, Pixelfed, PeerTube or any other server that speaks ActivityPub can
+follow it. Where the administrator has Bluesky switched on, the screen also
+shows the Bluesky address the account gets, `@handle.your-nextcloud-host`, as
+Bluesky writes it: small letters, digits and dashes only, so `Frank_K` becomes
+`frank-k`, and a handle starting with a digit gets `u-` in front. If another
+account here already has that Bluesky address, a number is added to it.
 
-**Your post can include:**
-- **Text** — up to 5,000 characters
-- **Photos** — drag in, or **Add from Files** to use files already in your workspace (no re-upload!)
-- **Videos** — up to 2 GB, converted automatically for other servers
-- **Audio** — MP3, AAC, OGG, FLAC, WAV
-- **Polls** — 2-4 options, multiple choice, 30 min to 7 days
-- **Alt text** — Describe images for accessibility (nudged if missing)
-- **Content warning** — Hide sensitive content behind a "Show more" button
-- **Location** — Add a place name (never sent to a map service)
-- **Scheduled posts** — Clock button → pick a time (min 5 min from now)
-- **Games** — Type `/dice`, `/flip`, or `/pick tea, coffee`
-- **Custom emoji** — Click the GIF button for 881 built-in animated emoji
-- **Cards** — Short text (≤120 chars, no attachments) as a styled card
+**Link an existing account** creates nothing here: it writes the address you
+already have elsewhere into your Nextcloud profile, so the people on this
+Nextcloud can find you. The screen then says it is done and offers **Back to
+Nextcloud**; opening Aloha Social again shows the same choice with a note of the
+account you linked, so you can still create an account here later.
 
-### Visibility (who receives your post)
-Click the **globe icon** next to Post:
-- **Public** — Everyone, appears in Local/Global timelines
-- **Unlisted** — Anyone with the link or who follows you, not in public timelines
-- **Followers only** — Only your followers, cannot be boosted/quoted
-- **Direct message** — Only people you @mention
+Your display name and avatar come from your Nextcloud account and are changed
+there. The rest of the profile — banner, bio, profile fields — is edited in
+Aloha Social (see [Managing your account](#managing-your-account)).
 
-### Replying & Quoting
-- **Reply** — Opens composer addressed to the author
-- **Quote** — Embeds the post in yours (public/unlisted posts only)
+On the first visit the app shows a four-step introduction: your address with a
+copy button (and your Bluesky address under it, where the account has one), people to follow, a way to bring the follows you already have from
+another server, and a button that puts you in the composer. Every step can be
+skipped; once closed it stays closed, and **Settings → Help → Introduction** shows it
+again.
 
-### Your Post Menu (⋯)
-- **Edit** — Updates sent to servers that received it
-- **Delete** — Removes everywhere, cannot be undone
-- **Pin to profile** — Up to 5 public/unlisted posts
-- **Archive** — Hides from your profile/timelines here, keeps it on other servers
-- **Delivery status** — Shows which servers received it
+### Signing in from an app for the first time
 
----
+You can start with an app on your phone or computer instead of the web page:
+a Mastodon app, or a Bluesky app where the administrator has Bluesky switched
+on. The app opens a sign-in page in your browser, and after you log in to
+Nextcloud that page first asks you to choose your username, with the same
+rules and the same address preview as the screen above. **Create account**
+makes your account, and the page goes straight on to asking whether to let
+the app in. **Cancel** sends you back to the app, and nothing is created.
+Linking an account you have somewhere else is not offered there: the app
+needs an account on this server to sign in to.
 
-## 4. Reading Posts
+An app that signs in with a Nextcloud app password instead is told, until you
+have an account here, that your account is not set up yet, with the address
+of the setup page: open it in a browser, choose your username, and try the
+app again.
 
-### Your Feeds (switch at top of sidebar)
-- **My Feed** — Posts from people & hashtags you follow
-- **Local** — All public posts on your server
-- **Global** — All public posts your server knows
-- **For You** — Personalized feed based on what you read (explains why each post appears)
-- **Photos** / **Videos** — Filtered views with the same feed switcher
+### Registering without a Nextcloud account
 
-### Read Marker
-A thin line in **My Feed** shows where you last read (*Up to date since 14:02*). Posts below are dimmed. Syncs with Mastodon apps.
+Where the administrators allow it, the login page has a **Create an account**
+button, and an invitation link from somebody here leads to the same form. The
+username you choose is your handle, so the same rules apply, and your address
+is `@username@your-nextcloud-host` from the start; where Bluesky is switched
+on, the form shows the Bluesky address it gets as well. Depending on the server you
+confirm your email address first, and an administrator may look at the
+registration before it becomes an account; you are emailed either way.
 
-### Shorts
-Full-screen vertical videos. Swipe to watch. Two types:
-- **24-hour Shorts** — Seen by followers only, disappear after a day
-- **Kept Shorts** — Stay on profile like regular posts
+Such an account is for Aloha Social only. You log in on the normal login page, with
+two-factor authentication if you set it up or the server requires it, and
+land in Aloha Social. Your personal settings for your details, password, security,
+appearance and notifications are there; Files, Talk and the other apps are
+not, and Nextcloud's own desktop and mobile clients are refused. Mastodon apps
+can. **Settings → Apps and account → Your storage** shows how much of the space the server gives
+each such account your pictures and videos take up. Deleting your Aloha Social
+account deletes the whole account.
 
----
+Where the administrators let everybody invite people, **Settings → Apps and account → Invite
+people** makes an invitation link: it works once and for a week.
 
-## 5. Filtering & Control
+## Finding and following people
 
-### Filtered Words
-**Settings → Filters** — Add words/phrases to hide or fold matching posts. Set expiry if you want.
+- **Search.** The search box at the top of the sidebar looks through the
+  people, hashtags and posts this server knows. Somebody this server has never
+  met is found by their full handle, `@someone@example.org` — or, where this
+  server is connected to Bluesky, `@someone.example.com` — or a profile or post
+  link: press **Enter**, or **Look up** under the heading, and their own server
+  is asked. While you type, only this server is searched. When nobody is
+  there, the page says so.
+- **Discover** (in the sidebar) has five tabs: **People** (suggestions, with
+  the people who share your Nextcloud and have said where they are on the
+  fediverse listed first under *On your Nextcloud*), **Starter packs**,
+  **Pictures** and **Videos** being looked at, and **Hashtags** that are
+  trending, ranked over a window you pick.
+- **Your island and its neighbours** opens the People tab: a map of the
+  fediverse as islands. Your own server is in the middle, with your picture on
+  it. Around it is an island for each server you follow people on (up to
+  eight, larger where you follow more people), each joined to yours by a canoe
+  route, and the sentence under the map says how many there are.
+- **Find people across the fediverse** comes next on the People tab. Type a
+  name, a handle or a subject and this server asks several directories at once —
+  its own first, then the ones its administrator configured — and offers a
+  **Follow** on every row. Pick one directory with the buttons under the box to
+  ask only that one. Servers that did not answer are named under the results, so
+  a short list is never mistaken for an empty fediverse. Somebody this server
+  already knows opens here; a stranger opens on their own server. Somebody who
+  is in none of these directories is found by their full handle in the search
+  at the top of the sidebar.
+- **Look at who they follow**, on the People tab, suggests the people the
+  people you follow follow. Once it has answered, **Constellation** shows the
+  same suggestions as a small sky: you in the middle, the people you follow who
+  led somewhere around you, and the suggestions at the edge, tied to whoever
+  they came through. It settles by itself; drag a star anywhere and it stays
+  there, and press one to follow. **List** puts it back. Every star is a
+  button that says who it is and why, so a keyboard gets there too.
+- **Starter packs** are named handfuls of accounts. Open one to see who is in
+  it: everybody you do not follow yet has a **Follow** of their own, and one
+  button follows them all, counting as it goes, asking first when that is more
+  than ten people, and saying how many could not be followed. Once you follow
+  everybody it says so. Two ship with the app — the projects behind the
+  network, and photography — and an administrator can curate more. The
+  collections curators publish on Mastodon and the starter packs Bluesky
+  suggests are starter packs here too, and open the same way: they say who
+  curated them, link to where they live, and are read again every day. An
+  opened pack shows the people this server already knows; anybody it has not
+  met yet is looked up in the background and is there the next time you open
+  the pack, and following everybody follows them either way. Accounts your
+  administrator has blocked or limited are never offered.
+- **Follow** on a profile, in search results or on a Discover card sends a
+  follow request. On an open account it is accepted at once; on a locked
+  account the button reads **Requested** until the owner answers. **Unfollow**
+  asks you to confirm, because on a locked account you would have to ask
+  again.
+- **Followed hashtags.** A hashtag timeline (`#tag` in a post, or a trending
+  tag) has a follow button; following a tag puts the *public* posts carrying
+  it into your home feed. It is not a relationship with anybody, and the tags
+  you follow are listed above any hashtag timeline.
+- **Coming from another server?** Every Mastodon-like server exports the
+  people you follow as `following_accounts.csv`, and Pixelfed as
+  `pixelfed-following.json`. Upload it in the first-run
+  introduction or on the **Migration** page and each account is followed
+  again from here.
 
-### Mute a Conversation
-Click **Mute** on any post in a thread — stops all notifications for that thread.
+## Writing a post
 
-### Hide a Server
-**Settings → Domain blocks** — Block everything from a specific server, just for you.
+**New post** at the top of the sidebar, the compact post field on a feed or
+profile, or `n` opens the shared composer. The compact field sends a simple
+text post directly; expand it to open the full popup for attachments, polls,
+events, warnings, scheduling and other options. Replies use the same compact
+entry and popup with the reply context. An empty composer greets you by first
+name: "Aloha, Frank. What’s new?" A post may be up to
+5,000 characters, content warning included. What is in the composer is kept
+as a draft across a failed post, a reload or leaving the page: the words, the
+content warning, the audience, the language, who may reply, the team account
+you write as, the poll, the time it is scheduled for, the place, a video's
+title and a card. Attachments are kept too, with their descriptions, focal
+points and filters. When the draft comes back the server is asked about each
+attachment again; one it has cleared away in the meantime is taken off, and a
+short message says so. An attachment that is still uploading cannot be kept
+yet, so leaving the page while one is on its way asks you first. A draft is
+kept for a week, for your account only. A reply keeps its own draft, under the
+post it answers, and so does a quote, so starting one does not take the place
+of a post you were still writing.
+**Ctrl+Enter** (**⌘+Enter** on a Mac) sends from the full composer. Closing the
+popup preserves the draft; unsaved edits and unfinished uploads ask before
+discarding. **Escape** closes the popup subject to that protection.
 
-### Block & Mute Users
-- **Block** — Severs relationship both ways, hides them everywhere (they're not told)
-- **Mute** — Hides from your timelines & optionally notifications (1 hour to forever)
+- **Visibility** is chosen with the globe menu next to the post button. The
+  choice decides who receives the post on the fediverse, not only who sees it
+  here:
+  - **Public** — visible to everyone; appears in the Local and Global
+    timelines of every server it reaches, and on your profile to anyone.
+  - **Unlisted** — visible to everyone who has the link or follows you, but
+    kept out of public timelines and discovery features.
+  - **Followers** — delivered to your followers only. It cannot be boosted,
+    pinned or quoted, because those would carry it to people it was not
+    written for.
+  - **Direct message** — delivered to the people mentioned in it and nobody
+    else. The button will not send a direct post without at least one
+    `@mention`.
 
-### Who May Reach You
-**Settings → Notifications** — Five choices: Allow or Hold for review:
-1. People you don't follow
-2. People who don't follow you
-3. Accounts under 30 days old
-4. Private mentions you didn't ask for
-5. Accounts your server limited
+  Where your account is on Bluesky, Unlisted, Followers and Direct message
+  say *Not on Bluesky* in the menu: only a public post goes there, so people
+  who follow you from Bluesky do not see the others.
+- **Mentions and hashtags.** Type `@` and the first letters of a name to pick
+  an account, or `#` for a hashtag; both are also recognised when typed in
+  full. A mention makes that person a recipient of the post; a hashtag makes
+  the post part of that tag's timeline everywhere it is delivered.
+- **Content warning.** The speech-bubble button adds a warning field. Readers
+  see the warning and a **Show more** button; the body stays out of the page
+  until they ask. Attachments on a post with a warning are treated as
+  sensitive. Warnings written on other servers are honoured here the same way.
+- **Attachments.** Up to ten per post: pictures (JPEG, PNG, GIF, WebP, AVIF,
+  and HEIC/HEIF from a phone, converted on the way in), video (MP4, WebM,
+  QuickTime) and audio (MP3, AAC, OGG/Opus, WAV, FLAC). A video other
+  servers cannot play as it is gets converted before the post leaves: it is
+  on this server straight away, and your own copy says *Converting video —
+  reaches other servers when done* until it has. Drag them in, use
+  **Add attachment**, or **Add from Files** to attach something already in
+  your Nextcloud without uploading it again — the Files app's own menu also
+  has **Share to Aloha Social** for the same thing. Attachments show under the
+  box you write in. Every picture has its Exif
+  metadata (including the location a phone writes) removed before it is
+  stored or sent anywhere. A picture can be given one of eight mild filters,
+  previewed live and baked into the copy that is posted when you press Post,
+  in every browser, Safari and iPhone included. A photo larger than 4096 pixels
+  on its longest side, or larger than the size your server takes, is made
+  smaller before it is uploaded. Animated GIFs and WebPs are never changed, so
+  one that is too large is refused before it is sent. A video has its own,
+  larger ceiling, and one over it is refused before it is sent too — the
+  message names the size your server takes. When the server itself refuses an
+  upload, its reason is what you are shown.
+- **The GIF button** opens a picker with 881 animated emoji in it, searchable by
+  name — "party", "sad", "hedgehog" — plus whatever your administrator has added
+  for this instance, which comes first. Nothing you type goes anywhere but your
+  own Nextcloud, and neither does your browser: your server keeps its own copy of
+  every picture it has been asked for. Picking one attaches it to the post you are
+  writing, exactly as though you had uploaded it.
+- **Alt text.** Each attachment has a **Describe this for people who cannot
+  see it** field. Posting with an undescribed attachment shows a nudge, never
+  a refusal.
+- **Polls.** **Add poll** gives two to four options, a **Multiple choice**
+  switch and a duration from 30 minutes to 7 days. Readers on any server
+  vote; the totals come back and are shown under the poll, with when it
+  closes or that it has.
+- **Emoji.** The smiley opens a Unicode emoji picker. A custom emoji this
+  instance publishes is written by its shortcode, `:name:`, and renders here
+  and on other servers.
+- **Send it later.** The clock button turns **Post** into **Schedule**: pick a
+  time at least five minutes from now and the post waits on the server until
+  then. What is waiting is listed under **Settings → Your posts → Scheduled posts**, where
+  one can be cancelled or moved: the clock beside an entry opens the same
+  picker at the time it has, and **Save** sends the new one. The five-minute
+  rule applies again, and so does the limit of 25 posts a day; a time the
+  server refuses leaves the post where it was, and the reason is shown.
+  What a waiting post says cannot be changed there.
+- **A card.** While a post is short (up to 120 characters) and has nothing
+  attached, the card button draws it big on one of six backgrounds. It goes
+  out as a picture of the words, described with those words, and the words
+  stay in the post as well.
+- **Games.** `/dice` rolls a six-sided die (`/dice 20` a twenty-sided one),
+  `/flip` tosses a coin, and `/pick tea, coffee` picks one of the options on
+  the rest of the line. A line under the box says they will be played; when
+  you post, the dice tumble for a moment, and what is sent is the result as
+  plain text, so everybody sees the same one.
+- **Replying and quoting.** **Reply** under a post opens the composer
+  addressed to its author; **Quote** in a post's menu embeds it in yours. Only
+  public and unlisted posts held by this server can be quoted, and the quoted
+  author receives the post that carries their words.
 
-Held notifications wait silently in **Activities** — no bell, no push, no email.
+Your own posts carry more in their `…` menu: **Edit** (saved and sent to the
+servers that have the post as an update), **Delete** (removed here, and a
+deletion is sent to every server that received it — this cannot be undone),
+**Pin to profile** (up to five public or unlisted posts), and **Delivery
+status**, which says which servers received the post, which are still being
+tried and which gave up.
 
-### AI Content
-**Settings → One switch** hides all posts that declare themselves AI-generated.
+### Putting a post away
 
----
+A post you no longer want on your profile does not have to be deleted. **Archive**,
+in the post's own `…` menu, takes it off your profile and out of every timeline,
+search and hashtag page on this server, and leaves it exactly where it is
+otherwise: nobody is told, nothing is sent anywhere, and you can put it back at
+any time from **Settings → Your posts → Archived posts**.
 
-## 6. Your Profile & Settings
+What archiving is not is a way to take a post back from the fediverse. Other
+servers that received it still have it, and somebody who kept the link still
+opens it — that is what **Delete** is for, and deleting cannot be undone.
 
-### Edit Your Profile
-**Settings → Profile** — Display name, bio, avatar, banner, profile fields (links, pronouns, etc.)
+### If your post is kept back
 
-### Your Posts
-- **Settings → Your posts** — See all your posts, scheduled posts, archived posts, waiting-for-review posts
+Your server may show some posts to a moderator before they go out. There are
+two reasons it does: the **first post** of an account that has not published
+anything here yet, and a post that tripped one of the server's spam rules — a
+lot of links, or a lot of mentions from an account nobody follows yet. Your
+administrator can turn either off, and neither applies to a **direct
+message**: nobody reads those but the people you wrote to. If you are an
+administrator of this server, nothing of yours is ever held — you are the
+person the queue is waiting for.
 
-### Notifications
-- **Quiet hours** — Set when notifications are delivered
-- **Digest** — Daily summary instead of instant alerts
-- **Per-conversation** — Mute notifications for specific threads
+When it happens the app says so at once, and your writing is kept — there is
+no need to write it again, and writing it again only finds the copy already
+waiting. Nobody but you and the moderators can see it in the meantime: it is
+in no timeline, not even your own. **Settings → Your posts → Waiting for review** is
+where yours are, and you can take one back from there, which deletes it and
+tells nobody.
 
-### Appearance
-- **Dark/Light/System** theme
-- **Reduced motion** respected
-- **Sound & haptics** optional
+If it is approved, it goes out as an ordinary post, dated the moment it was
+approved rather than when you wrote it. If it is refused, it is deleted and
+you are told.
 
-### Apps & Sessions
-- **Settings → Apps and account** — See active sessions, revoke access
-- **Mastodon apps** — Connect via **Settings → Apps and account → Your apps**
+### Replies in Files
 
----
+A picture or video you post from Files — with **Share to Aloha Social** or
+**Add from Files** — keeps a link to its file. Public and unlisted replies to
+the post then appear in that file's **Comments** tab in Files, each one naming
+who wrote it, so the conversation sits next to the picture it is about. Replies
+from people or servers you blocked or muted are left out, and a reply with a
+content warning shows only the warning there.
 
-## 7. Keyboard Shortcuts
+A comment **you** write on that file is posted as your reply, to everyone who
+can see the post. Comments from anybody else who can open the file stay on this
+server, as they always did. Editing or deleting your comment edits or deletes
+the reply.
 
-| Shortcut | Action |
-|----------|--------|
-| `n` | New post |
-| `/` | Search |
-| `g` then `h` | Go to My Feed |
-| `g` then `l` | Go to Local |
-| `g` then `g` | Go to Global |
-| `g` then `n` | Go to Notifications |
-| `g` then `p` | Go to Profile |
-| `g` then `s` | Go to Settings |
-| `j` / `k` | Next / Previous post |
-| `Enter` | Open post |
-| `b` | Boost |
-| `f` | Favourite |
-| `r` | Reply |
-| `q` | Quote |
-| `m` | Mute conversation |
-| `?` | Show all shortcuts |
+This is on unless you turn it off: **Settings → Your posts → Replies in Files**. Followers-only
+posts and direct messages are never linked.
 
----
+### Where it was taken
 
-## 8. What the Web Client Doesn't Do (Yet)
+The pin in the composer's toolbar says where a post was taken. It offers the
+places people on this server have already posted from as you type; a name
+nobody here has used yet becomes a place the moment your post goes out, with
+a country if you add one. **Nothing is looked up on a map service** — the app
+never sends your location anywhere to work out what it is, which is the same
+promise it keeps by stripping the camera's location from your pictures. The
+place shows as a small marker under the post, and tapping it opens the page
+of everything public that was taken there. Release the pin and the post has
+no place.
 
-- No multi-account switching
-- No custom emoji management (admin only)
-- No advanced moderation tools (use Mastodon app or web)
-- Some Mastodon 4.3+ features not yet implemented
+## Following events from Gancio
 
----
+Gancio publishes events over ActivityPub from one instance-wide account. Search
+for and follow that account from Social: it is usually `@events@gancio.example`
+on Gancio 1.24 and newer, or `@relay@gancio.example` on older instances. The
+Gancio administrator can customize this name, so use the federation address
+shown on that Gancio site's follow link when it differs. The Gancio instance
+must have federation enabled. Once the follow is accepted, new public events
+that Gancio delivers appear in Social like other followed ActivityPub posts,
+with a card for the event title, time and venue. Following alone does not
+backfill the instance's existing event catalogue. To look for older events,
+open the followed Gancio account's profile in Social; Social reads its public
+ActivityPub outbox in bounded pages, including Gancio `Event` objects, as you
+open and page through that profile. This uses ActivityPub rather than Gancio's
+instance-specific API, and only imports entries the Gancio outbox exposes.
 
-## Need Help?
+On a signed-in Social timeline, choose **Add to Nextcloud Calendar** on an
+event card to import it directly into your first writable Nextcloud calendar.
+The event keeps its title, start and end time, venue and source link. Social
+detects an event that is already in a calendar and avoids adding it twice. If
+the Calendar app is unavailable or no writable calendar exists, the card offers
+an `.ics` download instead. Public status pages offer the `.ics` download;
+direct import requires a signed-in Nextcloud session and a writable calendar.
+The calendar entry is a copy, not a live subscription. If Gancio later changes
+an event, Social updates the event in its timeline when it receives the
+ActivityPub update or reads the changed event from the followed account's
+outbox. Social also applies a Gancio `Delete` found in that outbox to the
+timeline copy. An entry already imported into Calendar stays as it was, even
+if the event is changed or deleted. To import changed details, delete the old
+entry in Calendar first and then import the event again from Social.
 
-- **Settings → Help → Introduction** — Replay the welcome tour
-- **Settings → Help → Keyboard shortcuts** — Full list
-- **Report a problem** — Post menu (⋯) → Report
-- **Ask your admin** — For server-specific questions
+## Reading
 
----
+The browser tab names the page you are on — the feed, the account, the author
+of the post, *Settings* — in front of the app's name, so the history and a
+screen reader can tell the pages apart. A link to a page that does not exist
+says *Page not found* and offers the way back to your feed.
 
-*Welcome to a calmer, healthier social network!*
+The sidebar is the map:
+
+- **My Feed**, **Local**, **Global** — a switcher above the posts. My Feed is
+  what the people and hashtags you follow post; Local is every public post
+  written on this Nextcloud; Global is every public post this server has
+  received. **Photos** and **Videos** carry the same switcher over posts that
+  are pictures, or videos — including videos from PeerTube channels anyone
+  here follows — with **For you** in it as well (see below). A thin line
+  across My Feed — *Up to date since 14:02* — marks where you had got to last
+  time, and the posts below it are drawn a shade quieter. It is the position
+  Mastodon apps keep too: read your feed on your phone and the line here has
+  moved, and the other way round.
+- **Videos** looks like a video site's front page: large cards, four to a
+  row on a wide screen, two on a tablet and one on a phone. Each card shows the
+  video's picture with its running time (or **Live**), the channel's face, the
+  title, the channel, and how many views it has and how long ago it was
+  published — the views of a video posted here are counted here, those of a
+  video from elsewhere only where its own site counts them, and none at all
+  while you hide the numbers (see **Likes and followers** below). Rest the
+  mouse on a card and after a moment it plays a silent preview; it does not on
+  a touch screen, when your device asks for less motion, or when it asks to
+  save data. Press a card to watch the video. Chips above the cards narrow
+  what you see: **All**, **Live** when anything is live, the categories of the
+  videos shown, and **Recently uploaded** (the last seven days). Between the
+  rows are shelves: **Shorts** (press one to watch it in Shorts), **From
+  channels you follow** when you are looking at Local, Global or For you, and
+  **Continue watching** once there is something you started. **Upload a
+  video** next to the chips picks the file first and then opens the post
+  around it, with the video's title and category. The arrow keys move from
+  card to card.
+- **Watching a video.** A video's page plays it in a player of its own. It
+  starts where you stopped last time, unless you had nearly finished it, and
+  remembers where you are as you watch, so **Continue watching** offers it
+  back. Under the picture are play and pause, the sound and its volume, the
+  time, and on the right **Subtitles** (when the video has them, in your own
+  language first), the **speed** (half to double; this browser remembers
+  your choice), **Quality** (Auto, or one size, when the video comes in
+  several), **Play in a floating window** where your browser can, and **Full
+  screen**. The keys are the ones video sites use — see **Keyboard
+  shortcuts** below. A view is counted once you have watched five seconds of
+  a video posted here, once a day per person; nothing about who watched is
+  kept past the day.
+- **The small player.** Leave a video's page while it plays — open the
+  timeline, a profile, anything in the app — and it goes on in a small
+  player in the bottom corner, with play and pause, **Back to the video** and
+  **Close the player**. Back to the video goes on from the same moment on its
+  page; closing it stops the video. It only ever holds a video you were
+  watching: nothing starts in it on its own.
+- **Shorts** — short videos watched one at a time, full height, each
+  playing as it comes up and pausing as you scroll past. A short is kept on
+  its poster's profile like any other post, or lasts **24 hours** and is seen
+  only by its poster's followers (see **Shorts that last 24 hours** below).
+  The 24-hour shorts of the people you follow come first, grouped by person
+  and the ones you have not seen before the rest, each marked **24h** with the
+  hours it has left; then come the kept ones. **What counts as a short:** a
+  post with a single video of **at most 3 minutes** that is **upright or
+  square** — a landscape video, a longer one, or a post with several videos
+  stays on the Videos page instead. A video from another server counts once
+  this server knows how long it is and how it is shaped, which it learns
+  from the other server or by measuring the file when it keeps a copy. Where
+  there are no shorts yet, Shorts says so.
+  The switch in the top corner picks whose videos (**My Feed**, **For you**,
+  **Local** or **Global**); it opens on For you once your reading has taught
+  it something, and on My Feed before that. It plays
+  with sound; opened from a link, the browser may hold the sound back until
+  you tap the speaker, which a "Tap for sound" hint points at. Once you have
+  tapped it, the videos after it keep their sound as you scroll, and if you
+  mute one they stay muted until you close the tab. Tap to pause,
+  arrow keys to move, space to pause, `m` for sound, `l` to like. The **+**
+  opens **New short**, which first asks how long it should last: **Keep it on
+  my profile**, or **Only for 24 hours, for my followers**. A kept short is a
+  video; a 24-hour one can also be a picture or a few words on a card.
+  - **Upload a video**, drop one on the dialog, or **Record** one with your
+    camera. Recording counts down 3-2-1 first, can switch between the front
+    and back camera, and stops by itself at the limit you pick (15 s, 60 s or
+    3 min). Browsers only lend a page the camera over https, so on a server
+    reached by plain http the Record button says so instead.
+  - **Trim** it by dragging the two handles on the strip under the preview,
+    or focus a handle and use the arrow keys (Shift for bigger steps, Home and
+    End for the ends). The preview loops over just the part you kept.
+  - **Cover**: slide to the frame people see before the short plays.
+  - Write a **caption**; the popular hashtags underneath add themselves with
+    one press. For a kept short, choose **Everyone**, **Quiet public** or
+    **Followers**, and switch on **Sensitive content** to hide it until
+    somebody chooses to watch; a 24-hour short always goes to your followers.
+  - **Post** shows how far it has got: cutting (as long as the trimmed short
+    lasts, since the browser plays it through once), uploading, posting.
+    Closing the dialog with a video in it asks before throwing it away.
+- **Activities** — your notifications: mentions, favourites, boosts, new
+  followers and follow requests, poll results, edits of posts you boosted.
+  It is in the sidebar, between Shorts and Direct messages. The badge
+  beside it counts what arrived since you last looked, plus the people
+  [waiting for your review](#who-may-reach-you-and-requests); the same
+  events reach the Nextcloud bell and its mail digest; a follow request can be
+  accepted or declined from the bell itself. While anybody is waiting, the
+  first line of the page says so — *3 people are waiting — Review* — and
+  opens the list of them in place. The page says how many new activities there are at
+  the top — *3 new activities*, with a **Mark all as read** button that clears
+  the badge whichever filter you are looking at — and marks the activities
+  themselves: each new one carries a **New** tag beside its age and a bar
+  down its edge, and a **New** heading separates them from **Earlier** where
+  the page holds both. Each activity is a row like a post in My Feed: who did
+  what and how long ago (*3h*, *2w*), with the post or account it is about
+  underneath. A private message is not laid out there beside the public
+  mentions: its row says *sent you a private message* with a lock, shows its
+  first words (or its content warning), and **Open the conversation** takes
+  you to Direct messages.
+  Otherwise the page marks itself read after a couple of seconds in front of
+  you, and that position is the one every other Fediverse client shares: a
+  badge cleared on your phone is cleared here too.
+- **Direct messages** — private conversations, one chat per person: every
+  message between you and the same people is in that one chat, however it
+  was started (other apps may list such messages as separate
+  conversations). **New
+  message** first offers people from your existing chats and the accounts you
+  follow. Search by name, `@handle` or profile link to find somebody else:
+  the people you know — accounts you follow and people from your chats — are
+  listed first under **People you know**, and every other account the search
+  finds follows under **Other accounts**. A full handle or profile link that
+  is not known here yet is offered with **Look up** (or press **Enter**), which
+  asks that person's own server. A search failure is shown separately
+  from a genuine empty result. Selecting somebody with an
+  existing conversation opens that chat instead of creating another one.
+  The new chat uses the same person header and message field as an existing
+  conversation. Messages are sent privately to that person, so there is no
+  public, follower-only or other audience to choose and no repeated mention to
+  type. The inbox lists conversations the way the feed lists posts — the
+  person's face and name, a line of the last message and how long ago it was
+  (*3h*, *2w*) — with **All** and **Unread** in the same switcher as My Feed
+  and Local. A search box joins them once there are more than a handful of
+  conversations, and **Remove conversation** is in a row's **…** menu, which
+  appears when you point at the row. Opening a chat marks it read, and the
+  sidebar badge comes down with it; new messages appear in the inbox and the
+  open chat on their own. Your
+  messages are drawn in your own colour, the other person's in grey; a run of
+  messages carries its time under the last one, and you see the others' by
+  pointing at them. The message field is the feed composer's rounded line with
+  your face beside it, and the send button appears once you have written
+  something; **Ctrl+Enter** (**⌘+Enter** on a Mac) sends, Enter starts a new
+  line. A conversation keeps to the feed's reading width. On a phone, the
+  conversation list and chat open as separate screens, with a back arrow.
+- **Explore** — one collapsible entry holding everything there is to look at
+  besides your own feed: the hashtags you follow, your **lists**, and the tags
+  this server is busy with right now, in that order. Each list is a timeline of
+  its own; a Nextcloud group you belong to (up to 500 members) is a list too
+  when your administrator has chosen that group for it — none are, until they
+  do — kept in step with the group, and your own are made in
+  **Settings → Reading → Lists**. Explore shows as much as the sidebar has room for and
+  no more — make the window taller and more appears. What you follow is never
+  pushed out by what happens to be trending: the trending tags take only the
+  room the rest leave, and a tag you already follow is not offered twice.
+- **Liked posts** and **Bookmarks** — what you favourited, and what you saved
+  with **Bookmark** in a post's menu. Bookmarks are private and never leave
+  this server.
+- **Statistics** — what you have posted here and what came back: likes,
+  boosts, replies and quotes per post, your best posts, when your posts do
+  best, which of your hashtags work, which servers your followers and the
+  people who answer you are on, and where else your posts went out.
+
+Open a post (its timestamp, `o` or `Enter`) for its own page: the thread, a
+reply box, who boosted and favourited it, and the details a card leaves out —
+exact time, audience, language, whether it was edited, and a link to the
+original on its home server. **Like**, **Boost** and **Reply** sit under every
+post; a post's `…` menu adds **Bookmark**, **Open on original instance** and
+**Report**.
+
+A post that links somewhere gets a preview card, read by this server rather
+than by your browser. With the `notify_push` app installed, new posts arrive
+live; without it the page checks every 30 seconds.
+
+### For you
+
+**For You** is an optional ranked feed beside My Feed and the local and global
+timelines. The administrator can enable it. It combines relevant posts already
+known to this server with bounded discovery; available candidates can include
+ActivityPub and Bluesky posts. Photos, Videos and Shorts can use the same ranking
+with the relevant media filter. A sparse candidate pool may include fallback
+discovery, so this feed is not a complete or guaranteed index of either network.
+
+Post menus offer feedback such as hiding a post, seeing more from an author, or
+seeing less like similar content. These actions influence recommendations; they
+do not follow, mute or block anyone. The feed may show a short explanation for a
+post while it is in For You. The explanation is tied to that feed and does not
+appear in ordinary timelines.
+
+Behavioral learning is a separate setting and is not required for the feed to
+work. If enabled, supported reading and video actions can refine future feed
+sessions. Learned data is private to the account and is not federated. The
+current interface does not provide manual topic selection or topic editing.
+For details about signals, consent, data export and operational limits, see
+[For-You.md](For-You.md).
+
+### Announcements from your administrators
+
+When the administrators of this Nextcloud post a notice — a maintenance
+window, a move, a new rule — it appears at the top of the timeline, above the
+composer, on every page except a single post's own. It is there because you
+have not read it yet.
+
+**Got it** marks it read. It does not disappear under you: it stays where it
+was, greyed, with a **Read** mark, so you can finish the sentence you were on.
+It is gone the next time you open the app, and gone on your phone too — being
+read is remembered by the server for your account, not by this browser.
+
+Announcements you have already read are not shown. While the card is up —
+that is, while something in it is still unread — a line at its foot, **Show 2
+announcements you have read**, brings them back; once everything is read the
+card is gone entirely and so are they. An announcement with an end says when
+it runs out ("Until 21 September"), and one that has not started yet, or has
+run out, is never shown at all.
+
+The emoji buttons under an announcement are the one thing you can say back to
+one. Press one to add yours or to take it back, or press the smiley with a
+plus on it to choose another; you may put up to eight different emoji on the
+same announcement.
+
+Administrators post and remove announcements in **Administration → Aloha Social**.
+
+### How a post reads
+
+A feed is a column of posts separated by thin lines, not a stack of boxes,
+narrow enough that a line of text is easy to follow back to its start (the
+photo and video grids keep the wider page). Each post has its author's face
+beside their name, how old it is in a word — *now*, *5m*, *3h*, *2d*, *2w*,
+then the date — and the full date when you point at it. A post shows who can
+see it only when that is not everybody: a mark for unlisted, followers-only or
+direct posts, nothing for public ones.
+
+The reply, boost and like buttons stay out of sight until you point at a post
+or reach it with the keyboard, so a page of posts is a page of words; a like
+or boost you have given shows as a small heart or arrows beside the post's age.
+With the numbers turned on, a post that has replies, boosts or likes keeps
+them in a row under its words, each beside a faint icon, and your own like or
+boost is shown there instead. On a phone they are always there. The
+three are on every post in the same place; one that cannot be used — a boost
+of a followers-only post, a reply the author does not take — is greyed out and
+says why. To react with an emoji, hold the heart (or right-click it), or choose
+**Add a reaction** in the post's menu; the reactions people left are shown under
+the post.
+
+### Shorts that last 24 hours
+
+A short you post for **24 hours** is one picture, video or card of words that
+the people who follow you can see for a day, and then it is gone. It is not on
+your profile and nobody else can open it.
+
+Above your own feed is the **Shorts** bar. Your own tile, **Your shorts**,
+comes first, with a **+** on it to make a new one. After it come the people
+you follow who have a 24-hour short up, the ones holding something you have
+not seen first, with a coloured ring around their face; the ring goes grey
+once you have seen them all. The last tile, **All shorts**, opens the Shorts
+stack. The bar is there only while somebody you follow has a 24-hour
+short up, and takes no room at all while nobody does; **Shorts** in the
+sidebar is always there.
+
+Tap a face and that person's shorts play one after another in the same
+player as every other short: a picture or a card for the seconds its poster
+gave it, a video for as long as it runs. Hold the picture to pause it, tap
+the left or right of it to go back or forward, and use the arrows at the
+sides to move to the next person. A video plays with its sound on; the
+speaker at the top turns it off (or `m`), and when the browser holds the
+sound back a "Tap for sound" hint points at the speaker.
+
+To post one, press the camera at the end of the box you write posts in
+(**New short**) — it opens on 24 hours — or the **+** (on your tile or in the
+Shorts stack) and choose
+**Only for 24 hours, for my followers**, and either record or upload a video
+as for any short, or choose a picture or words. A picture goes on to an
+editor: add a caption if you like, and say how many seconds it should show
+for. On a picture you can add
+**stickers** — eight emoji, or a line of your own words — drag them where you
+want them, move a selected one with the arrow keys and remove it with Delete;
+they are drawn into the picture before it goes up. Or write a few words, pick
+one of six backgrounds (the first is your own colour), and the short is a
+card with those words on it, sent with the words as its description so
+somebody who cannot see it is told what it says. Either way the picture goes
+up the way every attachment does — stripped of the camera's metadata — and
+your short is up for a day, to your followers and nobody else. While it is
+up, **Who has seen it** in the player lists the people who watched it, and
+**Delete this short** takes it down early.
+
+Somebody watching a 24-hour short can answer it: a row of emoji under it for
+a reaction, and a box beside them for a line of text. Either one goes to the
+person who posted it and to nobody else — a reply to a 24-hour short is a
+message, not a comment on a page — and only somebody who follows them can
+send one, which is the same condition as being able to see the short at all.
+Five answers to one short is the limit, because without one what it hands
+somebody is a private channel to its poster that the poster cannot close.
+What was said shows under your own short while it is up, and goes with it
+when it expires: a reply is not a post, and nothing keeps it after the thing
+it was about has gone.
+
+24-hour shorts travel. Yours go to the people who follow you on Pixelfed,
+and Pixelfed shows them in its stories bar. Pixelfed's own come the other way
+only to servers it recognises as Pixelfed, and that is Pixelfed's decision
+rather than this server's. Taking yours down early takes it down there too.
+What another server does with its copy after the day is up is that server's
+business, which is why one that arrives here is kept for a day at the most,
+whatever the sender says, and one that has already expired is not kept at
+all. Watching one from another server sends a receipt to its author so that
+their own server can count it, and reactions and replies travel the same way
+in both directions, in the shape Pixelfed's own inbox reads.
+
+### Collections
+
+A profile has a **Collections** tab beside Posts, Photos, Videos and Tagged: the
+account's albums. Each is a page of the posts the owner gathered into it, drawn
+as the same grid of squares the Photos tab uses, with a lock on the ones that
+are for followers only.
+
+Your own shelf has a **New collection** field at the top. To put a post into
+one, open the post's menu (**…**) and choose **Add to a collection**; only your
+own posts with a picture or a video in them offer it, because that is all a
+collection may hold. On a collection's page you can **Edit** its title,
+description and audience, **Remove posts** from their own squares, or
+**Delete** it — the posts stay where they are.
+
+### Posting as a team
+
+If an administrator has given one of your Nextcloud groups an account, a small
+picker appears in the composer beside the language and the audience: **As
+myself**, or the team. Choose the team and the post goes out from the team's
+account — its name, its picture, its followers — rather than from yours.
+
+Everybody in the group can post as it, and the list is checked at the moment
+you press post: leaving the group takes the account away with it, with nothing
+to remember to undo.
+
+Who actually wrote each post is recorded. The team can see it, and so can a
+moderator looking at a report; nobody else can. Outside the team, the team
+speaks with one voice, which is the point of having a team account.
+
+An administrator makes one with `occ social:team <group> <username>`.
+
+### A page of your work
+
+**Settings → Profile and privacy → Portfolio** makes a page with its own address, to put on a CV.
+A profile is a feed: everything you posted, newest first, with the follow
+button and the boosts and the replies around it. A portfolio is the opposite —
+a title, a sentence, the pictures you chose, and nothing else on it.
+
+Give it a title and a line about the work, choose a grid of squares or one
+picture at a time, and say where the pictures come from: your most recent
+public photos, or one of your collections. Then decide what goes under each
+one — the caption, where it was taken, the year — and whether your own picture
+is at the top.
+
+Until you turn **Publish my portfolio** on, the page is a draft only you can
+see. Once it is on, the address appears under the switch and anybody with it
+can read the page without signing in, which is the whole point. **Only your
+public photos are ever on it**, whatever the rest of the settings say: the page
+is built by asking for your posts as an anonymous reader, so a followers-only
+photograph cannot reach it. The draft shows you exactly what will be published,
+which is why a followers-only photo is missing from it too.
+
+### Who is in the photo
+
+Open one of your own posts with a picture in it, choose **Tag people** from its
+menu (**…**), and type the handles of the people in it, separated by commas.
+Their names appear under the post, linked to their profiles, and each of them is
+told — including somebody on another server, because the name is written onto
+the post as a mention and the post is sent out again.
+
+The field holds the whole list rather than only what you are adding, so taking
+somebody out of the photo is deleting their handle. Only the person who posted a
+photo can name anybody in it: if anybody could, writing your own name onto
+somebody else's picture would put their post in front of an audience that never
+asked for it.
+
+Naming somebody does **not** change who may see the post. A followers-only
+photograph stays followers-only.
+
+Each profile has a **Tagged** tab: the photographs that account is named in,
+whoever took them. If you are named in one and would rather not be, **Remove me**
+under the post takes your name off, and needs nobody's permission.
+
+### Who may reach you, and requests
+
+**Settings → Notifications → Who may reach you** is one place for
+everything about being interrupted: the digests and quiet hours first, then
+who may reach you at all. Five rows, each answered **Allow** or **Hold for
+review**:
+
+- People you don't follow
+- People who don't follow you
+- New accounts (less than 30 days old, counted from the account's creation
+  date, on any server)
+- Private mentions you didn't ask for
+- Accounts this server limited
+
+Held people can still write to you. Their posts, likes and follows wait in
+Activities until you look; they do not ring, push or mail. Everything a held
+person does waits together — mentions, replies, direct messages, likes,
+boosts, follows. A choice is saved the moment you make it; if the server
+refuses it, the row goes back and says why.
+
+**Who may send you direct messages** — in Settings → Profile and privacy —
+is the private-mentions row seen from the other side: *Everybody*, *People
+you follow* (a message from anybody else waits with the rest), or *Nobody*
+(every direct message waits, except from people you allowed). People on
+Bluesky go by the same choice.
+
+A new account starts calm: people you don't follow, new accounts, private
+mentions you didn't ask for and accounts this server limited are held, and
+everybody else is allowed. An account that existed before this setting keeps
+accepting everybody until you choose, and sees one notice at the top of
+Activities pointing here; it goes away when you close it or save a choice.
+Mastodon apps can also set a row to discard instead of hold. The web app does
+not offer that: such a row shows as **Hold for review** with the note *An app
+set this to discard; choosing here replaces it*, and choosing either answer
+here replaces it.
+
+**Requests.** The people being held wait at the top of **Activities**: a line
+says how many — *2 people are waiting — Review* — and **Review** opens the
+list there, one row per person with how many notifications they sent and the
+first words of their most recent post. The count is part of the Activities
+badge in the sidebar; a request never rings the bell. If a digest is due while
+somebody waits, it ends with *2 people are waiting to reach you*; nobody
+waiting never raises a digest of its own. (**Filtered notifications** on the
+Blocking page links to the same list.)
+
+You decide about the **person**, not about each notification. **Show these**
+accepts them: what they sent moves into Activities — counted as unread, without
+ringing now — and they are always allowed from then on. Accepting does not
+follow them. **Dismiss** discards what they sent; whatever they do next is
+judged by your rows again. There are buttons for the whole list too.
+
+Under the rows, **Always allowed** lists everybody you accepted, each with
+**Stop allowing**, which hands that person back to your rows. Nobody is on it
+until you accept somebody.
+
+**Digests and quiet hours.** Who may reach you is about *whether* you are
+told; **Settings → Notifications → When to tell you** is about *when* the Nextcloud
+bell — and with it the mobile app and the notification mail — rings for what
+happens in Aloha Social. Left at **instant**, it rings the moment somebody
+mentions, favourites, boosts or follows you, as it always did. Set to
+**digest**, it stays quiet and rings once at each time of day you choose, up
+to four, with a count of what came in since the last one: "14 new
+notifications in Aloha Social — 3 mentions, 6 favourites, 4 boosts, 1 new
+follower". Two kinds of news can still reach you at once, each on its own
+switch: a direct message, and a mention from somebody you follow. **Quiet
+hours** work in either mode — between the two times you set, nothing but those
+pass-throughs rings, and one digest of what arrived is raised when the window
+ends. The times are read in the time zone of your Nextcloud account. None of
+this changes the notifications page itself: everything is listed there the
+moment it happens, read or unread, and the digest only counts what you have
+not read yet. Switching a digest on does not deliver a backlog, and switching
+it off raises one last digest of what it was still holding.
+
+### Muting a conversation
+
+**Mute conversation** stops the notifications one thread would give you
+without muting anybody. It is in every post's menu, and in the menu of a
+mention or reply card in Activities. The mute covers the whole thread,
+replies that arrive later included: nothing from it rings the bell, pushes or
+mails, and nothing from it is listed in Activities. The posts stay on every
+timeline. The post menu reads **Unmute conversation** on any post of a muted
+thread; unmuting lists what arrived meanwhile without ringing for it. A mute
+lasts until you unmute it. Neither entry is offered to somebody not signed in
+or on a public page.
+
+### Hiding a whole server
+
+**Settings → Blocking** now has a third list: the servers you
+have hidden. Hiding one hides every account on it and everything they post, and
+takes your follows in both directions with it. It is the answer to being
+bothered by a server rather than by one person — the alternative was blocking
+accounts one at a time as they appeared.
+
+### Posts made with AI
+
+**Settings → Blocking** has a switch, **Hide posts made with AI**, off until
+you turn it on. On, a post that says it was made with AI is kept out of
+everything you read — your feed, the public timelines, hashtags, threads,
+profiles, lists and your notifications alike — the same way a filtered word
+takes a post out, and nothing of it reaches this app. Off, such a post arrives
+as usual and carries a quiet **AI** mark, so you can tell without being told.
+
+"Says it was made with AI" is meant literally. A post counts when it carries
+one of the specific hashtags people and tools use for it. Built-in labels include
+`#AIgenerated`, `#midjourney` and `#stablediffusion`; your administrator can add
+others, such as `#aiart`, to the list. It also counts when its author marked it in the composer (which adds
+`#AIgenerated`), or when one of its pictures states in its own metadata that a
+model produced it, as the generators that label their output write. Nothing
+here looks at the picture itself or guesses from the words: a generated post
+that carries no label is not recognised. The generic topic tag `#AI` by itself
+is never treated as a generated-content label, so a real photograph tagged
+`#ai` is not mistaken for one. Like your filters, the switch is yours alone — nothing is
+sent to another server and nobody is told.
+
+### What a post used to say
+
+A post that has been edited says so under it. That line is a button now: it
+opens every version, oldest first, with the content warning and the pictures
+each one carried. A reader who has been quoted or replied to can see what
+changed rather than being told only that something did.
+
+## Filtering out words
+
+Some words are not worth reading. **Blocking → Filtered words** is where you say
+so — with the accounts you have blocked and muted and the servers you have hidden,
+because it is the same decision aimed at a word rather than at a person. It is the
+same list a Mastodon app on your phone writes to: a filter you made there has been
+applying here all along, and this is the first page that shows it.
+
+A filter is four things:
+
+- **A name.** Whatever reminds you later what it was for.
+- **The words.** One or more; a post matches if *any* of them appears in its text,
+  its content warning, the description of one of its pictures, or an option of a
+  poll. Upper and lower case never matter, and a boost is read as the post it
+  boosts, so nothing escapes a filter by being boosted. Each word can be marked
+  **whole word only**, which is the difference between filtering "cat" and also
+  filtering every "catalogue".
+- **Where it applies.** **My Feed**, **Activities** (your notifications), the
+  **Local, Global and hashtag** timelines, **Conversations** (the replies above and
+  below an opened post), and **Profiles**. Somewhere you did not tick, a matching
+  post arrives as usual. Ticking nothing is refused: a filter with no place applies
+  nowhere. Two exceptions worth knowing: **list timelines are never filtered**, even
+  with My Feed ticked, and in **Activities** only taking a post out has an effect —
+  a notification is never folded.
+- **What happens to a matching post.** Either it is **folded away** — the post keeps
+  its place in the timeline, with the name of the filter where its text would be and
+  a **Show anyway** button; nothing of the post is on the page until you press it, so
+  the words you filtered cannot be read on the way past. In the Photos and Videos
+  grids the same post shows a covered tile with no picture. Or it is **taken out of
+  the timeline**, and never reaches this app at all. Either way nothing is deleted
+  and nobody is told; lift the filter and the post is back as it was.
+
+  A post that carries a content warning of its own is still warned about after you
+  press Show anyway: the author's cover is not yours to lift.
+
+A filter can also be given an expiry — thirty minutes up to a week — after which it
+simply stops applying. It stays in the list, marked **Expired**, and saving it again
+starts it over. Editing a filter that is still counting down leaves its expiry alone
+unless you change it.
+
+Because a filter that removes posts is easy to forget and looks exactly like a
+conversation with a hole in it, the page says at the top which of your filters are
+taking posts away right now, and where.
+
+Filters are private: they are never sent to another server, and they change nothing
+for anybody else reading the same post.
+
+## Managing your account
+
+**Settings** (in the account menu at the foot of the sidebar) has six groups:
+**Profile and privacy**, **Reading**, **Notifications**, **Your posts**, **Apps
+and account** and **Help**. Pick a group on the left (at the top on a phone) to
+see its settings, or type into **Find a setting** to search all of them at once.
+Every change is saved as you make it; there is no Save button to forget, except
+in a form you fill in, such as the portfolio.
+
+**Pronouns and a support link.** Two of the four profile fields on **Edit
+profile** have boxes of their own, because this app draws them differently: the
+pronouns appear beside your name rather than in the table at the bottom, and a
+support address (`https://…`) becomes a button on your profile. They are still
+ordinary profile fields underneath, so Mastodon and the rest show them in their
+table as they always did — and if you already wrote a row called "Pronouns" by
+hand, it is picked up as one.
+
+
+- **Likes and followers.** You are not shown how many likes, dislikes, boosts
+  or replies anything has, or how many times a video was watched — not on your
+  posts, not on anybody else's — and
+  other people's profiles show **Followers** without a number. A number next
+  to a post is a score, and a score is pressure.
+  **Settings → Reading → Likes and followers → Show the numbers** brings them back. It
+  belongs to your account, so your phone apps follow it too: they are sent
+  zero for each of a post's numbers while they are hidden. Who liked or boosted a
+  post is still there to look at, and so is every reply; your own follower
+  count, following and post counts are not hidden — your profile, Statistics
+  and your phone apps all tell you how many people follow you.
+- **Sound and touch.** **Settings → Reading → Sound and touch** has three switches:
+  **Play sounds** (a tick on a like, a breath of air when a post goes out, a
+  chime when a direct message arrives; off until you turn it on, with
+  **Listen** to hear them first), **Vibrate** (a short tap on a phone; on
+  unless you turn it off, and off whenever your system asks for less motion)
+  and **Start videos with sound** (Shorts; on unless you turn it
+  off). All three belong to the device you are on, not to your account.
+- **Profile.** **My profile** (behind your portrait at the bottom of the
+  sidebar) → **Edit profile**: a banner (upload one or give the address of
+  one), a bio, and up to four name/value fields shown under it — your website,
+  your pronouns, where you work. All of it is shared with other servers. The
+  pronouns and the support link are two of those four, and the editor shows
+  how many are used ("2 of 4 fields used"): **Add field** goes away when
+  there is no room left, and a fifth field is refused with a message rather
+  than dropped. A row with only one half filled in is dropped;
+  emptying the table and saving removes it from your profile everywhere.
+- **Your Nextcloud profile page.** The native `/u/username` page shows your
+  custom Aloha Social banner across the profile header, behind your profile picture,
+  and your posts below. The banner starts at the top of the native profile
+  content and meets the profile details without an extra coloured strip.
+  Without a native profile header, the banner appears at
+  the top of the Aloha Social section. Its **Posts**, **My Feed**, **Local** and
+  **Global** tabs read Aloha Social's feeds; **My Feed** is available only on your
+  own profile. This page is for reading. To publish, open the Aloha Social app.
+- **Missing pictures on older remote posts.** If a federated post shows its text
+  but none of its pictures, an administrator can run
+  `occ social:media:recover --dry-run` to list posts whose stored ActivityPub
+  original still names attachments. Run `occ social:media:recover` to fetch
+  those attachments and restore the post's media and Photos index. The command
+  only examines remote posts with an empty attachment list; posts with no
+  attachment in their original are left alone. `--limit=N` bounds how many
+  posts are examined in one run. A failed download is reported and can be
+  retried by running the command again.
+- **Verified links.** A field whose value is a full web address — written out,
+  starting with `http://` or `https://` — can carry a **verified tick**, and
+  the editor shows where each of yours stands: verified and when it was
+  proved, not verified yet, or, for a bare `example.org`, that nothing written
+  that way can be verified at all.
+
+  To earn one, put a link back to your profile on that page:
+  `<a rel="me" href="https://your-server/@you">…</a>` anywhere in its HTML, or
+  `<link rel="me" href="…">` in its `<head>`. `me` only has to be one of the
+  `rel` words, and a trailing slash or a `#fragment` on the address makes no
+  difference. The editor shows the exact line to paste, with a copy button, as
+  soon as a value looks like an address.
+
+  This server fetches the page itself, in the background, at most once a day
+  per account and only over http or https, and marks the field when it finds
+  the link back. A page it cannot reach is left unverified and asked again
+  later; a page that stops linking back loses the tick. Editing a field's value
+  drops that field's tick straight away — the tick belongs to the address, not
+  to the row — and it returns once the page at the new address has been
+  checked. Your other fields keep theirs.
+- **Featured hashtags.** **Settings → Profile and privacy → Featured hashtags** decides which tags sit under
+  your bio — up to ten, and anybody reading your profile can click one to see what you
+  posted under it. It opens with the hashtags you post with most and have not featured
+  yet, so you pick from your own writing rather than guessing; anything else goes in
+  the box beside them, with or without the `#`. The **×** on a row stops featuring that
+  tag and does nothing else — your posts keep their hashtags. Your own profile links
+  here from where the tags are shown, whether you feature any or not.
+- **Blocking and muting.** Both are in the menu on an account's profile.
+  **Block** severs the relationship in both directions, hides the account
+  everywhere, and tells the other server (unless the administrator turned
+  that off). **Mute** hides the account from your timelines and notifications
+  without it ever knowing. **Blocking**, under **Settings**
+  in the sidebar, lists both with unblock and unmute inline.
+- **Follow requests.** When your account is locked, people asking to follow
+  you appear under **Follow requests** in the sidebar — **Accept** or
+  **Reject** — and on the Nextcloud bell. Locking the account itself is the
+  **Approve who follows you** switch under **Settings → Profile and privacy**, which
+  is `locked` on `PATCH /api/v1/accounts/update_credentials` underneath.
+- **Reporting.** **Report** in a post's menu sends the post, with an optional
+  note, to the moderators of this instance. From the web client it is never
+  sent to the reported account or their server.
+- **Your year.** `GET /api/v1/annual_reports` serves what Mastodon calls
+  `#Wrapstodon`: one report per year you wrote anything in, with twelve months
+  of what you posted and who arrived, the hashtags you used most, your three
+  posts that travelled furthest, and a word for how you use the account. It is
+  worked out from the posts already here whenever it is asked for, so there is
+  nothing to wait for and nothing to go stale. The web client has no page for
+  it yet; a phone client that has the feature shows it.
+- **Who may quote your post.** A post's menu has **Quotes of this post** on
+  your own posts. The top half is who may quote it from now on — anybody, the
+  people who follow you, or nobody but you — and the bottom half is who already
+  has, with a button that detaches one. The two are separate on purpose:
+  changing the setting does not take back a quote somebody has already posted
+  and other people have read. Detaching tells the other server, which then
+  shows the quote as withdrawn; the post itself is theirs and stays where it is.
+- **Authorized apps.** **Settings → Apps and account → Authorized apps** lists every app you have
+  signed in to with this account — a phone client, a cross-poster, anything
+  that asked — with what it may do, when you granted it and when it was last
+  used. **Sign this app out** takes the key back, and the app asks you to sign
+  in again the next time you open it. It is the page to open after losing a
+  phone, and the only page where signing an app out does not depend on still
+  having the app.
+- **Export and migration.** The whole move, in order, is one page:
+  [Moving.md](Moving.md). **Migration** (in the account menu at the foot of
+  the sidebar, a page of its own) has these sections.
+  **Export** downloads a zip of your profile, follows, followers, blocks,
+  mutes, lists, blocked domains, bookmarks, likes and every post you wrote — your private key is
+  deliberately not in it. **Import** reads such an archive (or a Nextcloud
+  account export) back in without deleting anything; posts in it are listed,
+  not published again. The third section imports the follows from another
+  network's export — a `following_accounts.csv`, or Pixelfed's
+  `pixelfed-following.json`.
+- **One list at a time, out.** Under the Export button, **Or one list at a
+  time** downloads your follows, your followers, your blocks, your mutes,
+  your lists, your bookmarks or your blocked domains as a single CSV, each
+  written the way Mastodon writes it. It is
+  the same content as the files inside the zip, for when the other end wants
+  one file rather than an archive. The followers file is a record rather than
+  something an import can re-create: a follower follows you again, or their
+  server is told by the move.
+- **Blocks, mutes, lists, bookmarks and blocked domains, in.** **Bring your
+  blocks, mutes, lists, bookmarks and blocked domains** reads the other files
+  from the same export. Bookmarks are the addresses of posts: each is fetched
+  from the server it lives on and marked here, for you alone — if it is a
+  post you may read; the others are listed as not imported. A blocked
+  domain hides a whole server from you, as it did there. Blocks and mutes are decisions
+  your account makes on its own, so they apply as soon as the file is read —
+  and a block federates, exactly as blocking somebody from here does. Do the
+  follows first and the lists after: a list here can only hold accounts you
+  follow, as on Mastodon, so anybody you have not followed again yet is counted
+  as skipped rather than followed by a button that says lists. A list you
+  already have is filled rather than made a second time, and a list that
+  follows a Nextcloud group is left alone — its members are the group's.
+- **Moving in from another server.** The quickest way in is the first thing
+  on the **Migration** page: type the handle of your old account
+  (`@you@mastodon.example`) and press **Look it up**. You are shown who that
+  is, how many accounts it follows and how many posts it has, and whether its
+  server lets those be read — Mastodon hides them if you turned on *Hide your
+  social graph*, and Pixelfed always does; the file imports below are for
+  that case. Press **Move here** and this account is marked as also being
+  that one, and in the background everyone the old account follows is followed
+  from here and its public posts are written here as yours, dated when you
+  wrote them. The list at the top of the page shows where it has got to, and
+  once it is done, **Copy newer posts** under it runs the copy again for
+  whatever you wrote on the old account since — only what is new is written.
+  Nothing is sent to anybody; your followers stay where they are until the
+  last step, which is done on the old server and which the page tells you
+  about when the run is done: on Mastodon, *Preferences → Account → Move to a
+  different account*, and enter your handle here. If the old server is Aloha
+  Social too, the page offers **Finish the move from here** instead: you are
+  sent to your old Nextcloud to log in and agree, and your followers are moved
+  without a visit to its settings.
+- **Naming your old account.** Your old server will not send your followers
+  here until this account says it is also you. **Migration →
+  Accounts you also answer to** is where you say it: type the old account's
+  handle (`@you@pixelfed.social`) and press Add. Nothing is sent to anybody — it is a note this server keeps about an
+  account it owns — and you can take it off again whenever you like. The
+  wizard above sets it for you.
+- **Moving away.** The last section of the **Migration** page moves this
+  account to another server. First, on the new account, name this one as an
+  account you also answer to — on Mastodon, *Preferences → Account → Moving
+  from a different account* — then type the new account's handle here, type
+  your own handle to confirm, and give your password when asked. Every server
+  that knows you is told to follow the new account instead, and this one is
+  marked as moved: it shows where you went, you cannot post or follow from it
+  while it stays moved, and your posts stay where they are, because a move
+  carries the followers and never the content. You can move again after
+  thirty days. **Undo the move** takes the redirect off and lets you post and
+  follow from here again; your followers do not come back by themselves,
+  because their servers acted on the move when it arrived.
+- **Bringing your posts.** The fourth section of the **Migration** page reads
+  the export from your old server — this app's own archive, Mastodon's or
+  GoToSocial's `outbox.json`, or Pixelfed's `pixelfed-statuses.json` — and
+  writes the posts in it here as yours, dated when you wrote them, with their
+  pictures. Nothing is sent to anybody: none of it is published again, so the
+  people who follow you do not receive years of posts in one afternoon. Boosts
+  and direct messages are left out, and a reply keeps the post it answers when
+  the file holds both. A picture the export names only by its address is
+  fetched from the old server, which has to still be running; the switch above
+  the button turns that off. At most 2000 posts a run — upload the same file
+  again to carry on — and an archive too large for a browser can be imported by
+  an administrator with `occ social:account:import-posts`.
+- **Coming from Instagram.** The same button reads an Instagram archive. Ask
+  Instagram to download your information and **choose JSON**: the HTML download
+  is a set of web pages with the posts taken out, and this says so rather than
+  failing quietly. Your posts and reels arrive with their pictures, their
+  captions and the hashtags you wrote in them. Two things are worth knowing
+  before you press it. An Instagram post does not record who could see it, so
+  every one of them is posted here with **your own default visibility** — set
+  that first, in **Settings → Profile and privacy**, if you would rather they were not
+  public. And **what Instagram showed for only a day, your archived posts and
+  anything you deleted are not imported**: you put those away on purpose.
+- **Leaving.** **Settings → Apps and account → Delete your Aloha Social account** deletes your fediverse
+  account and keeps your Nextcloud one. Everything you posted goes, your
+  followers and the people you follow are let go, and every server that knew
+  the account is told it is gone — a post already on somebody else's server is
+  deleted by asking that server to delete it, which almost all of them do and
+  none of them can be made to. You are asked to type your handle first, because
+  it cannot be undone; take an archive from **Migration → Export**
+  first if you might want one. Afterwards you are back at the setup screen and
+  can make a new account straight away, under a different handle: the old one
+  is held for an hour so that nobody can take it the moment you let it go.
+  Deleting the Nextcloud user does the same thing to the Aloha Social account along
+  the way.
+
+### Bluesky
+
+If the administrator has switched Bluesky on, your account is a Bluesky account
+too, hosted here: your handle there is `yourname.<this server>`, and anybody on
+Bluesky who looks it up sees your profile and your public posts, can follow you
+and like, reply to and quote what you wrote. Nothing is asked of you — no
+Bluesky account, no password, no switch.
+
+Every **public** post goes to Bluesky as you publish it. Bluesky posts hold 300
+characters, so a longer post is cut at a word before 280 and the rest is a link
+to the post here; the composer tells you so under the counter. The first four
+pictures go with it, with their descriptions; a content warning becomes a
+warning label and a "Content warning:" line; a poll becomes its question and
+options with a link to vote here. These added words are in the language of
+your post. An edit within five minutes replaces the Bluesky copy; a
+later one leaves the Bluesky copy as it was, with its link leading to the
+current text here. Deleting a post deletes it there too. Followers-only,
+unlisted and direct posts never go to Bluesky, which the audience menu in the
+composer says beside each of them, and a reply to a post that is not on
+Bluesky goes out as a post with a link to what it answers.
+
+Your profile page shows both handles under your name, each with a Copy button,
+and the Bluesky one leads to your profile on bsky.app. **Settings → Apps and
+account → Bluesky** shows the handle and the DID — the permanent identifier your Bluesky
+account has — and offers a **recovery phrase**: twelve words that are a key of
+your own on that identifier: on an identifier this server made, it ranks
+second, after the server's; on one you brought here, your own keys rank first,
+and they keep their places whatever the server changes later. They are shown once
+and never stored, so write them down; "Create a new recovery phrase" replaces
+them, and the old words stop working. You will not need the phrase in ordinary
+use. What it can do: the key it stands for can sign a change to your identifier
+at the PLC directory without this server — give it another signing key, point it
+at another Bluesky server, drop this server's key. That is how you take your
+Bluesky account with you if this server is ever gone. **Download the recovery
+tool** keeps one HTML page that does it in your browser, step by step, from a
+saved copy and without this server; open it with your words and the download
+below ([Moving.md](Moving.md#if-this-server-goes-away); the `goat`
+command-line tool can do the same). Anyone who has the words can do the same,
+so keep them where only you can find them.
+
+Other Bluesky tools do not read the words themselves, so the same dialog also
+shows the key they stand for: the private key in the form the `goat` command-line
+tool takes (`z…`) and as hex, and the public key (`did:key:…`) that your
+identifier lists. Keep the words; the key lines are the same secret written
+differently, and the words can be turned back into them offline
+([how](Atproto-Compatibility.md)).
+The server's key ranks above yours: for 72 hours the server can undo a change
+made with the phrase, a move to another server included.
+
+**Who controls your Bluesky identifier**, in the same section, lists the keys
+that can change where your identifier points, as the PLC directory has them,
+highest first: this server, your recovery phrase, or a key this server does not
+know. For 72 hours after a change, a key ranking above the one that made it can
+undo it; while that is so, the panel says until when and by which key.
+
+**Download your Bluesky account**, in the same section, gives you the account as
+files after your password: your repository (every post, like, follow and the
+profile, in the CAR format other Bluesky servers import), the pictures and videos,
+the history of your identifier from the PLC directory, and a README with the
+steps to move the account with your recovery phrase, even when this server is gone;
+it carries the recovery tool too. The archive from the **Migration** page holds the same files
+under `social/bluesky/`.
+
+The post menu's *Delivery status* shows whether a post is on Bluesky and opens
+it there.
+
+**Reading Bluesky.** Type a Bluesky handle — `alice.bsky.social`, no `@` —
+into search, the follow box or the composer's mention picker: the account
+appears with a butterfly badge next to its name, its profile page is
+`/@alice.bsky.social`, and following it is accepted at once (Bluesky has no
+follow requests). Their posts then come into your home feed within minutes,
+badged but otherwise ordinary: like, boost, reply and quote them as you would
+any post — a like or boost reaches Bluesky, a reply lands in their thread
+there, and a quote shows their post inside yours. Pictures and standard video
+embeds use the usual gallery and player. Audio is playable in the post; files
+from supported third-party Bluesky embeds appear as named downloads. Such files
+are streamed from the public PDS when opened, rather than fetched while the
+feed loads. A post they delete on
+Bluesky disappears here too, once the server's regular check reaches it. If you limit who may quote a post
+of yours (followers only, or nobody), nobody on Bluesky can quote it —
+Bluesky has no "followers only". *Open on Bluesky* in the post menu leads to the post on bsky.app. When
+somebody on Bluesky follows you, likes, boosts, answers or mentions you, it
+shows in Activities like anything else, under your notification policy.
+
+**Labels and reports.** Bluesky's moderation service labels posts, and its
+labels always apply here: a post it hides never arrives, and adult or
+upsetting pictures come with a warning. Under *Settings → Blocking → Bluesky
+labelers* you can add other labelers by their handle and choose, label by
+label, whether it does nothing, shows a warning, or hides the post. When you
+report a Bluesky account or post, *Also report to Bluesky's moderation
+service* passes the report on — sent by this server, not in your name.
+
+**Bluesky apps.** You can use the Bluesky app, or any other Bluesky client,
+with this account. In *Settings → Apps and account → Bluesky* make an
+**app password** and copy it — it is shown once. In the app, choose to sign in with
+a different hosting provider, give this server's address, then your Bluesky
+handle and the app password. This is not your Nextcloud password; never enter
+that in a Bluesky client. What you post, like or follow there happens
+here too, as if you had done it in Aloha Social; blocks stay here and cannot
+be made from the app. Revoking the app password signs the app out.
+
+**Pausing.** *Be on Bluesky* in Settings → Apps and account → Bluesky switches
+your presence there off, after asking: nothing new is published, Bluesky is told the
+account is inactive, Bluesky apps are signed out, and what you had posted comes back
+when you switch it on again — same handle, same identity. What you write while it is
+off never reaches Bluesky.
+
+## Keyboard shortcuts
+
+Press `?` anywhere, or open **Settings → Help → Keyboard shortcuts**, for the list.
+Shortcuts are off while you are typing in a field or the composer, while a
+modifier key is held, and while a dialog such as the picture viewer is open.
+The switch **Use keyboard shortcuts** on the same Settings page turns them off
+altogether; the choice is kept with your account. Turning keyboard shortcuts
+off in Nextcloud's own **Personal settings → Accessibility** turns them off here
+too.
+
+`l`, `b`, `r` and `o` act on the post `j` or `k` moved to, and only while it is
+still the one you are on: once you click somewhere else or scroll it out of
+view, no post is in focus, and the next `j` starts from the post at the top of
+the screen.
+
+| Key | Does |
+|---|---|
+| `j` | Next post |
+| `k` | Previous post |
+| `l` or `f` | Like the post in focus |
+| `b` | Boost the post in focus |
+| `r` | Reply to the post in focus |
+| `o` or `Enter` | Open the post in focus |
+| `n` | Write a new post |
+| `g` | Go to the home timeline |
+| `?` | Show these shortcuts |
+
+On a video's own page the video player has keys of its own, the ones video
+sites use. They work wherever the focus is on that page, except in a text
+field or behind a dialog; in the small player they work while it has the
+focus. `j`, `k`, `l` and `f` are the player's there, not the timeline's, and
+the up and down arrows change the volume only while the player has the focus,
+so they still scroll the page otherwise. The same switches turn them off.
+
+| Key | Does |
+|---|---|
+| `k` or `Space` | Play or pause |
+| `j` / `l` | Back / forward 10 seconds |
+| `←` / `→` | Back / forward 5 seconds |
+| `↑` / `↓` | Louder / quieter, while the player has the focus |
+| `m` | Sound off or on |
+| `f` | Full screen |
+| `c` | Subtitles on or off |
+| `<` / `>` | Slower / faster |
+| `0` … `9` | Jump to the start, or to 10% … 90% of the video |
+
+`Enter` on a focused button or link still presses it — the shortcut only
+applies where nothing else claims the key. Nextcloud's own **Skip to main
+content**, the first Tab stop on every page and visible only while it has the
+focus, jumps past the sidebar into the page; each page carries one top-level
+heading to jump to.
+
+## What the web client does not do yet
+
+Mastodon apps on a phone or desktop can connect only once the web server maps
+`/api` and `/oauth` at the domain root onto the app. The rules are in
+`contrib/webserver/` and [Admin.md](Admin.md#mastodon-apps-cannot-connect); ask
+your administrator whether they are in place. The web app uses Nextcloud's
+own update channels and refresh behavior. Mastodon-compatible clients can also
+use the optional streaming daemon when the administrator runs it and proxies
+its WebSocket/SSE routes; see [Mastodon-Compatibility.md](Mastodon-Compatibility.md#streaming).

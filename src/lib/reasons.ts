@@ -1,19 +1,19 @@
 /**
  * The release key points for Aloha Social.
- * Source of truth: "Aloha Social: 30 reasons it is special" (8 October 2026).
+ * Source of truth: validated against AlohaSocial/social documentation (27 October 2026).
  */
 
 export const PITCH =
-  "Aloha Social is a new and better social network. It focuses on the digital wellbeing of its users, amplifying good and fun content instead of negative emotions. It is easy to use and made for everyone, not only for geeks. It supports every modern way of social networking — from text microblogging to photos, video and Shorts — and it is fully federated and decentralised without adding complexity for the user.";
+  "Aloha Social is an open-source social network built around digital well-being. It brings text, photos, video and Shorts together in a carefully designed app, connects to the open social web, and keeps federation complexity out of the way.";
 
 export const BOILERPLATE = {
   intro: "Aloha Social is a fully open-source social network you run on your own server.",
   bullets: [
-    "Every user gets one account that reaches the open social web: Mastodon, Pixelfed, PeerTube, GoToSocial and Akkoma today, and Bluesky as well.",
+    "Every user gets a Fediverse identity that can reach Mastodon, Pixelfed, PeerTube, GoToSocial and Akkoma. Optional native AT Protocol hosting connects a server to Bluesky when its administrator enables and configures it.",
     "It brings posts, photos, Shorts and video channels together in one carefully designed app, on infrastructure the organisation controls.",
-    "New Aloha apps for mobile and desktop are on the way.",
-    "There is no advertising and no tracking, and counts are hidden by default.",
-    "Every personalised feed says why a post is there.",
+    "Native apps are available for Android and Apple platforms, alongside the web app.",
+    "The software includes no advertising or third-party tracking code, and engagement counts are hidden by default.",
+    "The personalised For You feed explains recommendations and gives readers controls over feedback and consented learning.",
     "Posts stay on servers the organisation runs, next to its files, calendar and chat.",
     "Aloha is fully open source and designed with care.",
   ],
@@ -54,34 +54,35 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         number: 2,
         title: "One account, the whole open social web.",
         bullets: [
-          "Aloha talks to Mastodon, Bluesky, Pixelfed, PeerTube, GoToSocial and Akkoma.",
-          "People there can follow, reply to, quote and boost Aloha users, and Aloha users can do the same in return.",
+          "Aloha Social speaks ActivityPub and exchanges supported content with Mastodon, Pixelfed, PeerTube, GoToSocial, Akkoma and other compatible servers.",
+          "People on those servers can discover and follow Aloha accounts; the exact actions available depend on both servers and the content type.",
         ],
       },
       {
         number: 3,
-        title: "Full Bluesky compatibility.",
+        title: "Optional native Bluesky and AT Protocol hosting.",
         bullets: [
-          "Every Aloha account is also a Bluesky account, hosted on its own server, with a handle like you.your.cloud. There is no Bluesky sign-up and no app password.",
-          "Bluesky users can find, follow, like, reply to and quote Aloha users, and Aloha users follow Bluesky accounts in the same timeline.",
-          "The Bluesky app itself can log in to Aloha.",
-          "Existing Bluesky users can move their account to Aloha and keep their followers.",
-          "Aloha is one of the few platforms connected to both the fediverse and Bluesky natively, without a bridge.",
+          "When an administrator enables and configures it, local accounts can have a native AT Protocol identity and repository alongside their ActivityPub identity.",
+          "Supported public posts can be written to both protocols as separate operations, with distinct identity, records, delivery and indexing.",
+          "Supported Bluesky clients can sign in through the configured PDS; remote profiles, feeds and interactions use supported local and proxied services.",
+          "Account moves are available for supported AT Protocol flows, but are protocol-specific operations rather than automatic conversion of every Fediverse account.",
+          "PLC, relay, AppView and Chat services remain external dependencies; a successful local write does not prove public indexing.",
         ],
       },
       {
         number: 4,
-        title: "New Aloha apps for every platform.",
+        title: "Native apps for Android and Apple platforms.",
         bullets: [
-          "New native apps for mobile and desktop, on iPhone, Android, Windows, macOS and Linux.",
-          "Newcomers create an account right in the app.",
+          "Aloha for Android runs on phones, tablets and foldables.",
+          "The Apple app supports iPhone, iPad, Mac, Vision Pro, Watch and Apple TV, with platform-specific capabilities.",
+          "The web app works in modern mobile and desktop browsers and ships with the server app.",
         ],
       },
       {
         number: 5,
         title: "Fully open source.",
         bullets: [
-          "All of Aloha is free software under the AGPL licence, developed in the open at github.com/alohasocial/social.",
+          "The Aloha Social server app is free software under AGPL-3.0-or-later; the native Android and Apple clients use MIT licences.",
           "Anyone can run it, inspect it, adapt it and contribute to it.",
           "There is no closed core, no proprietary cloud service and no vendor lock-in.",
         ],
@@ -185,10 +186,10 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         number: 15,
         title: "A “For you” feed that explains itself.",
         bullets: [
-          "It is built only from the hashtags a person actually reads.",
-          "Every post says why it is there.",
-          "People can see and edit their interests as a word cloud, or pause the feed or turn it off.",
-          "There is no engagement-driven ranking, and the data never leaves the user’s server.",
+          "It combines eligible local and remote candidates, followed accounts, content signals, freshness and feedback; consented behavioral learning is a separate control.",
+          "Recommendations explain why they appear, and post menus offer reversible feedback such as seeing less of a similar post.",
+          "Readers can manage learning consent, pause or reset learned data, and export supported recommendation data.",
+          "Recommendation data is account-scoped and is not federated; availability depends on administrator settings and server synchronization.",
         ],
       },
       {
@@ -202,7 +203,7 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
     id: "privacy-by-default",
     index: "04",
     title: "Privacy by default",
-    blurb: "No third parties, no trackers, and your data on your own servers.",
+    blurb: "No advertising code, privacy-minded defaults, and your data on servers you choose.",
     reasons: [
       {
         number: 17,
@@ -218,7 +219,7 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         bullets: [
           "No map service: places on posts are named by people, not looked up by a geolocation service.",
           "No GIF service: the 881 built-in animated emoji are served from your own server.",
-          "No trackers and no advertising.",
+          "The app includes no advertising or third-party analytics code; configured integrations and federation still communicate with their remote services.",
         ],
       },
       {
@@ -241,7 +242,7 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         number: 20,
         title: "Bring your history with you.",
         bullets: [
-          "Aloha imports past posts, with their pictures, from Mastodon, GoToSocial, Pixelfed and Instagram’s own data export.",
+          "Aloha can import supported posts and media from account archives and supported ActivityPub sources; the migration guide lists each source and its limits.",
           "Imported posts don’t flood followers’ timelines.",
           "Follows can be imported from Mastodon, Pixelfed, GoToSocial and Akkoma.",
           "PeerTube channels can be imported too.",
@@ -320,7 +321,8 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         number: 27,
         title: "Built to scale.",
         bullets: [
-          "On a test server with 400,000 posts, the home timeline loads in 50 ms.",
+          "Nightly benchmarks measure common timeline and search queries on synthetic 100,000-post datasets across MySQL and PostgreSQL.",
+          "The published measurements report test conditions and limits; they are not a promise of production latency.",
           "Several delivery workers can run in parallel.",
           "A video quota can be set per account.",
         ],
@@ -359,8 +361,9 @@ export const REASON_GROUPS: readonly ReasonGroup[] = [
         number: 30,
         title: "Works with the apps people already use.",
         bullets: [
-          "Mastodon and Pixelfed mobile apps can connect today.",
-          "It follows the latest standards of the network: Mastodon 4.3 notification policies and Mastodon 4.5 quote controls.",
+          "Mastodon and Pixelfed clients can use the supported Mastodon-compatible API paths; this is broad compatibility, not complete API parity.",
+          "When native AT Protocol hosting is enabled, supported Bluesky clients can use its PDS and configured services.",
+          "Root API and OAuth rewrites, server configuration and remote service availability affect what works in practice.",
         ],
       },
     ],
@@ -381,18 +384,18 @@ export type ProofPoint = { fact: string; value: string };
 export const PROOF_POINTS: readonly ProofPoint[] = [
   {
     fact: "Compatible networks today",
-    value: "Mastodon, Bluesky, Pixelfed, PeerTube, GoToSocial, Akkoma",
+    value: "ActivityPub integrations plus optional native AT Protocol hosting",
   },
-  { fact: "Coming native apps", value: "iPhone, Android, Windows, macOS and Linux" },
-  { fact: "Official Pixelfed app API calls answered", value: "34 of 40" },
+  { fact: "Native apps", value: "Android and Apple platforms; web app for modern browsers" },
+  { fact: "Live interoperability", value: "Verify with the specific remote service; CI tests are not proof of public availability or indexing" },
   {
     fact: "Built-in animated emoji (no Giphy or Tenor)",
     value: "881, Google Noto, CC BY 4.0",
   },
   { fact: "Maximum video size", value: "2 GB" },
-  { fact: "Home timeline on 400,000 posts", value: "50 ms (was 1,661 ms)" },
-  { fact: "Automated tests", value: "about 7,900 PHP and 4,000 JavaScript tests" },
-  { fact: "License", value: "AGPL-3.0-or-later, fully open source" },
+  { fact: "Performance evidence", value: "Nightly synthetic query benchmarks; see conditions and limits" },
+  { fact: "Validation", value: "Unit, integration, browser and protocol interoperability suites" },
+  { fact: "Licenses", value: "Server app: AGPL-3.0-or-later; native clients: MIT" },
   { fact: "Requirements", value: "Aloha 34 to 36, PHP 8.3 to 8.5" },
   { fact: "Source code", value: "github.com/alohasocial/social" },
 ];
@@ -401,8 +404,8 @@ export type HeadlineFigure = { value: string; label: string };
 
 /** Compact proof numbers for the landing page. */
 export const HEADLINE_FIGURES: readonly HeadlineFigure[] = [
-  { value: "50 ms", label: "home timeline on a server with 400,000 posts" },
+  { value: "100k", label: "posts in the published synthetic performance benchmark" },
   { value: "881", label: "animated emoji built in — no Giphy, no Tenor" },
   { value: "2 GB", label: "maximum video size per post" },
-  { value: "0", label: "ads, trackers or paid ranking" },
+  { value: "0", label: "ads or paid placements" },
 ];

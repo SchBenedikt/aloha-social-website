@@ -89,7 +89,7 @@ export default function ServersPage() {
               {
                 icon: Globe2,
                 title: "Search from where you already are",
-                body: "Already on Mastodon, Pixelfed or Bluesky? Search for @you@your.cloud, follow it, and reply from the app you use every day. Nothing to migrate to start with.",
+                body: "Already on Mastodon or Pixelfed? Search for @you@your.cloud, follow it and reply from the app you use every day. Bluesky discovery is available only when the server operator has enabled and configured native AT Protocol hosting.",
                 link: { label: "See what federates", href: "/activitypub" },
               },
               {
