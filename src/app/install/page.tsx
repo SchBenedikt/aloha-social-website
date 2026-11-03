@@ -163,7 +163,7 @@ export default function InstallPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(JSON_LD) }}
       />
-      <div className="mx-auto max-w-6xl px-5 py-16 sm:px-8 sm:py-20">
+      <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8 sm:py-20">
         <Link
           href="/get-started"
           className="link-quiet inline-flex items-center gap-1.5 text-sm font-medium"

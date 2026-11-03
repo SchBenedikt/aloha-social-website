@@ -642,7 +642,7 @@ pre.code {
    ------------------------------------------------------------------ */
 
 .md-prose {
-  max-width: 42rem;
+  max-width: 46rem;
   font-size: 16.5px;
   line-height: 1.72;
   color: var(--ink);

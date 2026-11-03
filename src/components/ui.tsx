@@ -13,7 +13,7 @@ export function Container({
   wide?: boolean;
 }) {
   return (
-    <div className={`mx-auto w-full ${wide ? "max-w-7xl" : "max-w-6xl"} px-5 sm:px-8 lg:px-12 ${className}`}>
+    <div className={`mx-auto w-full ${wide ? "max-w-[88rem]" : "max-w-7xl"} px-5 sm:px-8 lg:px-12 ${className}`}>
       {children}
     </div>
   );

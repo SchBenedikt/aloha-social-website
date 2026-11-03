@@ -64,7 +64,7 @@ export function SiteHeader() {
             : "border-b border-transparent bg-canvas/85 backdrop-blur-sm"
         }`}
       >
-        <div className="mx-auto flex h-[4.25rem] max-w-6xl items-center gap-6 px-5 sm:px-8 lg:px-12">
+        <div className="mx-auto flex h-[4.25rem] max-w-7xl items-center gap-6 px-5 sm:px-8 lg:px-12">
           <Link
             href="/"
             aria-label="Aloha Social — home"
@@ -121,7 +121,7 @@ export function SiteHeader() {
           inert={!open}
           className={`overflow-hidden border-t border-line transition-[max-height,opacity] duration-300 md:hidden ${open ? "max-h-80 opacity-100" : "max-h-0 opacity-0"}`}
         >
-          <nav id="mobile-navigation" aria-label="Mobile navigation" className="mx-auto flex max-w-6xl flex-col gap-1 px-5 py-4 sm:px-8 lg:px-12">
+          <nav id="mobile-navigation" aria-label="Mobile navigation" className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-4 sm:px-8 lg:px-12">
             {NAV_LINKS.map((item) => (
               <Link
                 key={item.href}
